@@ -1,5 +1,7 @@
+import { redirect } from "next/navigation";
 import AppShell from "@/components/AppShell";
 import { permissionMatrix, roleLabels, type Role } from "@/lib/permissions";
+import { getCurrentUser } from "@/lib/current-user";
 
 const users:{name:string;email:string;role:Role;unit:string;status:string}[]=[
   {name:"Alex Ribeiro",email:"alex@iphan.gov.br",role:"coordenador",unit:"Pernambuco",status:"Ativo"},
@@ -8,9 +10,12 @@ const users:{name:string;email:string;role:Role;unit:string;status:string}[]=[
   {name:"Equipe Executora",email:"obra@contratada.com.br",role:"executor",unit:"Intervenção autorizada",status:"Ativo"},
 ];
 
-export default function Page(){
+export default async function Page(){
+  const current=await getCurrentUser();
+  if(!current.isDemo && !["admin","gestor"].includes(current.role)) redirect("/");
+
   const roles=Object.keys(roleLabels) as Role[];
-  return <AppShell active=""><main className="pageWrap">
+  return <AppShell active="/administracao/usuarios"><main className="pageWrap">
     <div className="pageHead"><div><small>Administração</small><h1>Usuários e permissões</h1><p>Controle de acesso por função e unidade institucional.</p></div><div className="headActions"><a href="/administracao/auditoria" className="secondaryAction">Ver auditoria</a><button className="primaryAction">+ Convidar usuário</button></div></div>
     <section className="panel tablePanel">
       <div className="dataTable usersTable">
