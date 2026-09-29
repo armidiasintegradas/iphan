@@ -11,7 +11,7 @@ const users:{name:string;email:string;role:Role;unit:string;status:string}[]=[
 export default function Page(){
   const roles=Object.keys(roleLabels) as Role[];
   return <AppShell active=""><main className="pageWrap">
-    <div className="pageHead"><div><small>Administração</small><h1>Usuários e permissões</h1><p>Controle de acesso por função e unidade institucional.</p></div><button className="primaryAction">+ Convidar usuário</button></div>
+    <div className="pageHead"><div><small>Administração</small><h1>Usuários e permissões</h1><p>Controle de acesso por função e unidade institucional.</p></div><div className="headActions"><a href="/administracao/auditoria" className="secondaryAction">Ver auditoria</a><button className="primaryAction">+ Convidar usuário</button></div></div>
     <section className="panel tablePanel">
       <div className="dataTable usersTable">
         <div className="tr head"><span>Usuário</span><span>Perfil</span><span>Unidade / Escopo</span><span>Status</span></div>
