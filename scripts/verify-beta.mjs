@@ -61,6 +61,36 @@ const guardedRoutes=[
   ["app/intervencoes/[id]/editar/page.tsx","intervention.write"],
 ];
 
+const migrationDir=path.join(process.cwd(),"supabase/migrations");
+const migrationFiles=fs.readdirSync(migrationDir).filter(name=>/^[0-9]{4}_.*\.sql$/.test(name));
+const migrationNumbers=new Map();
+for(const file of migrationFiles){
+  const number=file.slice(0,4);
+  const list=migrationNumbers.get(number)||[];
+  list.push(file);
+  migrationNumbers.set(number,list);
+}
+const migrationNumberViolations=[...migrationNumbers.entries()]
+  .filter(([,files])=>files.length>1)
+  .map(([number,files])=>number+": "+files.join(", "));
+if(migrationNumberViolations.length){
+  console.error("Beta verification failed: duplicate migration numbers:");
+  migrationNumberViolations.forEach(item=>console.error(" - "+item));
+  process.exit(1);
+}
+
+const proxySource=fs.readFileSync(path.join(process.cwd(),"proxy.ts"),"utf8");
+if(!proxySource.includes('"/api/health"')){
+  console.error("Beta verification failed: /api/health must remain publicly reachable for deployment checks.");
+  process.exit(1);
+}
+
+const authSource=fs.readFileSync(path.join(process.cwd(),"app/auth/actions.ts"),"utf8");
+if(!authSource.includes("password.length>=12") || !authSource.includes("/[^A-Za-z0-9]/")){
+  console.error("Beta verification failed: strong password policy is missing.");
+  process.exit(1);
+}
+
 const missing=required.filter(file=>!fs.existsSync(path.join(process.cwd(),file)));
 if(missing.length){
   console.error("Beta verification failed: missing required files:");
@@ -110,4 +140,4 @@ if(violations.length){
   process.exit(1);
 }
 
-console.log(`Beta verification passed: ${required.length} required artifacts/routes, ${guardedRoutes.length} protected write routes, and no prohibited external visual fallback found.`);
+console.log(`Beta verification passed: ${required.length} required artifacts/routes, ${guardedRoutes.length} protected write routes, unique migration numbering, public health endpoint, strong password policy, and no prohibited external visual fallback found.`);
