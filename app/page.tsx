@@ -47,7 +47,7 @@ export default async function Page(){
       <section className="priorityGrid approvedPriorities">
         {topNotifications.length ? topNotifications.map((p:any,index:number)=>{
           const Icon=priorityIcons[index%priorityIcons.length];
-          return <article className="priorityCard approvedPriority" key={p.id}>
+          return <Link href={p.href||"/notificacoes"} className="priorityCard approvedPriority" key={p.id}>
             <div className="priorityApprovedImage" style={{backgroundImage:`url("${priorityImages[index%priorityImages.length]}")`}} aria-hidden="true"/>
             <div className="priorityBody">
               <div className={"priorityIcon "+p.tone}><Icon size={14}/></div>
@@ -57,7 +57,7 @@ export default async function Page(){
                 <b className={p.tone}>{p.when}</b>
               </div>
             </div>
-          </article>
+          </Link>
         }) : <div className="emptyState">Nenhuma prioridade registrada para hoje.</div>}
       </section>
 
@@ -75,11 +75,11 @@ export default async function Page(){
         </div>
         <aside className="panel agenda approvedAgenda">
           <div className="sectionTitle"><h2>Sua agenda</h2><Link href="/controle">Ver agenda completa →</Link></div>
-          {topNotifications.length ? topNotifications.slice(0,4).map((n:any,i:number)=><div className="agendaRow" key={n.id}>
+          {topNotifications.length ? topNotifications.slice(0,4).map((n:any,i:number)=><Link href={n.href||"/notificacoes"} className="agendaRow" key={n.id}>
             <b>{["09:00","11:30","14:00","16:30"][i]||"--:--"}</b>
             <i className={n.tone==="danger"?"danger":n.tone==="warning"?"warning":""}/>
             <div><strong>{n.title}</strong><span>{n.detail}</span></div>
-          </div>) : <div className="emptyState">Sem pendências registradas.</div>}
+          </Link>) : <div className="emptyState">Sem pendências registradas.</div>}
         </aside>
       </section>
     </main>
