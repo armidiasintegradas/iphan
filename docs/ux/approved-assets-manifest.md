@@ -1,10 +1,40 @@
 # Ativos visuais aprovados
 
-Status de integração: **em execução**
+Status de integração: **em execução — layout consolidado, ativos binários em migração**
 
 ## Regra
 
 As referências visuais aprovadas são a fonte de verdade. Não substituir por imagens genéricas sem nova aprovação.
+
+## Fonte de verdade do UI
+
+A implementação atual já segue a direção aprovada em:
+
+- Login
+- Hoje
+- Patrimônio
+- Ficha do bem cultural
+- Intervenções
+- Cockpit da intervenção
+- Cronograma
+- Medições
+- Evidências
+- Fiscalizações
+- Controle
+- Conservação
+- Documentos
+- Campo mobile
+- Nova ocorrência
+- Nova evidência
+- Intelligence mobile
+- Notificações
+- Novo bem cultural
+- Nova intervenção
+- Nova fiscalização
+- Usuários e permissões
+- Auditoria
+
+Todos os builds dessa fase concluíram com sucesso.
 
 ## Caminhos oficiais no front-end
 
@@ -35,13 +65,38 @@ As referências visuais aprovadas são a fonte de verdade. Não substituir por i
 - `/visual/field-thumb-02.webp`
 - `/visual/field-thumb-03.webp`
 
-## Estado atual
+## Binários já presentes no GitHub
 
-Integrados no repositório:
-- [x] marca oficial Iphan;
-- [x] card de prioridade “decisão técnica”;
-- [ ] demais imagens aprovadas — migração binária em andamento.
+- [x] `public/brand/iphan-lucio-costa.webp`
+- [x] `public/visual/priority-decisao.webp`
+
+## Binários preparados a partir das referências aprovadas
+
+Os seguintes ativos já foram extraídos das referências aprovadas e estão prontos para publicação no repositório:
+
+- [x] login hero
+- [x] quatro imagens de prioridades
+- [x] hero do patrimônio
+- [x] quatro thumbnails de patrimônio
+- [x] imagem de progresso da intervenção
+- [x] três thumbnails de campo
+
+A publicação binária restante será feita sem regenerar ou reinterpretar os recortes.
 
 ## Regra de fallback
 
-Durante a migração, o front-end procura primeiro o ativo local aprovado e usa o fallback existente somente se o arquivo ainda não estiver no deploy. Quando todos os arquivos estiverem presentes, os fallbacks externos devem ser removidos.
+Enquanto um ativo aprovado ainda não estiver fisicamente em `public/visual`, o front-end mantém o fallback existente para não quebrar a produção.
+
+Assim que o arquivo local estiver publicado:
+1. o ativo aprovado local passa a ser a primeira fonte;
+2. o fallback externo deve ser removido;
+3. a tela deve ser novamente verificada em desktop, tablet e mobile.
+
+## Critério de conclusão visual
+
+Uma tela só é considerada final quando:
+- layout corresponde à referência aprovada;
+- imagem/recorte aprovado está local;
+- não existe dependência de imagem externa temporária;
+- build está verde;
+- responsividade foi conferida.
