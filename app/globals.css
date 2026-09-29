@@ -1323,3 +1323,34 @@ body{background:var(--approved-bg)}
     font-size:20px;
   }
 }
+
+
+/* ===== Preview Login — refinement pass 2 ===== */
+.previewLogin .approvedPreviewLogo{
+  max-width:470px;
+  width:104%;
+  margin-left:-2%;
+  margin-bottom:32px;
+}
+.previewLogin .previewApprovedPanel::after{
+  right:-18px;
+  bottom:-44px;
+  width:150px;
+  height:430px;
+  opacity:.72;
+}
+.previewLogin .loginPanelInner{
+  padding-top:82px;
+}
+@media(max-height:820px) and (min-width:901px){
+  .previewLogin .approvedPreviewLogo{
+    max-width:420px;
+    width:100%;
+    margin-left:0;
+  }
+  .previewLogin .previewApprovedPanel::after{
+    width:125px;
+    height:360px;
+    bottom:-36px;
+  }
+}
