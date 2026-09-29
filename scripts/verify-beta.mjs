@@ -41,6 +41,7 @@ const required=[
   "supabase/migrations/0019_document_storage_unit_scope.sql",
   "supabase/migrations/0020_occurrence_read_scope.sql",
   "supabase/migrations/0021_profile_role_boundary.sql",
+  "supabase/migrations/0022_occurrence_update_rls.sql",
 ];
 
 const guardedRoutes=[
