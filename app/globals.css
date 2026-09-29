@@ -283,3 +283,30 @@ body{background:var(--approved-bg)}
   .formActions{flex-direction:column-reverse;align-items:stretch}
   .formActions>a,.formActions>button{text-align:center;width:100%}
 }
+
+
+/* ===== Global search ===== */
+.searchBox input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;color:inherit}
+.searchBox input::placeholder{color:#929a96}
+.searchBox button{border:0;background:transparent;color:var(--green);font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
+.approvedSearchPage{max-width:1180px}
+.searchGroup{margin:18px 0 24px}
+.searchGroup .sectionTitle h2{display:flex;align-items:center;gap:7px}
+.searchGroup .sectionTitle h2 svg{width:18px;color:var(--green)}
+.searchGroup .sectionTitle>span{font-size:10px;color:var(--muted)}
+.searchResultList{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.searchResult{display:grid;grid-template-columns:34px 1fr auto;gap:11px;align-items:center;padding:13px 14px;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.searchResult:first-child{border-top:0}
+.searchResult>svg{width:20px;color:var(--green)}
+.searchResult strong,.searchResult span{display:block}
+.searchResult strong{font-size:12px}
+.searchResult span{font-size:9px;color:var(--muted);margin-top:4px}
+.searchResult small{font-size:9px;color:#818984;text-transform:capitalize}
+.searchEmpty{display:flex;align-items:center;gap:10px;color:#65716b}
+.searchEmpty svg{color:var(--green)}
+@media(max-width:700px){
+  .topHeader .searchBox{flex:1}
+  .searchBox button{display:none}
+  .searchResult{grid-template-columns:28px 1fr}
+  .searchResult small{grid-column:2}
+}
