@@ -4,6 +4,8 @@ import {getHeritageById} from "@/lib/data";
 import {notFound} from "next/navigation";
 import Link from "next/link";
 import { MapPin, Share2, Bookmark, MoreHorizontal, Pencil } from "lucide-react";
+import {getCurrentUser} from "@/lib/current-user";
+import {can} from "@/lib/permissions";
 
 function tone(risk:string){
   if(risk==="critico"||risk==="risco") return "danger";
@@ -13,8 +15,9 @@ function tone(risk:string){
 
 export default async function Page({params}:{params:Promise<{id:string}>}){
   const {id}=await params;
-  const h=await getHeritageById(id);
+  const [h,current]=await Promise.all([getHeritageById(id),getCurrentUser()]);
   if(!h) notFound();
+  const canEdit=can(current.role,"heritage.write");
 
   return <AppShell active="/patrimonio"><main className="pageWrap detailPage approvedHeritageDetail">
     <div className="detailHero approvedDetailHero" style={{backgroundImage:`url("/visual/heritage-hero.webp")`}}>
@@ -43,7 +46,7 @@ export default async function Page({params}:{params:Promise<{id:string}>}){
       <span>Fiscalizações</span>
       <span>Documentos</span>
       <span>Conservação</span>
-      <button><Pencil size={15}/> Editar bem</button>
+      {canEdit&&<Link href={"/patrimonio/"+id+"/editar"} className="tabAction"><Pencil size={15}/> Editar bem</Link>}
     </div>
 
     <div className="threeCols approvedThreeCols">
