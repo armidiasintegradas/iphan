@@ -1,13 +1,15 @@
 import AppShell from "@/components/AppShell";
 import FormNotice from "@/components/FormNotice";
 import { createHeritage } from "@/app/actions";
+import { Landmark, MapPin } from "lucide-react";
 
 export default async function Page({ searchParams }: { searchParams: Promise<Record<string,string|undefined>> }) {
   const q = await searchParams;
-  return <AppShell active="/patrimonio"><main className="pageWrap formPage">
+  return <AppShell active="/patrimonio"><main className="pageWrap formPage approvedDesktopFormPage">
     <div className="pageHead"><div><small>Patrimônio / Novo bem</small><h1>Novo bem cultural</h1><p>Cadastre os dados básicos para iniciar o prontuário digital.</p></div></div>
     <FormNotice demo={q.demo} error={q.erro}/>
-    <form action={createHeritage} className="panel formGrid">
+    <div className="formContextStrip"><Landmark/><div><strong>Prontuário do patrimônio</strong><span>Este cadastro será a base para intervenções, fiscalizações, documentos e conservação.</span></div><MapPin/></div>
+    <form action={createHeritage} className="panel formGrid approvedFormGrid">
       <label className="span2">Nome do bem<input name="nome" required placeholder="Ex.: Igreja de Nossa Senhora..."/></label>
       <label>Município<input name="municipio" required placeholder="Olinda"/></label>
       <label>UF<input name="uf" defaultValue="PE" maxLength={2}/></label>
