@@ -36,15 +36,27 @@ export async function proxy(request: NextRequest) {
     request.nextUrl.pathname.startsWith(path)
   );
 
-  if (!user && !isPublic) {
+  let profileActive=true;
+  if(user){
+    const {data:profile}=await supabase
+      .from("perfis")
+      .select("ativo")
+      .eq("id",user.id)
+      .maybeSingle();
+    profileActive=profile?.ativo===true;
+  }
+
+  if ((!user || !profileActive) && !isPublic) {
     const login = request.nextUrl.clone();
     login.pathname = "/login";
-    login.searchParams.set("next", request.nextUrl.pathname);
+    if(user && !profileActive) login.searchParams.set("erro","inativo");
+    else login.searchParams.set("next", request.nextUrl.pathname);
     return NextResponse.redirect(login);
   }
 
   if (
     user &&
+    profileActive &&
     (request.nextUrl.pathname === "/login" ||
       request.nextUrl.pathname === "/cadastro")
   ) {
