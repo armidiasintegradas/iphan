@@ -97,7 +97,7 @@ body{background:var(--approved-bg)}
 /* ===== Approved exact-reference assets ===== */
 .iphanBrand{position:relative;overflow:hidden}
 .iphanBrandFallback{display:flex;align-items:stretch;height:100%;width:100%}
-.iphanBrandExact{position:absolute;inset:0;background-image:url('/brand/iphan-lucio-costa.webp');background-size:contain;background-repeat:no-repeat;background-position:left center;pointer-events:none}
+.iphanBrandExact{position:absolute;inset:0;background-image:url('/brand/iphan-official.webp');background-size:contain;background-repeat:no-repeat;background-position:left center;pointer-events:none}
 .priorityApprovedImage{width:100%;height:116px;background-size:cover,cover;background-position:center,center;background-repeat:no-repeat}
 .approvedProgressImage{width:100%;height:235px;border-radius:11px;background-size:cover,cover;background-position:center,center;background-repeat:no-repeat}
 .approvedLogin .loginPhoto{background-image:linear-gradient(90deg,transparent 80%,rgba(248,247,243,.18)),url('/visual/login-hero.webp');background-size:auto,cover;background-position:center,center;background-repeat:no-repeat}
@@ -111,7 +111,7 @@ body{background:var(--approved-bg)}
 .approvedFieldApp{background:#f8f7f3;min-height:100vh;padding-bottom:92px}
 .fieldTopbar{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 10px;background:transparent}
 .mobileBack{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;background:#fff;color:#27312c}
-.mobileBrandMini{width:92px;height:28px;background:url('/brand/iphan-lucio-costa.webp') left center/contain no-repeat}
+.mobileBrandMini{width:92px;height:28px;background:url('/brand/iphan-official.webp') left center/contain no-repeat}
 .fieldOnline{display:flex;align-items:center;gap:5px;font-size:10px;color:#0b7357;background:#e9f3ef;padding:7px 9px;border-radius:999px}
 .fieldHero{padding:18px 20px 12px}.fieldHero p{font-size:9px;letter-spacing:.16em;font-weight:800;color:#7b837f;margin:0 0 8px}.fieldHero h1{font:500 35px/1.05 Georgia,serif;margin:0 0 8px}.fieldHero span{font-size:12px;color:#68716d}
 .approvedQuickGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:8px 18px 22px}.approvedQuickGrid a{min-height:132px;border:1px solid var(--line);background:#fff;border-radius:16px;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;color:#1f2924;box-shadow:0 5px 18px rgba(28,39,33,.035)}.approvedQuickGrid svg{width:26px;height:26px;margin-bottom:auto;color:var(--green)}.approvedQuickGrid strong{font-size:15px;margin-bottom:4px}.approvedQuickGrid span{font-size:10px;color:var(--muted)}
@@ -585,7 +585,7 @@ body{background:var(--approved-bg)}
 /* ===== Layout refinement phase — Campo & Intelligence v1 ===== */
 .approvedFieldApp{max-width:390px;padding:16px 16px 86px;background:#fff}
 .approvedFieldApp .fieldTopbar{padding:8px 0 12px}
-.approvedFieldApp .mobileBrandMini{width:76px;height:20px;background:url('/brand/iphan-lucio-costa.webp') left center/contain no-repeat}
+.approvedFieldApp .mobileBrandMini{width:76px;height:20px;background:url('/brand/iphan-official.webp') left center/contain no-repeat}
 .approvedFieldApp .fieldOnline{font-size:8px;color:#67716c;display:flex;align-items:center;gap:4px}
 .approvedFieldApp .fieldHero{padding:8px 0 12px}
 .approvedFieldApp .fieldHero p{font-size:8px;margin-bottom:5px}
@@ -1192,7 +1192,7 @@ body{background:var(--approved-bg)}
 .previewShell{min-height:100vh;display:grid;grid-template-columns:210px minmax(0,1fr);background:#f5f5f2}
 .previewSidebar{background:#fff;border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column}
 .previewBrand{display:block;height:42px;margin:0 4px 22px}
-.previewBrand span{display:block;width:100%;height:100%;background:url('/brand/iphan-lucio-costa.webp') left center/contain no-repeat}
+.previewBrand span{display:block;width:100%;height:100%;background:url('/brand/iphan-official.webp') left center/contain no-repeat}
 .previewSidebar nav{display:flex;flex-direction:column;gap:4px}
 .previewSidebar nav a{display:flex;align-items:center;gap:9px;min-height:38px;padding:9px 10px;border-radius:8px;color:#59635e;text-decoration:none;font-size:10.5px}
 .previewSidebar nav a svg{width:15px;height:15px}
