@@ -62,6 +62,7 @@ function popupHTML(point: Point) {
         ? "Acompanhamento"
         : "Salvaguarda ativa";
 
+  const href = point.id.startsWith("demo-") ? "/patrimonio" : `/patrimonio/${point.id}`;
   return `
     <article class="v12MapPopup">
       <div class="v12MapPopupImage" style="background-image:url('${image}')">
@@ -71,7 +72,7 @@ function popupHTML(point: Point) {
         <strong>${point.name}</strong>
         <small>⌖ ${city}</small>
         <em><i></i>${status}</em>
-        <a href="/patrimonio/${point.id}" aria-label="Abrir ${point.name}">›</a>
+        <a href="${href}" aria-label="Abrir ${point.name}">›</a>
       </div>
     </article>
   `;
@@ -128,13 +129,25 @@ export default function DashboardMap({
             tileSize: 256,
             attribution: "Esri, Maxar, Earthstar Geographics",
           },
+          transport: {
+            type: "raster",
+            tiles: [
+              "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}",
+            ],
+            tileSize: 256,
+          },
+          labels: {
+            type: "raster",
+            tiles: [
+              "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+            ],
+            tileSize: 256,
+          },
         },
         layers: [
-          {
-            id: "imagery",
-            type: "raster",
-            source: "imagery",
-          },
+          { id: "imagery", type: "raster", source: "imagery" },
+          { id: "transport", type: "raster", source: "transport" },
+          { id: "labels", type: "raster", source: "labels" },
         ],
       },
       bounds: PE_BOUNDS,
@@ -199,6 +212,21 @@ export default function DashboardMap({
 
     if (activePole === "Todos") {
       instance.fitBounds(PE_BOUNDS, { padding: 22, duration: 500 });
+      const selected = visiblePoints.find((point) =>
+        cleanMunicipality(point).toLowerCase().includes("olinda")
+      ) || visiblePoints[0];
+      if (selected) {
+        popup.current = new Popup({
+          offset: 22,
+          closeButton: false,
+          closeOnClick: false,
+          maxWidth: "310px",
+          className: "v12PopupShell",
+        })
+          .setLngLat([selected.lng, selected.lat])
+          .setHTML(popupHTML(selected))
+          .addTo(instance);
+      }
     } else if (visiblePoints.length) {
       const first = visiblePoints[0];
       instance.flyTo({
