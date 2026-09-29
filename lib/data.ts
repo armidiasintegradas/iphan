@@ -5,7 +5,7 @@ export async function getHeritage() {
 
   const { data, error } = await supabase
     .from("bens_culturais")
-    .select("id,nome,municipio,uf,tipologia,risco,latitude,longitude")
+    .select("id,nome,municipio,uf,tipologia,nivel_protecao,risco,latitude,longitude,intervencoes(status)")
     .order("nome");
 
   if (error) return { data: [], source: "supabase" as const, error: true };
@@ -17,7 +17,11 @@ export async function getHeritage() {
       id: item.id,
       name: item.nome,
       city: [item.municipio, item.uf].filter(Boolean).join(", "),
+      municipality: item.municipio || "",
+      uf: item.uf || "",
       type: item.tipologia || "Não informado",
+      protection: item.nivel_protecao || "Não informado",
+      interventionStatuses: ((item as any).intervencoes || []).map((x:any)=>x.status),
       status: "Acompanhado",
       risk: item.risco || "regular",
       lat: item.latitude ? Number(item.latitude) : null,
