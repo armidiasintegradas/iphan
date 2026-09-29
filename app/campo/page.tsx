@@ -1,2 +1,41 @@
-import Link from "next/link"; import {Camera,CheckCircle2,FileText,Mic,ChevronRight,Home,MapPin,MoreHorizontal} from "lucide-react"; import {heritage} from "@/lib/mock";
-export default function Page(){return <main className="mobileApp"><header><Link href="/">←</Link><div><h1>Campo</h1><p>Igreja Matriz de Olinda · Olinda, PE</p></div><span className="status regular"><i/>Em execução</span></header><section className="quickGrid"><Link href="/campo/ocorrencia"><Camera/><span>Tirar foto</span></Link><Link href="/campo/ocorrencia"><Mic/><span>Falar</span></Link><Link href="/campo/ocorrencia"><FileText/><span>Escrever</span></Link><Link href="/campo/ocorrencia"><CheckCircle2/><span>Checklist</span></Link></section><div className="sectionTitle"><h2>Últimos registros</h2><a>Ver todos →</a></div>{[["Fachada oeste","Registro fotográfico"],["Cobertura","Registro de campo"],["Torre","Observação técnica"]].map(([t,s],i)=><div className="mobileRecord" key={t}><img src={heritage[i%heritage.length].image}/><div><strong>{t}</strong><span>{s}</span><small>{i?"Hoje, 11:20":"Hoje, 14:32"}</small></div><ChevronRight/></div>)}<nav className="bottomNav"><Link href="/"><Home/><span>Início</span></Link><Link className="active" href="/campo"><MapPin/><span>Campo</span></Link><Link href="/documentos"><FileText/><span>Registros</span></Link><Link href="/inteligencia"><MoreHorizontal/><span>Mais</span></Link></nav></main>}
+import Link from "next/link";
+import { Camera, CheckCircle2, FileText, Mic, ChevronRight, Home, MapPin, MoreHorizontal } from "lucide-react";
+import { heritage } from "@/lib/mock";
+
+export default function Page() {
+  return (
+    <main className="mobileApp">
+      <header>
+        <Link href="/">←</Link>
+        <div>
+          <h1>Campo</h1>
+          <p>Igreja Matriz de Olinda · Olinda, PE</p>
+        </div>
+        <span className="status regular"><i />Em execução</span>
+      </header>
+
+      <section className="quickGrid">
+        <Link href="/campo/evidencia"><Camera /><span>Tirar foto</span></Link>
+        <Link href="/campo/ocorrencia"><Mic /><span>Falar</span></Link>
+        <Link href="/campo/ocorrencia"><FileText /><span>Escrever</span></Link>
+        <Link href="/campo/ocorrencia"><CheckCircle2 /><span>Checklist</span></Link>
+      </section>
+
+      <div className="sectionTitle"><h2>Últimos registros</h2><a>Ver todos →</a></div>
+      {[["Fachada oeste","Registro fotográfico"],["Cobertura","Registro de campo"],["Torre","Observação técnica"]].map(([t,s],i)=>(
+        <div className="mobileRecord" key={t}>
+          <img src={heritage[i%heritage.length].image}/>
+          <div><strong>{t}</strong><span>{s}</span><small>{i?"Hoje, 11:20":"Hoje, 14:32"}</small></div>
+          <ChevronRight/>
+        </div>
+      ))}
+
+      <nav className="bottomNav">
+        <Link href="/"><Home/><span>Início</span></Link>
+        <Link className="active" href="/campo"><MapPin/><span>Campo</span></Link>
+        <Link href="/documentos"><FileText/><span>Registros</span></Link>
+        <Link href="/inteligencia"><MoreHorizontal/><span>Mais</span></Link>
+      </nav>
+    </main>
+  );
+}
