@@ -23,27 +23,27 @@ function answer(question: string, summary: any, delayed: any[]) {
   if (q.includes("decis") && q.includes("venc")) {
     return {
       text: `O sistema registra ${summary.decisoes} decisões pendentes. Consulte Controle para verificar prazos e responsáveis.`,
-      source,
+      source: "supabase",
     };
   }
 
   if (q.includes("resumo") || q.includes("reuni")) {
     return {
-      text: `Resumo executivo: ${summary.bens} bens acompanhados, ${summary.intervencoes} intervenções em execução, ${summary.decisoes} decisões pendentes e ${summary.ocorrencias} ocorrências em acompanhamento. Recomenda-se abrir a intervenção com maior desvio e revisar as decisões vencidas antes da reunião.`,
-      source,
+      text: `Resumo executivo: ${summary.bens} bens acompanhados, ${summary.intervencoes} intervenções em execução, ${summary.decisoes} decisões pendentes e ${summary.ocorrencias} ocorrências em acompanhamento.${delayed.length ? " Há " + delayed.length + " intervenção(ões) abaixo do planejado." : ""}`,
+      source: "supabase",
     };
   }
 
   if (q.includes("quant") || q.includes("bens") || q.includes("interven")) {
     return {
       text: `O recorte atual contém ${summary.bens} bens acompanhados e ${summary.intervencoes} intervenções em execução.`,
-      source,
+      source: "supabase",
     };
   }
 
   return {
     text: "Posso consultar bens culturais, intervenções, pendências, decisões, fiscalizações e resumos operacionais. Reformule a pergunta indicando o patrimônio, a intervenção ou o tipo de informação desejado.",
-    source,
+    source: "supabase",
   };
 }
 
