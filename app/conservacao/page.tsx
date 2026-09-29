@@ -1,2 +1,47 @@
-import AppShell from "@/components/AppShell"; import {Metric,Status} from "@/components/UI"; import {heritage} from "@/lib/mock";
-export default function Page(){return <AppShell active="/conservacao"><main className="pageWrap"><div className="pageHead"><div><h1>Conservação</h1><p>Acompanhamento preventivo dos bens culturais.</p></div></div><div className="metricsRow"><Metric value="68" label="Regular" detail="54,8% do total"/><Metric value="37" label="Atenção" detail="29,8%" tone="warning"/><Metric value="14" label="Risco" detail="11,3%" tone="danger"/><Metric value="5" label="Crítico" detail="4,0%" tone="danger"/></div><div className="controlGrid"><section className="panel"><h2>Bens culturais (124)</h2>{heritage.concat(heritage.slice(0,1)).map((h,i)=><div className="conservationRow" key={h.id+i}><img src={h.image}/><div><strong>{h.name}</strong><span>{h.city}</span></div><Status tone={i===2?"danger":i===1?"warning":"regular"}>{i===2?"Risco":i===1?"Atenção":"Regular"}</Status></div>)}</section><aside className="panel"><h2>Próximas inspeções</h2>{[["03 OUT","Cobertura","Igreja Matriz de Olinda"],["07 OUT","Elétrica","Forte das Cinco Pontas"],["10 OUT","SPDA","Conjunto do Carmo"],["15 OUT","Madeira","Igreja de São Bento"]].map(([d,t,b],i)=><div className="inspectionRow" key={d}><b>{d}</b><div><strong>{t}</strong><span>{b}</span></div><Status tone={i>1?"danger":"warning"}>{i>1?"Risco":"Atenção"}</Status></div>)}</aside></div></main></AppShell>}
+import AppShell from "@/components/AppShell";
+import {Metric,Status} from "@/components/UI";
+import {getConservationOverview} from "@/lib/overview-data";
+
+function tone(risk:string){
+  if(risk==="critico"||risk==="risco") return "danger";
+  if(risk==="atencao") return "warning";
+  return "regular";
+}
+
+export default async function Page(){
+  const {heritage,inspections,metrics}=await getConservationOverview();
+
+  return <AppShell active="/conservacao"><main className="pageWrap">
+    <div className="pageHead"><div><h1>Conservação</h1><p>Acompanhamento preventivo dos bens culturais.</p></div></div>
+
+    <div className="metricsRow">
+      <Metric value={String(metrics.regular)} label="Regular"/>
+      <Metric value={String(metrics.atencao)} label="Atenção" tone={metrics.atencao?"warning":undefined}/>
+      <Metric value={String(metrics.risco)} label="Risco" tone={metrics.risco?"danger":undefined}/>
+      <Metric value={String(metrics.critico)} label="Crítico" tone={metrics.critico?"danger":undefined}/>
+    </div>
+
+    <div className="controlGrid">
+      <section className="panel">
+        <h2>Bens culturais ({heritage.length})</h2>
+        {heritage.length ? heritage.map((h:any)=><div className="conservationRow" key={h.id}>
+          <div><strong>{h.nome}</strong><span>{[h.municipio,h.uf].filter(Boolean).join(", ")}</span></div>
+          <Status tone={tone(h.risco)}>{h.risco}</Status>
+        </div>) : <div className="emptyState">Nenhum bem cultural cadastrado.</div>}
+      </section>
+
+      <aside className="panel">
+        <h2>Próximas inspeções</h2>
+        {inspections.filter((i:any)=>i.proxima_inspecao).slice(0,8).map((i:any)=><div className="inspectionRow" key={i.id}>
+          <b>{new Date(i.proxima_inspecao+"T12:00:00").toLocaleDateString("pt-BR",{day:"2-digit",month:"short"}).toUpperCase()}</b>
+          <div>
+            <strong>{i.categoria}</strong>
+            <span>{i.bens_culturais?.nome||"Bem cultural"}</span>
+          </div>
+          <Status tone={tone(i.estado)}>{i.estado}</Status>
+        </div>)}
+        {!inspections.some((i:any)=>i.proxima_inspecao)&&<div className="emptyState">Nenhuma inspeção futura agendada.</div>}
+      </aside>
+    </div>
+  </main></AppShell>
+}
