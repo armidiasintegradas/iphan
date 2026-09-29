@@ -6,13 +6,21 @@ import { FileText, Star, Clock3 } from "lucide-react";
 import {getCurrentUser} from "@/lib/current-user";
 import {can} from "@/lib/permissions";
 
-export default async function Page(){
-  const [{rows,groups},current]=await Promise.all([getDocumentsOverview(),getCurrentUser()]);
+export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){
+  const q=await searchParams;
+  const filters={contexto:q.contexto||"todos",sistema:q.sistema||"todos",status:q.status||"todos",periodo:q.periodo||"365"};
+  const [{rows,groups},current]=await Promise.all([getDocumentsOverview(filters),getCurrentUser()]);
   const canWrite=can(current.role,"document.write");
 
   return <AppShell active="/documentos"><main className="pageWrap approvedDocs">
     <div className="pageHead"><div><h1>Documentos</h1><p>Organize e acesse documentos do patrimônio cultural.</p></div>{canWrite&&<Link href="/documentos/novo" className="primaryAction">+ Novo documento</Link>}</div>
-    <div className="filterRow docFilters">{[["Contexto","Todos os contextos"],["Sistema","Todos os sistemas"],["Status","Todos os status"],["Data","Últimos 12 meses"]].map(([a,b])=><button key={a}><strong>{a}</strong><span>{b}</span></button>)}</div>
+    <form className="filterRow docFilters realDocFilters" method="get">
+      <label><strong>Contexto</strong><select name="contexto" defaultValue={filters.contexto}><option value="todos">Todos os contextos</option><option>Bem cultural</option><option>Intervenção</option><option>Fiscalização</option><option>Medição</option><option>Decisão</option><option>Conservação</option><option>Outro</option></select></label>
+      <label><strong>Sistema</strong><select name="sistema" defaultValue={filters.sistema}><option value="todos">Todos os sistemas</option><option>Interno</option><option>SEI</option><option>SICG</option><option>Fiscalis</option><option>Transferegov</option><option>Outro</option></select></label>
+      <label><strong>Status</strong><select name="status" defaultValue={filters.status}><option value="todos">Todos os status</option><option value="arquivo">Com arquivo</option><option value="referencia">Somente referência</option></select></label>
+      <label><strong>Data</strong><select name="periodo" defaultValue={filters.periodo}><option value="30">Últimos 30 dias</option><option value="90">Últimos 90 dias</option><option value="365">Últimos 12 meses</option><option value="todos">Todo o período</option></select></label>
+      <button type="submit">Aplicar</button>
+    </form>
 
     <div className="docsGrid approvedDocsGrid">
       <section>
