@@ -58,6 +58,22 @@ export async function getInterventionOptions() {
   }));
 }
 
+export async function getMeasurementOptions() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("medicoes")
+    .select("id,numero,referencia,intervencao_id,intervencoes(titulo)")
+    .in("status", ["rascunho","aberto","aguardando","em_andamento"])
+    .order("created_at", {ascending:false});
+
+  if (error) return [];
+  return (data || []).map((item:any)=>({
+    id:item.id,
+    interventionId:item.intervencao_id,
+    label:`Medição ${item.numero}${item.referencia ? " · "+item.referencia : ""}${item.intervencoes?.titulo ? " — "+item.intervencoes.titulo : ""}`,
+  }));
+}
+
 export async function getInterventionsPortfolio() {
   const supabase = await createClient();
 
