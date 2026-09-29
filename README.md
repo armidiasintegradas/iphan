@@ -46,9 +46,9 @@ As migrations versionadas ficam em `supabase/migrations/`.
 
 A rota `/cadastro` cria o usuário no Supabase Auth.
 
-- o primeiro usuário cadastrado recebe perfil `admin`;
-- os usuários seguintes recebem perfil `consulta`;
-- Administrador/Gestor pode alterar perfis em **Administração → Usuários e permissões**.
+- todo novo usuário cadastrado recebe perfil `consulta`;
+- a promoção inicial para `admin` é feita de forma controlada no Supabase;
+- depois disso, Administrador/Gestor pode alterar perfis em **Administração → Usuários e permissões**.
 
 ## Stack
 
