@@ -48,7 +48,7 @@ export default async function Page(){
         {topNotifications.length ? topNotifications.map((p:any,index:number)=>{
           const Icon=priorityIcons[index%priorityIcons.length];
           return <article className="priorityCard approvedPriority" key={p.id}>
-            <img src={priorityImages[index%priorityImages.length]} alt="" />
+            <div className="priorityApprovedImage" style={{backgroundImage:`url("${priorityImages[index%priorityImages.length].local}"),url("${priorityImages[index%priorityImages.length].fallback}")`}} aria-hidden="true"/>
             <div className="priorityBody">
               <div className={"priorityIcon "+p.tone}><Icon size={14}/></div>
               <div>
