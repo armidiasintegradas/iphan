@@ -353,3 +353,9 @@ body{background:var(--approved-bg)}
 .userStatusActions form{margin:0}
 .approvedUserRow .userDeactivate{background:#fff6f4;color:var(--red);border:1px solid #efc8c2}
 .approvedUserRow .userActivate{background:#f1f8f5;color:var(--green);border:1px solid #b8d9ca}
+
+
+.auditFilters{display:grid;grid-template-columns:minmax(240px,1fr) 220px auto;gap:8px;margin:14px 0}
+.auditFilters input,.auditFilters select{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 11px;font-size:10px;outline:0}
+.auditFilters button{border:0;background:var(--green);color:#fff;border-radius:10px;padding:10px 15px;font-size:10px;font-weight:800}
+@media(max-width:700px){.auditFilters{grid-template-columns:1fr}.auditFilters button{width:100%}}
