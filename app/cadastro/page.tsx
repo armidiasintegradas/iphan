@@ -33,7 +33,7 @@ export default async function Page({
           </label>
           <label>
             Senha
-            <input name="password" type="password" minLength={8} required placeholder="Mínimo de 8 caracteres" />
+            <input name="password" type="password" minLength={12} required placeholder="12+ caracteres, maiúscula, número e símbolo" />
           </label>
           <button type="submit">Criar acesso →</button>
         </form>
