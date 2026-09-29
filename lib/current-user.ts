@@ -63,3 +63,25 @@ export async function getCurrentUser(): Promise<CurrentUser> {
     isDemo:false,
   };
 }
+
+
+export async function getProfiles() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("perfis")
+    .select("id,nome,role,ativo,created_at,updated_at,unidades(nome,uf)")
+    .order("nome");
+
+  if (error) return [];
+
+  return (data || []).map((item:any) => ({
+    id: item.id,
+    name: item.nome,
+    role: item.role as Role,
+    active: item.ativo,
+    unit: item.unidades?.nome || "Unidade não informada",
+    uf: item.unidades?.uf || "",
+    createdAt: item.created_at,
+    updatedAt: item.updated_at,
+  }));
+}
