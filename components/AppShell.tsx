@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Bell, ClipboardCheck, FileText, Home, Landmark, MapPin, Search, ShieldCheck, Sparkles, Wrench, Users } from "lucide-react";
+import { Bell, ClipboardCheck, FileText, Home, Landmark, MapPin, Search, ShieldCheck, Sparkles, Wrench, Users, SlidersHorizontal } from "lucide-react";
 import { nav } from "@/lib/mock";
 import { getCurrentUser } from "@/lib/current-user";
 
-const icons:any = { home:Home, landmark:Landmark, wrench:Wrench, mapPin:MapPin, clipboard:ClipboardCheck, shield:ShieldCheck, file:FileText, sparkles:Sparkles, users:Users };
+const icons:any = { home:Home, landmark:Landmark, wrench:Wrench, mapPin:MapPin, clipboard:ClipboardCheck, shield:ShieldCheck, file:FileText, sparkles:Sparkles, users:Users, sliders:SlidersHorizontal };
 
 export function Brand(){
   return <div className="brandLockup" aria-label="Iphan">
@@ -33,7 +33,7 @@ export default async function AppShell({ children, active }: { children: React.R
       <header className="topHeader">
         <div className="searchBox"><Search size={18}/><span>Buscar bens, intervenções, documentos...</span></div>
         <div className="profile">
-          <button className="iconBtn"><Bell size={19}/><i/></button>
+          <Link href="/notificacoes" className="iconBtn" aria-label="Notificações"><Bell size={19}/><i/></Link>
           <div className="avatar">{initials || "US"}</div>
           <div><strong>{user.name}</strong><span>{user.roleLabel}</span></div>
         </div>
