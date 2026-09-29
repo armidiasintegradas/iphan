@@ -37,6 +37,7 @@ const required=[
   "supabase/migrations/0016_unit_scope_rls_hardening.sql",
   "supabase/migrations/0017_intervention_update_rls.sql",
   "supabase/migrations/0018_complete_audit_triggers.sql",
+  "supabase/migrations/0019_document_storage_unit_scope.sql",
 ];
 
 const guardedRoutes=[
@@ -48,6 +49,7 @@ const guardedRoutes=[
   ["app/controle/decisao/nova/page.tsx","decision.write"],
   ["app/controle/restricao/nova/page.tsx","decision.write"],
   ["app/conservacao/nova/page.tsx","inspection.write"],
+  ["app/documentos/novo/page.tsx","document.write"],
   ["app/intervencoes/[id]/medicoes/nova/page.tsx","measurement.write"],
   ["app/intervencoes/[id]/cronograma/novo/page.tsx","intervention.write"],
   ["app/patrimonio/[id]/editar/page.tsx","heritage.write"],
