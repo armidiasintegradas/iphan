@@ -1,21 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "@/lib/supabase/config";
 
-const publicPaths = ["/login"];
+const publicPaths = ["/login", "/cadastro"];
 
 export async function proxy(request: NextRequest) {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key =
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  // Development/demo mode: keep navigation open until the dedicated
-  // institutional Supabase project is configured.
-  if (!url || !key) return NextResponse.next();
-
   let response = NextResponse.next({ request });
 
-  const supabase = createServerClient(url, key, {
+  const supabase = createServerClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
     cookies: {
       getAll() {
         return request.cookies.getAll();
@@ -34,7 +26,9 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isPublic = publicPaths.some((path) => request.nextUrl.pathname.startsWith(path));
+  const isPublic = publicPaths.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  );
 
   if (!user && !isPublic) {
     const login = request.nextUrl.clone();
@@ -43,7 +37,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(login);
   }
 
-  if (user && request.nextUrl.pathname === "/login") {
+  if (user && (request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/cadastro")) {
     const home = request.nextUrl.clone();
     home.pathname = "/";
     home.search = "";
