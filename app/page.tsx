@@ -1,176 +1,42 @@
-import {
-  AlertTriangle,
-  Bell,
-  Building2,
-  CalendarDays,
-  CheckCircle2,
-  ChevronRight,
-  ClipboardCheck,
-  FileClock,
-  Landmark,
-  Map,
-  Mic,
-  Search,
-  ShieldCheck,
-} from "lucide-react";
+import AppShell from "@/components/AppShell";
+import {Metric,Status} from "@/components/UI";
+import {heritage,priorities} from "@/lib/mock";
+import Link from "next/link";
 
-const attention = [
-  {
-    title: "Decisões técnicas vencidas",
-    detail: "2 decisões aguardam análise há mais de 5 dias.",
-    tone: "critical",
-    icon: FileClock,
-  },
-  {
-    title: "Intervenção com desvio físico",
-    detail: "Execução 64% · Planejado 72% · Desvio −8 p.p.",
-    tone: "warning",
-    icon: AlertTriangle,
-  },
-  {
-    title: "Medição aguardando conferência",
-    detail: "Medição 08 está há 4 dias sem validação.",
-    tone: "neutral",
-    icon: ClipboardCheck,
-  },
-];
+export default function Page(){
+  return <AppShell active="/">
+    <main className="pageWrap">
+      <div className="welcome">
+        <div><h1>Boa tarde, Alex.</h1><p>O patrimônio de Pernambuco em movimento.</p></div>
+        <div className="dateCard"><strong>28</strong><span>SET 2026</span><small>SEGUNDA-FEIRA</small></div>
+      </div>
 
-const metrics = [
-  ["18", "ações acompanhadas"],
-  ["7", "intervenções em execução"],
-  ["3", "decisões pendentes"],
-  ["2", "situações de risco"],
-];
+      <div className="sectionTitle"><h2>Prioridades do dia</h2><Link href="/fiscalizacoes">Ver todas →</Link></div>
+      <section className="priorityGrid">
+        {priorities.map(p=><article className="priorityCard" key={p.title}><img src={p.image}/><div><Status tone={p.tone}>{p.title}</Status><span>{p.meta}</span><b className={p.tone}>{p.note}</b></div></article>)}
+      </section>
 
-const nav = [
-  ["Hoje", CalendarDays],
-  ["Patrimônio", Landmark],
-  ["Intervenções", Building2],
-  ["Campo", ClipboardCheck],
-  ["Controle", ShieldCheck],
-  ["Conservação", CheckCircle2],
-  ["Documentos", FileClock],
-];
+      <section className="metricsRow">
+        <Metric value="42" label="bens acompanhados" detail="+12% vs. mês anterior"/>
+        <Metric value="18" label="intervenções em execução" detail="3 com desvio físico" tone="danger"/>
+        <Metric value="7" label="decisões pendentes" detail="4 vencidas" tone="warning"/>
+        <Metric value="3" label="fiscalizações no prazo" detail="1 crítica | 2 em atenção" tone="danger"/>
+      </section>
 
-export default function Home() {
-  return (
-    <main className="shell">
-      <aside className="sidebar">
-        <div className="brand">
-          <div className="brandMark">I</div>
-          <div>
-            <strong>IPHAN OS</strong>
-            <span>Beta 01 · Pernambuco</span>
-          </div>
+      <section className="homeBottom">
+        <div className="panel">
+          <div className="sectionTitle"><h2>Intervenções em Pernambuco</h2><Link href="/patrimonio">Ver mapa completo →</Link></div>
+          <div className="mapHero compact"><div className="mapPins">{[1,2,3,4,5,6,7].map((n,i)=><i key={n} style={{left:`${14+i*11}%`,top:`${24+(i%3)*20}%`}} className={i===1||i===5?"warning":i===3?"danger":""}>{n}</i>)}</div></div>
         </div>
-
-        <nav className="nav">
-          {nav.map(([label, Icon], index) => (
-            <button className={index === 0 ? "navItem active" : "navItem"} key={label as string}>
-              <Icon size={18} strokeWidth={1.8} />
-              <span>{label as string}</span>
-            </button>
-          ))}
-        </nav>
-
-        <div className="intelligence">
-          <div className="intelligenceIcon"><Mic size={18} /></div>
-          <div>
-            <strong>Intelligence</strong>
-            <span>Pergunte sobre o patrimônio</span>
-          </div>
-        </div>
-      </aside>
-
-      <section className="content">
-        <header className="topbar">
-          <div className="crumb">Superintendência de Pernambuco</div>
-          <div className="topActions">
-            <button className="iconButton" aria-label="Pesquisar"><Search size={19} /></button>
-            <button className="iconButton" aria-label="Notificações"><Bell size={19} /></button>
-            <div className="avatar">AR</div>
-          </div>
-        </header>
-
-        <div className="page">
-          <section className="hero">
-            <p className="eyebrow">HOJE · VISÃO EXECUTIVA</p>
-            <h1>Boa noite.</h1>
-            <p className="subtitle">Há <strong>4 situações</strong> que precisam da sua atenção.</p>
-          </section>
-
-          <section className="metrics">
-            {metrics.map(([value, label]) => (
-              <article className="metric" key={label}>
-                <strong>{value}</strong>
-                <span>{label}</span>
-              </article>
-            ))}
-          </section>
-
-          <section className="grid">
-            <div className="mainColumn">
-              <div className="sectionHeading">
-                <div>
-                  <p className="eyebrow">PRIORIDADES</p>
-                  <h2>Precisa de atenção</h2>
-                </div>
-                <button className="textButton">Ver tudo <ChevronRight size={16} /></button>
-              </div>
-
-              <div className="attentionList">
-                {attention.map(({ title, detail, tone, icon: Icon }) => (
-                  <article className="attentionCard" key={title}>
-                    <div className={`statusIcon ${tone}`}><Icon size={19} /></div>
-                    <div className="attentionText">
-                      <strong>{title}</strong>
-                      <span>{detail}</span>
-                    </div>
-                    <ChevronRight className="chevron" size={18} />
-                  </article>
-                ))}
-              </div>
-            </div>
-
-            <aside className="sideColumn">
-              <div className="mapCard">
-                <div className="cardTitle">
-                  <div>
-                    <p className="eyebrow">TERRITÓRIO</p>
-                    <h3>Pernambuco</h3>
-                  </div>
-                  <Map size={20} />
-                </div>
-                <div className="mapPlaceholder">
-                  <div className="mapDot d1" />
-                  <div className="mapDot d2" />
-                  <div className="mapDot d3" />
-                  <div className="mapDot d4" />
-                  <span>Mapa operacional</span>
-                </div>
-                <div className="mapLegend">
-                  <span><i className="ok" /> Regular</span>
-                  <span><i className="warn" /> Atenção</span>
-                  <span><i className="risk" /> Crítico</span>
-                </div>
-              </div>
-
-              <div className="agendaCard">
-                <p className="eyebrow">AGENDA</p>
-                <h3>Próximas ações</h3>
-                <div className="agendaItem">
-                  <span className="time">09:00</span>
-                  <div><strong>Fiscalização</strong><span>Centro histórico</span></div>
-                </div>
-                <div className="agendaItem">
-                  <span className="time">14:00</span>
-                  <div><strong>Reunião de obra</strong><span>Intervenção em andamento</span></div>
-                </div>
-              </div>
-            </aside>
-          </section>
-        </div>
+        <aside className="panel agenda">
+          <div className="sectionTitle"><h2>Sua agenda</h2><a>Ver agenda completa →</a></div>
+          {[
+            ["09:00","Fiscalização — Igreja Matriz","Olinda, PE"],
+            ["14:00","Reunião de obra","São Bento, Olinda"],
+            ["18:07","Vencimento de decisão","IPHE-PE-2024-017"]
+          ].map(([t,a,b],i)=><div className="agendaRow" key={t}><b>{t}</b><i className={i===2?"danger":""}/><div><strong>{a}</strong><span>{b}</span></div></div>)}
+        </aside>
       </section>
     </main>
-  );
+  </AppShell>
 }
