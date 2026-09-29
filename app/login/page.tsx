@@ -23,8 +23,8 @@ export default async function Page({
         {q.cadastro === "confirmar-email" && <div className="formNotice">Cadastro criado. Confirme o e-mail recebido para concluir o primeiro acesso.</div>}
 
         <form action={signIn}>
-          <label>E-mail institucional<input name="email" type="email" required placeholder="seu.nome@iphan.gov.br" /></label>
-          <label>Senha<input name="password" type="password" required placeholder="••••••••" /></label>
+          <label>E-mail institucional<input name="email" type="email" required placeholder="E-mail institucional" /></label>
+          <label>Senha<input name="password" type="password" required placeholder="Senha" /></label>
           <label className="check"><input type="checkbox" name="remember" /> Manter conectado</label>
           <button type="submit">Entrar →</button>
         </form>
