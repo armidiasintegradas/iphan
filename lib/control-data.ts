@@ -21,14 +21,14 @@ export async function getNotifications(){
   const [decisions,restrictions,measurements,inspections]=await Promise.all([
     supabase.from("decisoes").select("id,titulo,prazo,status").lt("prazo",now).neq("status","concluido").limit(10),
     supabase.from("restricoes").select("id,titulo,prazo,status,risco").neq("status","concluido").order("prazo").limit(10),
-    supabase.from("medicoes").select("id,numero,status,created_at").eq("status","aguardando").limit(10),
+    supabase.from("medicoes").select("id,numero,status,created_at,intervencao_id").eq("status","aguardando").limit(10),
     supabase.from("fiscalizacoes").select("id,titulo,agendada_para,status").gte("agendada_para",now).limit(10),
   ]);
 
   const data:any[]=[];
   (decisions.data||[]).forEach(x=>data.push({id:"d-"+x.id,title:"Decisão técnica vencida",detail:x.titulo,when:"Prazo vencido",tone:"danger",href:"/controle"}));
   (restrictions.data||[]).forEach(x=>data.push({id:"r-"+x.id,title:"Restrição em acompanhamento",detail:x.titulo,when:x.prazo?"Prazo "+new Date(x.prazo).toLocaleDateString("pt-BR"):"Sem prazo",tone:x.risco==="critico"?"danger":"warning",href:"/controle"}));
-  (measurements.data||[]).forEach(x=>data.push({id:"m-"+x.id,title:"Medição aguardando conferência",detail:"Medição "+x.numero,when:"Aguardando análise",tone:"warning",href:"/intervencoes"}));
+  (measurements.data||[]).forEach(x=>data.push({id:"m-"+x.id,title:"Medição aguardando conferência",detail:"Medição "+x.numero,when:"Aguardando análise",tone:"warning",href:x.intervencao_id?"/intervencoes/"+x.intervencao_id+"/medicoes":"/intervencoes"}));
   (inspections.data||[]).forEach(x=>data.push({id:"f-"+x.id,title:"Fiscalização programada",detail:x.titulo,when:x.agendada_para?new Date(x.agendada_para).toLocaleString("pt-BR"):"Programada",tone:"info",href:"/fiscalizacoes"}));
 
   return {data,source:"supabase" as const};
