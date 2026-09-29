@@ -12,7 +12,9 @@ const tone=(r:string)=>r==="critico"?"danger":r==="atencao"?"warning":"regular";
 export default async function Page(){
   const [{decisions,restrictions,source},current]=await Promise.all([getControlData(),getCurrentUser()]);
   const canClose=can(current.role,"decision.write");
-  const critical=decisions.filter(x=>x.risco==="critico").length+restrictions.filter(x=>x.risco==="critico").length;
+  const openDecisions=decisions.filter((x:any)=>x.status!=="concluido"&&x.status!=="cancelado");
+  const openRestrictions=restrictions.filter((x:any)=>x.status!=="concluido"&&x.status!=="cancelado");
+  const critical=openDecisions.filter(x=>x.risco==="critico").length+openRestrictions.filter(x=>x.risco==="critico").length;
   return <AppShell active="/controle"><main className="pageWrap approvedControl">
     <div className="pageHead">
       <div><h1>Controle</h1><p>Decisões, restrições, responsáveis e prazos em um único fluxo.</p></div>
@@ -20,10 +22,10 @@ export default async function Page(){
     </div>
 
     <section className="controlMetricRow">
-      <article><Gavel/><strong>{decisions.length}</strong><span>Decisões abertas</span><small>em análise</small></article>
-      <article><Clock3/><strong>{restrictions.length}</strong><span>Restrições abertas</span><small>impacto operacional</small></article>
+      <article><Gavel/><strong>{openDecisions.length}</strong><span>Decisões abertas</span><small>em análise</small></article>
+      <article><Clock3/><strong>{openRestrictions.length}</strong><span>Restrições abertas</span><small>impacto operacional</small></article>
       <article><AlertTriangle/><strong>{critical}</strong><span>Itens críticos</span><small className={critical?"dangerText":""}>ação prioritária</small></article>
-      <article><SlidersHorizontal/><strong>{decisions.length+restrictions.length}</strong><span>Total em controle</span><small>visão consolidada</small></article>
+      <article><SlidersHorizontal/><strong>{openDecisions.length+openRestrictions.length}</strong><span>Total em controle</span><small>visão consolidada</small></article>
     </section>
 
     <div className="controlTabs"><button className="active">Todos</button><button>Decisões</button><button>Restrições</button><button>Vencidos</button></div>
