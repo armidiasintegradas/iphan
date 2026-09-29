@@ -1,12 +1,14 @@
 import AppShell from "@/components/AppShell";
 import FormNotice from "@/components/FormNotice";
 import {createMeasurement} from "@/app/intervencoes/actions";
+import {requirePermission} from "@/lib/authorization";
 
 export default async function Page({
   params,
   searchParams,
 }:{params:Promise<{id:string}>;searchParams:Promise<Record<string,string|undefined>>}){
   const {id}=await params; const q=await searchParams;
+  await requirePermission("measurement.write","/intervencoes");
   return <AppShell active="/intervencoes"><main className="pageWrap formPage">
     <div className="pageHead"><div><small>Intervenção / Medições</small><h1>Nova medição</h1><p>Registre a medição física e financeira para conferência.</p></div></div>
     <FormNotice demo={q.demo} error={q.erro}/>
