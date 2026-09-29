@@ -221,3 +221,65 @@ body{background:var(--approved-bg)}
 .tabAction{margin-left:auto;display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:10px;font-weight:700;text-decoration:none}
 .headActions form{margin:0}
 .successAction{border-color:#b8d9ca!important;color:var(--green)!important;background:#f1f8f5!important}
+
+
+/* ===== Final responsive operational safeguards ===== */
+@media(max-width:760px){
+  .measurementHead.withActions{display:none}
+  .measurementRow{
+    grid-template-columns:1fr auto!important;
+    gap:10px;
+    align-items:start;
+    padding:13px;
+  }
+  .measurementRow>.measurementNumber{grid-column:1;grid-row:1}
+  .measurementRow>div:nth-child(2){grid-column:1/3}
+  .measurementRow>span:not(.status){grid-column:1}
+  .measurementRow>.status{grid-column:2;grid-row:1;justify-self:end}
+  .measurementRow>.rowActions{grid-column:1/3;padding-top:4px}
+  .measurementRow>.rowActions form{flex:1}
+  .measurementRow>.rowActions .rowAction{width:100%}
+
+  .controlTableHead.withActions{display:none}
+  .controlTableRow{
+    grid-template-columns:1fr auto!important;
+    gap:9px;
+    align-items:start;
+  }
+  .controlTableRow>div:first-of-type{grid-column:1}
+  .controlTableRow>.status{grid-column:2;grid-row:1;justify-self:end}
+  .controlTableRow>.rowActions{grid-column:1/3}
+  .controlTableRow>.rowActions .rowAction{width:100%}
+
+  .approvedDataTable .tr:not(.head),
+  .dataTable .tr.fiscalWithActions{
+    grid-template-columns:1fr auto!important;
+    gap:9px;
+    align-items:start;
+    padding:13px;
+  }
+  .approvedDataTable .tr:not(.head)>span:nth-child(2){grid-column:1}
+  .approvedDataTable .tr:not(.head)>span:nth-last-child(2){grid-column:2;grid-row:1}
+  .approvedDataTable .tr:not(.head)>span:last-child{grid-column:1/3}
+  .approvedDataTable .tr:not(.head)>span:last-child form{width:100%}
+  .approvedDataTable .tr:not(.head)>span:last-child .rowAction{width:100%}
+
+  .interventionHead{align-items:flex-start}
+  .interventionHead .headActions{width:100%;display:flex;flex-wrap:wrap;gap:7px}
+  .interventionHead .headActions>a,
+  .interventionHead .headActions>form,
+  .interventionHead .headActions>.secondaryAction{flex:1 1 calc(50% - 7px)}
+  .interventionHead .headActions form .secondaryAction{width:100%}
+  .tabs.approvedTabs{overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+  .tabs.approvedTabs .tabAction{margin-left:0}
+}
+
+@media(max-width:480px){
+  .portfolioMetrics,.scheduleMetrics,.measurementMetrics,.notificationMetrics{grid-template-columns:1fr}
+  .pageHead{gap:10px}
+  .pageHead>.primaryAction{width:100%;justify-content:center}
+  .formGrid{grid-template-columns:1fr}
+  .formGrid .span2{grid-column:auto}
+  .formActions{flex-direction:column-reverse;align-items:stretch}
+  .formActions>a,.formActions>button{text-align:center;width:100%}
+}
