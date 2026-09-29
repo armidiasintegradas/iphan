@@ -7,10 +7,10 @@ import Link from "next/link";
 import { AlertCircle, CalendarClock, ClipboardCheck, SearchCheck } from "lucide-react";
 
 const priorityImages=[
-  "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
+  {local:"/visual/priority-decisao.webp",fallback:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80"},
+  {local:"/visual/priority-intervencao.webp",fallback:"https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80"},
+  {local:"/visual/priority-medicao.webp",fallback:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80"},
+  {local:"/visual/priority-fiscalizacao.webp",fallback:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"}
 ];
 
 const priorityIcons=[AlertCircle,CalendarClock,ClipboardCheck,SearchCheck];
