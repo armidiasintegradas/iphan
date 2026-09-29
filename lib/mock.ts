@@ -24,4 +24,5 @@ export const nav = [
   { href:"/conservacao", label:"Conservação", icon:"shield" },
   { href:"/documentos", label:"Documentos", icon:"file" },
   { href:"/inteligencia", label:"Inteligência", icon:"sparkles" },
+  { href:"/administracao/usuarios", label:"Administração", icon:"users" },
 ];
