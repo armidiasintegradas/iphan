@@ -1,4 +1,5 @@
 import AppShell from "@/components/AppShell";
+import HeritageMap from "@/components/HeritageMap";
 import {Metric,Status} from "@/components/UI";
 import {heritage,priorities} from "@/lib/mock";
 import Link from "next/link";
@@ -26,7 +27,7 @@ export default function Page(){
       <section className="homeBottom">
         <div className="panel">
           <div className="sectionTitle"><h2>Intervenções em Pernambuco</h2><Link href="/patrimonio">Ver mapa completo →</Link></div>
-          <div className="mapHero compact"><div className="mapPins">{[1,2,3,4,5,6,7].map((n,i)=><i key={n} style={{left:`${14+i*11}%`,top:`${24+(i%3)*20}%`}} className={i===1||i===5?"warning":i===3?"danger":""}>{n}</i>)}</div></div>
+          <HeritageMap points={heritage} compact />
         </div>
         <aside className="panel agenda">
           <div className="sectionTitle"><h2>Sua agenda</h2><a>Ver agenda completa →</a></div>
