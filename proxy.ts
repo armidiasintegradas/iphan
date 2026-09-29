@@ -8,7 +8,7 @@ type CookieToSet = {
   options: CookieOptions;
 };
 
-const publicPaths = ["/login", "/cadastro", "/recuperar-senha", "/redefinir-senha", "/auth/callback", "/api/health"];
+const publicPaths = ["/login", "/cadastro", "/recuperar-senha", "/redefinir-senha", "/auth/callback", "/api/health", "/preview"];
 
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
