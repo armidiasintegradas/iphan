@@ -68,14 +68,14 @@ Todos os builds dessa fase concluíram com sucesso.
 ## Binários já presentes no GitHub
 
 - [x] `public/brand/iphan-lucio-costa.webp` — marca oficial aprovada, usada sem fallback visual
-- [x] `public/visual/priority-decisao.webp`
+- [x] `public/visual/priority-decisao.webp`\n- [x] `public/visual/field-thumb-01.webp`\n- [x] `public/visual/field-thumb-02.webp`\n- [x] `public/visual/field-thumb-03.webp`
 - [x] `public/visual/field-thumb-01.webp`
 - [x] `public/visual/field-thumb-02.webp`
 - [x] `public/visual/field-thumb-03.webp`
 
 ## Binários preparados a partir das referências aprovadas
 
-Os seguintes ativos já foram extraídos das referências aprovadas e estão prontos para publicação no repositório:
+Os seguintes ativos já foram extraídos das referências aprovadas; os três recortes de Campo já estão publicados e os demais seguem prontos para publicação:
 
 - [x] login hero
 - [x] quatro imagens de prioridades
