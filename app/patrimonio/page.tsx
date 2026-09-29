@@ -12,9 +12,30 @@ function tone(risk:string){
   return "regular";
 }
 
-export default async function Page(){
+export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){
+  const q=await searchParams;
   const result=await getHeritage();
-  const heritage=result.data;
+  const all=result.data;
+  const search=(q.q||"").trim().toLowerCase();
+  const municipality=q.municipio||"todos";
+  const type=q.tipologia||"todos";
+  const protection=q.protecao||"todos";
+  const conservation=q.conservacao||"todos";
+  const intervention=q.intervencao||"todos";
+  const risk=q.risco||"todos";
+  const heritage=all.filter((h:any)=>{
+    if(search && ![h.name,h.city,h.type,h.protection].join(" ").toLowerCase().includes(search)) return false;
+    if(municipality!=="todos" && h.municipality!==municipality) return false;
+    if(type!=="todos" && h.type!==type) return false;
+    if(protection!=="todos" && h.protection!==protection) return false;
+    if(conservation!=="todos" && h.risk!==conservation) return false;
+    if(risk!=="todos" && h.risk!==risk) return false;
+    if(intervention!=="todos" && !h.interventionStatuses.includes(intervention)) return false;
+    return true;
+  });
+  const municipalities=[...new Set(all.map((h:any)=>h.municipality).filter(Boolean))].sort();
+  const types=[...new Set(all.map((h:any)=>h.type).filter(Boolean))].sort();
+  const protections=[...new Set(all.map((h:any)=>h.protection).filter(Boolean))].sort();
   const mapPoints=heritage.filter((h:any)=>h.lat!==null&&h.lng!==null).map((h:any)=>({...h,lat:Number(h.lat),lng:Number(h.lng)}));
 
   return <AppShell active="/patrimonio"><main className="pageWrap approvedPatrimonio">
@@ -23,21 +44,21 @@ export default async function Page(){
       <div className="headActions"><DemoBadge source={result.source}/></div>
     </div>
 
-    <div className="heritageSearchBar">
-      <input aria-label="Buscar patrimônio" placeholder="Buscar bem, cidade, tipologia, projeto..." />
-    </div>
+    <form method="get" className="heritageFilterForm">
+      <div className="heritageSearchBar">
+        <input name="q" defaultValue={q.q||""} aria-label="Buscar patrimônio" placeholder="Buscar bem, cidade, tipologia, projeto..." />
+      </div>
 
-    <div className="filterRow approvedFilters">
-      {[
-        ["Município","Todos os municípios"],
-        ["Tipologia","Todas as tipologias"],
-        ["Nível de proteção","Todos os níveis"],
-        ["Estado de conservação","Todos os estados"],
-        ["Intervenção","Todos os status"],
-        ["Risco","Todos os níveis"],
-      ].map(([title,value])=><button key={title}><strong>{title}</strong><span>{value}</span></button>)}
-      <button className="filterAction"><SlidersHorizontal size={16}/><strong>Filtros</strong></button>
-    </div>
+      <div className="filterRow approvedFilters realHeritageFilters">
+        <label><strong>Município</strong><select name="municipio" defaultValue={municipality}><option value="todos">Todos os municípios</option>{municipalities.map(v=><option key={v} value={v}>{v}</option>)}</select></label>
+        <label><strong>Tipologia</strong><select name="tipologia" defaultValue={type}><option value="todos">Todas as tipologias</option>{types.map(v=><option key={v} value={v}>{v}</option>)}</select></label>
+        <label><strong>Nível de proteção</strong><select name="protecao" defaultValue={protection}><option value="todos">Todos os níveis</option>{protections.map(v=><option key={v} value={v}>{v}</option>)}</select></label>
+        <label><strong>Estado de conservação</strong><select name="conservacao" defaultValue={conservation}><option value="todos">Todos os estados</option><option value="regular">Regular</option><option value="atencao">Atenção</option><option value="risco">Risco</option><option value="critico">Crítico</option></select></label>
+        <label><strong>Intervenção</strong><select name="intervencao" defaultValue={intervention}><option value="todos">Todos os status</option><option value="em_andamento">Em execução</option><option value="aguardando">Aguardando</option><option value="concluido">Concluída</option></select></label>
+        <label><strong>Risco</strong><select name="risco" defaultValue={risk}><option value="todos">Todos os níveis</option><option value="regular">Regular</option><option value="atencao">Atenção</option><option value="risco">Risco</option><option value="critico">Crítico</option></select></label>
+        <button type="submit" className="filterAction"><SlidersHorizontal size={16}/><strong>Aplicar</strong></button>
+      </div>
+    </form>
 
     <section className="mapList approvedMapList">
       <div className="approvedMapWrap">
