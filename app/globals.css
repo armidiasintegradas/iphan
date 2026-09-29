@@ -359,3 +359,84 @@ body{background:var(--approved-bg)}
 .auditFilters input,.auditFilters select{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 11px;font-size:10px;outline:0}
 .auditFilters button{border:0;background:var(--green);color:#fff;border-radius:10px;padding:10px 15px;font-size:10px;font-weight:800}
 @media(max-width:700px){.auditFilters{grid-template-columns:1fr}.auditFilters button{width:100%}}
+
+
+/* ===== Layout refinement phase — Home v1 ===== */
+@media(min-width:1051px){
+  .appShell{grid-template-columns:224px minmax(0,1fr)}
+  .sidebar{padding:22px 18px 20px}
+  .iphanBrand{height:44px;max-width:188px;margin:0 0 24px 1px}
+  .sideNav{gap:4px}
+  .sideLink{min-height:40px;padding:10px 12px;border-radius:9px;font-size:12.5px;gap:11px}
+  .sideLink svg{width:16px;height:16px;stroke-width:1.7}
+  .sidebarArt{min-height:224px}
+  .sidebarPhoto{height:158px;bottom:58px}
+  .sidebarArt strong{font-size:17px}
+  .sidebarArt span{font-size:11px;line-height:1.45}
+
+  .topHeader{height:70px;padding:0 28px}
+  .searchBox{width:min(46vw,590px);padding:11px 14px;border-radius:9px;font-size:12px}
+  .avatar{width:34px;height:34px;font-size:10px}
+  .profile strong{font-size:12px}
+  .profile span{font-size:9.5px}
+  .iconBtn{width:32px;height:32px}
+  .logoutBtn{width:30px;height:30px}
+}
+
+.approvedHome{max-width:1180px;padding-top:20px}
+.approvedHome .welcome{margin-bottom:18px;align-items:flex-start}
+.approvedHome .welcome h1{font-size:40px;line-height:1.02;letter-spacing:-.025em}
+.approvedHome .welcome p{font-size:14px;margin-top:5px;color:#707773}
+.approvedHome .dateCard{width:72px;border-radius:11px;padding:8px 7px}
+.approvedHome .dateCard strong{font-size:28px;line-height:1}
+.approvedHome .dateCard span{font-size:9px;margin-top:3px}
+.approvedHome .dateCard small{font-size:7px;margin-top:2px;letter-spacing:.03em}
+
+.approvedHome .priorityHeading{margin-bottom:8px}
+.approvedHome .priorityHeading h2{font-size:10px;letter-spacing:.07em}
+.approvedHome .priorityHeading a{font-size:10px}
+.approvedHome .approvedPriorities{gap:9px}
+.approvedHome .approvedPriority{border-radius:10px;box-shadow:0 4px 14px rgba(27,41,34,.03)}
+.approvedHome .priorityApprovedImage{height:100px}
+.approvedHome .priorityBody{grid-template-columns:21px 1fr;gap:8px;padding:9px 10px 10px!important}
+.approvedHome .priorityIcon{width:19px;height:19px}
+.approvedHome .priorityIcon svg{width:11px;height:11px}
+.approvedHome .priorityBody strong{font-size:11px;line-height:1.2}
+.approvedHome .priorityBody span{font-size:9px!important;margin:4px 0!important;line-height:1.25}
+.approvedHome .priorityBody b{font-size:9.5px!important}
+
+.approvedHome .approvedMetrics{margin:11px 0 14px;border-radius:10px}
+.approvedHome .approvedMetrics article{padding:12px 15px}
+.approvedHome .approvedMetrics strong{font-size:26px}
+.approvedHome .approvedMetrics span{font-size:10px;margin-top:3px}
+.approvedHome .approvedMetrics small{font-size:8.5px;margin-top:5px}
+
+.approvedHome .approvedBottom{grid-template-columns:minmax(0,1.72fr) minmax(260px,.78fr);gap:10px}
+.approvedHome .mapPanel,
+.approvedHome .approvedAgenda{padding:11px;border-radius:10px}
+.approvedHome .mapPanel .sectionTitle,
+.approvedHome .approvedAgenda .sectionTitle{margin:0 0 8px}
+.approvedHome .mapPanel .sectionTitle h2,
+.approvedHome .approvedAgenda .sectionTitle h2{font-size:17px}
+.approvedHome .sectionTitle a{font-size:9.5px}
+.approvedHome .mapPanel .realMap.compact{min-height:225px;border-radius:9px}
+.approvedHome .approvedAgenda .agendaRow{grid-template-columns:43px 8px 1fr;gap:7px;padding:10px 0}
+.approvedHome .approvedAgenda .agendaRow>b{font-size:9px}
+.approvedHome .approvedAgenda .agendaRow>i{width:6px;height:6px}
+.approvedHome .approvedAgenda .agendaRow strong{font-size:10.5px;line-height:1.25}
+.approvedHome .approvedAgenda .agendaRow span{font-size:8.5px;line-height:1.3}
+
+@media(max-width:1050px){
+  .approvedHome{max-width:100%}
+  .approvedHome .priorityApprovedImage{height:118px}
+}
+@media(max-width:700px){
+  .approvedHome{padding-top:18px}
+  .approvedHome .welcome h1{font-size:31px}
+  .approvedHome .welcome p{font-size:12px}
+  .approvedHome .dateCard{width:64px}
+  .approvedHome .priorityApprovedImage{height:132px}
+  .approvedHome .approvedMetrics{grid-template-columns:1fr 1fr}
+  .approvedHome .approvedMetrics article{padding:12px}
+  .approvedHome .approvedBottom{grid-template-columns:1fr}
+}
