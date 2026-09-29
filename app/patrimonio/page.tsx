@@ -45,8 +45,8 @@ export default async function Page(){
       </div>
       <div className="heritageList approvedHeritageList">
         <div className="listHeader"><h3>{heritage.length} bens culturais</h3><span>Mais relevantes</span></div>
-        {heritage.length ? heritage.slice(0,5).map((h:any)=><Link href={"/patrimonio/"+h.id} key={h.id} className="miniAsset">
-          <img src={h.image} alt="" />
+        {heritage.length ? heritage.slice(0,5).map((h:any,index:number)=><Link href={"/patrimonio/"+h.id} key={h.id} className="miniAsset">
+          <span className="approvedHeritageThumb" style={{backgroundImage:`url("/visual/heritage-thumb-${String((index%4)+1).padStart(2,"0")}.webp"),url("${h.image}")`}} aria-hidden="true"/>
           <div><strong>{h.name}</strong><span>{h.city} · {h.type}</span><Status tone={tone(h.risk)}>{h.status}</Status></div>
           <MoreHorizontal size={16}/>
         </Link>) : <div className="emptyState">Nenhum bem cultural cadastrado.</div>}
@@ -58,8 +58,8 @@ export default async function Page(){
       <div className="viewActions"><span>Ordenar por</span><button>Mais relevantes</button><button className="active"><Grid2X2 size={16}/></button><button><List size={16}/></button></div>
     </div>
 
-    {heritage.length ? <div className="assetGrid approvedAssetGrid">{heritage.map((h:any)=><article className="assetCard approvedAssetCard" key={h.id}>
-      <Link href={"/patrimonio/"+h.id}><img src={h.image} alt="" /></Link>
+    {heritage.length ? <div className="assetGrid approvedAssetGrid">{heritage.map((h:any,index:number)=><article className="assetCard approvedAssetCard" key={h.id}>
+      <Link href={"/patrimonio/"+h.id} className="approvedAssetVisual"><span style={{backgroundImage:`url("/visual/heritage-thumb-${String((index%4)+1).padStart(2,"0")}.webp"),url("${h.image}")`}} aria-hidden="true"/></Link>
       <div>
         <h3>{h.name}</h3>
         <p>{h.city}</p>
