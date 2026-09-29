@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { Camera, CheckCircle2, FileText, Mic, ChevronRight, Home, MapPin, MoreHorizontal, Wifi } from "lucide-react";
 import { getFieldOverview } from "@/lib/overview-data";
+import { getInterventionsPortfolio } from "@/lib/data";
 
 export default async function Page() {
-  const {rows}=await getFieldOverview();
+  const [{rows},portfolio]=await Promise.all([getFieldOverview(),getInterventionsPortfolio()]);
+  const active=portfolio.data.find((item:any)=>item.status==="em_andamento") || portfolio.data[0] || null;
 
   return (
     <main className="mobileApp approvedFieldApp">
@@ -15,8 +17,13 @@ export default async function Page() {
 
       <section className="fieldHero">
         <p>CAMPO</p>
-        <h1>Registrar em campo</h1>
-        <span>Registro técnico rápido, direto e contextual.</span>
+        <div className="fieldAssetContext">
+          <div>
+            <h1>{active?.heritageName || "Registro em campo"}</h1>
+            <span>{active?.city || "Selecione uma intervenção ativa"}</span>
+          </div>
+          {active&&<b className="fieldStatus">Em execução</b>}
+        </div>
       </section>
 
       <section className="quickGrid approvedQuickGrid">
@@ -42,9 +49,9 @@ export default async function Page() {
       </section>
 
       <nav className="bottomNav approvedBottomNav">
-        <Link href="/"><Home/><span>Início</span></Link>
-        <Link className="active" href="/campo"><MapPin/><span>Campo</span></Link>
-        <Link href="/documentos"><FileText/><span>Registros</span></Link>
+        <Link className="active" href="/"><Home/><span>Início</span></Link>
+        <Link href="/campo/ocorrencia"><MapPin/><span>Ocorrências</span></Link>
+        <Link href="/campo/evidencia"><FileText/><span>Evidências</span></Link>
         <Link href="/inteligencia"><MoreHorizontal/><span>Mais</span></Link>
       </nav>
     </main>
