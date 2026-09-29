@@ -40,9 +40,9 @@ export default async function Page({
 
         <Link href="/login">Já tenho acesso</Link>
         <div className="loginQuote">
-          O primeiro usuário cadastrado
+          Novos usuários entram como Consulta.
           <br />
-          será o administrador inicial.
+          A liberação de perfil é feita pela gestão.
         </div>
       </section>
     </main>
