@@ -67,3 +67,7 @@ O código principal está conectado ao backend real. Dados demonstrativos estão
 A publicação web ainda precisa de um ambiente que execute Next.js com rotas de servidor e Server Actions. GitHub Pages sozinho não executa essa arquitetura.
 
 > A marca oficial do Iphan deve ser usada somente com o arquivo institucional aprovado. O componente visual temporário do projeto não deve ser tratado como marca oficial.
+
+## Publicação
+
+O ambiente de produção é acionado pela branch `main` conectada à Vercel.
