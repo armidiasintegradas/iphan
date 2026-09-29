@@ -36,6 +36,21 @@ const required=[
   "supabase/migrations/0016_unit_scope_rls_hardening.sql",
 ];
 
+const guardedRoutes=[
+  ["app/patrimonio/novo/page.tsx","heritage.write"],
+  ["app/intervencoes/nova/page.tsx","intervention.write"],
+  ["app/campo/ocorrencia/page.tsx","field.write"],
+  ["app/campo/evidencia/page.tsx","evidence.write"],
+  ["app/fiscalizacoes/nova/page.tsx","inspection.write"],
+  ["app/controle/decisao/nova/page.tsx","decision.write"],
+  ["app/controle/restricao/nova/page.tsx","decision.write"],
+  ["app/conservacao/nova/page.tsx","inspection.write"],
+  ["app/intervencoes/[id]/medicoes/nova/page.tsx","measurement.write"],
+  ["app/intervencoes/[id]/cronograma/novo/page.tsx","intervention.write"],
+  ["app/patrimonio/[id]/editar/page.tsx","heritage.write"],
+  ["app/intervencoes/[id]/editar/page.tsx","intervention.write"],
+];
+
 const missing=required.filter(file=>!fs.existsSync(path.join(process.cwd(),file)));
 if(missing.length){
   console.error("Beta verification failed: missing required files:");
@@ -66,10 +81,23 @@ function scan(dir){
 }
 roots.filter(fs.existsSync).forEach(scan);
 
+const guardViolations=[];
+for(const [file,permission] of guardedRoutes){
+  const source=fs.readFileSync(path.join(process.cwd(),file),"utf8");
+  if(!source.includes('requirePermission("'+permission+'"')){
+    guardViolations.push(file+" -> "+permission);
+  }
+}
+if(guardViolations.length){
+  console.error("Beta verification failed: route permission guard missing:");
+  guardViolations.forEach(item=>console.error(" - "+item));
+  process.exit(1);
+}
+
 if(violations.length){
   console.error("Beta verification failed: prohibited visual fallback found:");
   violations.forEach(item=>console.error(" - "+item));
   process.exit(1);
 }
 
-console.log(`Beta verification passed: ${required.length} required artifacts/routes present and no prohibited external visual fallback found.`);
+console.log(`Beta verification passed: ${required.length} required artifacts/routes, ${guardedRoutes.length} protected write routes, and no prohibited external visual fallback found.`);
