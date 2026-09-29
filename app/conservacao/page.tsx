@@ -13,7 +13,7 @@ export default async function Page(){
   const {heritage,inspections,metrics}=await getConservationOverview();
   const total=Math.max(1,heritage.length);
   return <AppShell active="/conservacao"><main className="pageWrap approvedConservation">
-    <div className="pageHead"><div><h1>Conservação</h1><p>Acompanhamento preventivo dos bens culturais.</p></div></div>
+    <div className="pageHead"><div><h1>Conservação</h1><p>Acompanhamento preventivo dos bens culturais.</p></div><Link href="/conservacao/nova" className="primaryAction">+ Nova inspeção</Link></div>
 
     <section className="conservationMetrics">
       <article className="regular"><i/><strong>{metrics.regular}</strong><span>Regular</span><small>{Math.round(metrics.regular/total*100)}% do total</small></article>
