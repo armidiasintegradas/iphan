@@ -38,6 +38,7 @@ const required=[
   "supabase/migrations/0017_intervention_update_rls.sql",
   "supabase/migrations/0018_complete_audit_triggers.sql",
   "supabase/migrations/0019_document_storage_unit_scope.sql",
+  "supabase/migrations/0020_occurrence_read_scope.sql",
 ];
 
 const guardedRoutes=[
