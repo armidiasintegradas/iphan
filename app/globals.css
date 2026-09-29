@@ -1172,3 +1172,48 @@ body{background:var(--approved-bg)}
   .approvedLogin .approvedLoginSubmit{height:56px;font-size:16px}
   .approvedLogin .approvedLoginQuote{font-size:20px}
 }
+
+
+/* ===== Visual preview workspace ===== */
+.previewIndex{min-height:100vh;background:#f5f5f2;padding:54px;display:flex;flex-direction:column}
+.previewIndexHead{max-width:760px}
+.previewEyebrow{font-size:9px;letter-spacing:.12em;color:var(--green);font-weight:800}
+.previewIndexHead h1{font:500 56px/1 Georgia,'Times New Roman',serif;margin:10px 0 12px;letter-spacing:-.035em}
+.previewIndexHead p{font-size:14px;color:#68716c;line-height:1.5}
+.previewScreenGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:34px}
+.previewScreenCard{display:flex;flex-direction:column;min-height:170px;padding:18px;border:1px solid var(--line);border-radius:12px;background:#fff;color:inherit;text-decoration:none}
+.previewScreenCard>span{font-size:8px;color:#8a918d}
+.previewScreenCard strong{font:500 24px/1.15 Georgia,'Times New Roman',serif;margin-top:20px}
+.previewScreenCard small{font-size:9px;color:var(--muted);margin-top:7px}
+.previewScreenCard b{font-size:9px;color:var(--green);margin-top:auto}
+.previewHowTo{display:flex;gap:9px;align-items:center;margin-top:28px;font-size:10px;color:#656e69}
+.previewHowTo code{background:#e9ece9;padding:7px 9px;border-radius:7px}
+
+.previewShell{min-height:100vh;display:grid;grid-template-columns:210px minmax(0,1fr);background:#f5f5f2}
+.previewSidebar{background:#fff;border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column}
+.previewBrand{display:block;height:42px;margin:0 4px 22px}
+.previewBrand span{display:block;width:100%;height:100%;background:url('/brand/iphan-lucio-costa.webp') left center/contain no-repeat}
+.previewSidebar nav{display:flex;flex-direction:column;gap:4px}
+.previewSidebar nav a{display:flex;align-items:center;gap:9px;min-height:38px;padding:9px 10px;border-radius:8px;color:#59635e;text-decoration:none;font-size:10.5px}
+.previewSidebar nav a svg{width:15px;height:15px}
+.previewSidebar nav a.active{background:#e7f1ec;color:var(--green);font-weight:700}
+.previewModeBadge{margin-top:auto;border:1px solid #cfe1d9;background:#f1f8f5;color:var(--green);border-radius:8px;padding:8px;text-align:center;font-size:8px;font-weight:800;letter-spacing:.08em}
+.previewMain{min-width:0}
+.previewHeader{height:54px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:9px;color:#79807c}
+.previewHeader a{color:var(--green);text-decoration:none;font-weight:700}
+.previewStaticPage{position:relative}
+.previewMapCanvas{position:relative;min-height:225px;border-radius:9px;background:linear-gradient(145deg,#eef2ee,#dde6df);overflow:hidden}
+.previewMapShape{position:absolute;inset:22px 80px;display:grid;place-items:center;border:1px solid rgba(0,115,80,.14);border-radius:48% 52% 42% 58% / 55% 43% 57% 45%;font:600 56px/1 Georgia;color:rgba(0,115,80,.12)}
+.previewMapCanvas i{position:absolute;width:10px;height:10px;border-radius:50%;background:#007350;box-shadow:0 0 0 5px rgba(0,115,80,.12)}
+.previewFloatingBack,.previewBack{position:fixed;right:18px;bottom:18px;z-index:20;background:#173f33;color:#fff;text-decoration:none;border-radius:999px;padding:9px 12px;font-size:9px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.previewLogin .approvedLoginField input{cursor:default}
+@media(max-width:900px){
+  .previewScreenGrid{grid-template-columns:1fr 1fr}
+  .previewShell{grid-template-columns:1fr}
+  .previewSidebar{display:none}
+}
+@media(max-width:600px){
+  .previewIndex{padding:28px 18px}
+  .previewIndexHead h1{font-size:40px}
+  .previewScreenGrid{grid-template-columns:1fr}
+}
