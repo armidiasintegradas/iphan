@@ -31,7 +31,7 @@ export default async function AppShell({ children, active }: { children: React.R
     </aside>
     <div className="mainArea">
       <header className="topHeader">
-        <div className="searchBox"><Search size={18}/><span>Buscar bens, intervenções, documentos...</span></div>
+        <form className="searchBox" action="/buscar" method="get"><Search size={18}/><input name="q" type="search" minLength={2} aria-label="Buscar no sistema" placeholder="Buscar bens, intervenções, documentos..."/><button type="submit" aria-label="Buscar">Buscar</button></form>
         <div className="profile">
           <Link href="/notificacoes" className="iconBtn" aria-label="Notificações"><Bell size={20}/><i/></Link>
           <div className="avatar">{initials || "US"}</div>
