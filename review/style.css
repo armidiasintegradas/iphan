@@ -12,9 +12,13 @@ body{background:#f3f4f1}
 .login-review{min-height:100vh;display:grid;grid-template-columns:58.5% 41.5%;background:#fff;overflow:hidden;position:relative}
 .login-photo{
   min-height:100vh;
-  background:
-    url("assets/heritage-hero.webp") center center/cover no-repeat,
-    #dfe5e1;
+  background:#dfe5e1 center center/cover no-repeat;
+  transition:opacity .15s ease;
+}
+.login-photo.is-loaded{
+  background-position:center center;
+  background-size:cover;
+  background-repeat:no-repeat;
 }
 .login-panel{position:relative;min-height:100vh;background:var(--paper);overflow:hidden}
 .login-inner{
