@@ -2,16 +2,18 @@ import AppShell from "@/components/AppShell";
 import FormNotice from "@/components/FormNotice";
 import { createIntervention } from "@/app/actions";
 import { getHeritageOptions } from "@/lib/data";
+import { Wrench, Landmark } from "lucide-react";
 
 export default async function Page({ searchParams }: { searchParams: Promise<Record<string,string|undefined>> }) {
   const q = await searchParams;
   const heritage = await getHeritageOptions();
 
-  return <AppShell active="/intervencoes"><main className="pageWrap formPage">
+  return <AppShell active="/intervencoes"><main className="pageWrap formPage approvedDesktopFormPage">
     <div className="pageHead"><div><small>Intervenções / Nova</small><h1>Nova intervenção</h1><p>Crie uma intervenção vinculada a um bem cultural.</p></div></div>
     <FormNotice demo={q.demo} error={q.erro}/>
     {!heritage.length && <div className="formNotice">Cadastre primeiro um bem cultural para criar uma intervenção.</div>}
-    <form action={createIntervention} className="panel formGrid">
+    <div className="formContextStrip"><Wrench/><div><strong>Nova ação de preservação</strong><span>A intervenção ficará vinculada ao prontuário do bem e aos fluxos de campo, controle e medição.</span></div><Landmark/></div>
+    <form action={createIntervention} className="panel formGrid approvedFormGrid">
       <label className="span2">Bem cultural<select name="bem_id" required defaultValue=""><option value="" disabled>Selecione um bem cultural</option>{heritage.map(h=><option key={h.id} value={h.id}>{h.label}</option>)}</select></label>
       <label className="span2">Título<input name="titulo" required placeholder="Ex.: Restauração da cobertura e fachadas"/></label>
       <label>Início previsto<input type="date" name="inicio_previsto"/></label>
