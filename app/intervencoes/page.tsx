@@ -14,13 +14,16 @@ function label(status:string){
   return map[status]||status;
 }
 
-export default async function Page(){
+export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){
+  const q=await searchParams;
   const result=await getInterventionsPortfolio();
-  const rows=result.data;
-  const running=rows.filter((x:any)=>x.status==="em_andamento").length;
-  const delayed=rows.filter((x:any)=>x.actual<x.planned).length;
-  const risks=rows.filter((x:any)=>x.risk==="risco"||x.risk==="critico").length;
-  const completed=rows.filter((x:any)=>x.status==="concluido").length;
+  const allRows=result.data;
+  const status=q.status||"todas";
+  const rows=status==="todas" ? allRows : allRows.filter((x:any)=>x.status===status);
+  const running=allRows.filter((x:any)=>x.status==="em_andamento").length;
+  const delayed=allRows.filter((x:any)=>x.actual<x.planned).length;
+  const risks=allRows.filter((x:any)=>x.risk==="risco"||x.risk==="critico").length;
+  const completed=allRows.filter((x:any)=>x.status==="concluido").length;
 
   return <AppShell active="/intervencoes"><main className="pageWrap approvedInterventions">
     <div className="pageHead">
@@ -36,7 +39,12 @@ export default async function Page(){
     </section>
 
     <div className="interventionToolbar">
-      <div><button className="active">Todas</button><button>Em execução</button><button>Aguardando</button><button>Concluídas</button></div>
+      <div>
+        <Link className={status==="todas"?"active":""} href="/intervencoes">Todas</Link>
+        <Link className={status==="em_andamento"?"active":""} href="/intervencoes?status=em_andamento">Em execução</Link>
+        <Link className={status==="aguardando"?"active":""} href="/intervencoes?status=aguardando">Aguardando</Link>
+        <Link className={status==="concluido"?"active":""} href="/intervencoes?status=concluido">Concluídas</Link>
+      </div>
       <span>{rows.length} intervenções</span>
     </div>
 
