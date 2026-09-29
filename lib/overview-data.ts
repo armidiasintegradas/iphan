@@ -7,7 +7,7 @@ export async function getFiscalizationsOverview() {
     .select("id,titulo,tipo,status,agendada_para,realizada_em,observacoes,bem_id,intervencao_id")
     .order("agendada_para",{ascending:true});
 
-  if(error) return {rows:[],source:"supabase" as const};
+  if(error) return {rows:[],metrics:{abertas:0,planejadas:0,realizadas:0,vencidas:0},source:"supabase" as const};
 
   const rows=data||[];
   const metrics={
@@ -30,7 +30,7 @@ export async function getConservationOverview() {
     supabase.from("bens_culturais").select("id,nome,municipio,uf,risco").order("nome"),
   ]);
 
-  if(error) return {inspections:[],heritage:heritage||[],source:"supabase" as const};
+  if(error) return {inspections:[],heritage:heritage||[],metrics:{regular:0,atencao:0,risco:0,critico:0},source:"supabase" as const};
 
   const all=heritage||[];
   const metrics={
@@ -50,7 +50,7 @@ export async function getDocumentsOverview() {
     .select("id,contexto,titulo,sistema_origem,referencia_externa,storage_path,created_at,bem_id,intervencao_id")
     .order("created_at",{ascending:false});
 
-  if(error) return {rows:[],source:"supabase" as const};
+  if(error) return {rows:[],groups:{},source:"supabase" as const};
 
   const rows=data||[];
   const groups=rows.reduce((acc:Record<string,any[]>,item:any)=>{
