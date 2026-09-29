@@ -636,3 +636,27 @@ body{background:var(--approved-bg)}
 .aiTrustNote{margin-top:12px;border-radius:9px;padding:9px;background:#f6f7f5}
 .aiTrustNote svg{width:14px;height:14px}
 .aiTrustNote p{font-size:8px;line-height:1.4}
+
+
+/* ===== Layout refinement phase — Login v1 ===== */
+@media(min-width:701px){
+  .approvedLogin{grid-template-columns:58.5% 41.5%}
+  .approvedLogin .loginPanel{padding:64px 7vw 48px}
+  .approvedLogin .iphanBrand{height:58px;max-width:270px;margin:0 0 30px 0}
+  .approvedLogin .loginPanel h1{font-size:52px;line-height:1.01;margin:24px 0 10px;letter-spacing:-.025em}
+  .approvedLogin .loginPanel>p{font-size:15px}
+  .approvedLogin .pill{font-size:9px;padding:5px 9px}
+  .approvedLogin .loginPanel form{margin-top:34px;gap:13px}
+  .approvedLogin .loginPanel form>label:not(.check){font-size:0}
+  .approvedLogin .loginPanel input{font-size:12px;padding:15px 15px;border-radius:8px}
+  .approvedLogin .loginPanel .check{font-size:11px}
+  .approvedLogin .loginPanel form button{padding:14px;font-size:12px}
+  .approvedLogin .loginLinks{margin-top:12px;gap:14px}
+  .approvedLogin .loginLinks a{font-size:10px}
+  .approvedLogin .loginQuote{left:7vw;bottom:48px;font-size:19px;line-height:1.25}
+  .approvedLogin .loginQuote i{width:42px;height:1px;margin-bottom:12px}
+}
+@media(max-width:700px){
+  .approvedLogin .iphanBrand{height:48px;max-width:220px}
+  .approvedLogin .loginPanel h1{font-size:36px}
+}
