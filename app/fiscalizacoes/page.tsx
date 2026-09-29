@@ -27,9 +27,9 @@ export default async function Page(){
 
     <section className="controlMetricRow">
       <article><CalendarDays/><strong>{metrics.abertas}</strong><span>Vistorias previstas</span><small>acompanhamento ativo</small></article>
-      <article><Clock3/><strong>{metrics.vencidas}</strong><span>Pendências vencidas</span><small className="dangerText">requerem atenção</small></article>
-      <article><Gavel/><strong>{metrics.planejadas}</strong><span>Decisões abertas</span><small>fluxo em análise</small></article>
-      <article><AlertTriangle/><strong>{metrics.realizadas}</strong><span>Restrições críticas</span><small className="dangerText">ação imediata</small></article>
+      <article><Clock3/><strong>{metrics.vencidas}</strong><span>Vistorias vencidas</span><small className="dangerText">requerem atenção</small></article>
+      <article><Gavel/><strong>{metrics.planejadas}</strong><span>Vistorias planejadas</span><small>agenda futura</small></article>
+      <article><AlertTriangle/><strong>{metrics.realizadas}</strong><span>Vistorias realizadas</span><small>histórico concluído</small></article>
     </section>
 
     <div className="controlGrid approvedControlGrid">
