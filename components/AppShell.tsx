@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Bell, ClipboardCheck, FileText, Home, Landmark, MapPin, Search, ShieldCheck, Sparkles, Wrench, Users, SlidersHorizontal, LogOut } from "lucide-react";
-import { nav } from "@/lib/mock";
+import { nav } from "@/lib/navigation";
 import { getCurrentUser } from "@/lib/current-user";
 import { signOut } from "@/app/auth/actions";
 
