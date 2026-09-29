@@ -60,7 +60,7 @@ export default function IntelligenceClient() {
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter") ask(question); }}
-          placeholder="Pergunte sobre obras, bens, prazos ou decisões"
+          placeholder="Como posso ajudar?"
           aria-label="Pergunta para a inteligência"
         />
         <button onClick={() => ask(question)} aria-label="Enviar pergunta">{loading ? "…" : <Send size={18} />}</button>
