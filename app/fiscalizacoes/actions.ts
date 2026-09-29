@@ -2,6 +2,8 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/current-user";
+import { can } from "@/lib/permissions";
 
 const value=(fd:FormData,key:string)=>String(fd.get(key)||"").trim();
 
@@ -63,4 +65,24 @@ export async function createRestriction(fd:FormData){
   });
   if(error) redirect("/controle/restricao/nova?erro=salvar");
   redirect("/controle?restricao=criada");
+}
+
+
+export async function completeInspection(fd:FormData){
+  const current=await getCurrentUser();
+  if(!current.id || !can(current.role,"inspection.write")) redirect("/fiscalizacoes?erro=permissao");
+
+  const id=value(fd,"fiscalizacao_id");
+  if(!id) redirect("/fiscalizacoes?erro=dados");
+
+  const supabase=await createClient();
+  const {error}=await supabase.from("fiscalizacoes").update({
+    status:"concluido",
+    realizada_em:new Date().toISOString(),
+    responsavel_id:current.id,
+    updated_at:new Date().toISOString(),
+  }).eq("id",id).neq("status","cancelado");
+
+  if(error) redirect("/fiscalizacoes?erro=salvar");
+  redirect("/fiscalizacoes?concluida=1");
 }
