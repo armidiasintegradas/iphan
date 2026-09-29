@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import maplibregl, { type Map as MapLibreMap } from "maplibre-gl";
+import { Map as MapLibreMap, NavigationControl, AttributionControl, Popup, Marker } from "maplibre-gl";
 import Link from "next/link";
 
 type Point = {
@@ -32,7 +32,7 @@ export default function HeritageMap({
   useEffect(() => {
     if (!container.current || map.current) return;
 
-    const instance = new maplibregl.Map({
+    const instance = new MapLibreMap({
       container: container.current,
       style: {
         version: 8,
@@ -51,8 +51,8 @@ export default function HeritageMap({
       attributionControl: false,
     });
 
-    instance.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-left");
-    instance.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-right");
+    instance.addControl(new NavigationControl({ showCompass: false }), "top-left");
+    instance.addControl(new AttributionControl({ compact: true }), "bottom-right");
 
     points.forEach((point) => {
       const el = document.createElement("button");
@@ -60,11 +60,11 @@ export default function HeritageMap({
       el.style.background = markerColor(point.risk);
       el.title = point.name;
 
-      const popup = new maplibregl.Popup({ offset: 18 }).setHTML(
+      const popup = new Popup({ offset: 18 }).setHTML(
         `<div class="mapPopup"><strong>${point.name}</strong><span>${point.city}</span><a href="/patrimonio/${point.id}">Ver detalhes →</a></div>`
       );
 
-      new maplibregl.Marker({ element: el })
+      new Marker({ element: el })
         .setLngLat([point.lng, point.lat])
         .setPopup(popup)
         .addTo(instance);
