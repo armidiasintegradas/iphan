@@ -22,7 +22,7 @@ export default async function Page({params}:{params:Promise<{id:string}>}){
 
   const deviation=item.actual-item.planned;
   const finance=item.latestMeasurement?.valor ? Number(item.latestMeasurement.valor) : 0;
-  const hero=item.heritage?.image || "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=85";
+  const hero="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=85";
 
   return <AppShell active="/intervencoes"><main className="pageWrap detailPage approvedIntervention">
     <div className="pageHead interventionHead">
