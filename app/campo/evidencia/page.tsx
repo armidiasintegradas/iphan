@@ -3,9 +3,11 @@ import FormNotice from "@/components/FormNotice";
 import { uploadEvidence } from "@/app/evidencias/actions";
 import { Camera, ImagePlus, ChevronLeft } from "lucide-react";
 import { getInterventionOptions, getMeasurementOptions } from "@/lib/data";
+import {requirePermission} from "@/lib/authorization";
 
 export default async function Page({ searchParams }: { searchParams: Promise<Record<string,string|undefined>> }) {
   const q = await searchParams;
+  await requirePermission("evidence.write","/campo");
   const [interventions, measurements] = await Promise.all([getInterventionOptions(), getMeasurementOptions()]);
 
   return <main className="mobileApp occurrenceForm approvedMobileFormPage">
