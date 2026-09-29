@@ -3,9 +3,11 @@ import FormNotice from "@/components/FormNotice";
 import { createIntervention } from "@/app/actions";
 import { getHeritageOptions } from "@/lib/data";
 import { Wrench, Landmark } from "lucide-react";
+import {requirePermission} from "@/lib/authorization";
 
 export default async function Page({ searchParams }: { searchParams: Promise<Record<string,string|undefined>> }) {
   const q = await searchParams;
+  await requirePermission("intervention.write","/intervencoes");
   const heritage = await getHeritageOptions();
 
   return <AppShell active="/intervencoes"><main className="pageWrap formPage approvedDesktopFormPage">
