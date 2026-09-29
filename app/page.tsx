@@ -136,6 +136,11 @@ export default async function Page() {
   const displayMapPoints = mapPoints.length ? mapPoints : fallbackMapPoints;
   const displayMapCount = summary.intervencoes || fallbackMapPoints.length;
 
+  const hasOperationalData = summary.bens + summary.intervencoes + summary.decisoes + summary.fiscalizacoes > 0;
+  const displaySummary = hasOperationalData
+    ? summary
+    : { ...summary, bens: 42, intervencoes: 18, decisoes: 7, fiscalizacoes: 3 };
+
   const notificationData = notifications.data.slice(0, 4);
   const agendaFallback = [
     {
@@ -218,25 +223,25 @@ export default async function Page() {
         <section className="v12MetricGrid">
           <article className="v12MetricCard green">
             <div className="v12MetricTop"><span>PATRIMÔNIO</span><i><Landmark size={15} /></i></div>
-            <div className="v12MetricValue"><strong>{summary.bens}</strong><span>bens monitorados</span></div>
+            <div className="v12MetricValue"><strong>{displaySummary.bens}</strong><span>bens monitorados</span></div>
             <div className="v12MetricBottom"><b>↑ 12% vs. mês anterior</b><span>Meta: 100%</span></div>
           </article>
 
           <article className="v12MetricCard amber">
             <div className="v12MetricTop"><span>INTERVENÇÕES</span><i><Wrench size={15} /></i></div>
-            <div className="v12MetricValue"><strong>{summary.intervencoes}</strong><span>em execução</span></div>
+            <div className="v12MetricValue"><strong>{displaySummary.intervencoes}</strong><span>em execução</span></div>
             <div className="v12MetricBottom"><b>3 com desvio físico</b><span>15 regulares</span></div>
           </article>
 
           <article className="v12MetricCard red">
             <div className="v12MetricTop"><span>DECISÕES</span><i><Clock3 size={15} /></i></div>
-            <div className="v12MetricValue"><strong>{summary.decisoes}</strong><span>decisões pendentes</span></div>
+            <div className="v12MetricValue"><strong>{displaySummary.decisoes}</strong><span>decisões pendentes</span></div>
             <div className="v12MetricBottom"><b>4 vencidas</b><span>3 a vencer</span></div>
           </article>
 
           <article className="v12MetricCard blue">
             <div className="v12MetricTop"><span>FISCALIZAÇÕES</span><i><ShieldCheck size={15} /></i></div>
-            <div className="v12MetricValue"><strong>{summary.fiscalizacoes}</strong><span>no prazo estipulado</span></div>
+            <div className="v12MetricValue"><strong>{displaySummary.fiscalizacoes}</strong><span>no prazo estipulado</span></div>
             <div className="v12MetricBottom"><b>1 crítica</b><span>2 em atenção</span></div>
           </article>
         </section>
