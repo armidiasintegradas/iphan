@@ -902,3 +902,273 @@ body{background:var(--approved-bg)}
   .approvedInterventions .approvedInterventionGrid,
   .approvedAdminUsers .approvedPermissionGrid{grid-template-columns:1fr}
 }
+
+
+/* ===== LOGIN APPROVED REFERENCE — exact execution ===== */
+.approvedLogin{
+  min-height:100vh;
+  width:100%;
+  display:grid;
+  grid-template-columns:58.5% 41.5%;
+  background:#fff;
+  overflow:hidden;
+}
+.approvedLogin .approvedLoginPhoto{
+  margin:0;
+  min-width:0;
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+  background:#eef1ed;
+}
+.approvedLogin .approvedLoginPhoto img{
+  width:100%;
+  height:100vh;
+  display:block;
+  object-fit:cover;
+  object-position:center center;
+}
+.approvedLogin .approvedLoginPanel{
+  position:relative;
+  min-width:0;
+  min-height:100vh;
+  padding:0;
+  background:
+    radial-gradient(ellipse at 24% -12%,transparent 0 31%,rgba(229,169,35,.055) 31.25% 31.5%,transparent 31.75% 36%,rgba(229,169,35,.04) 36.2% 36.4%,transparent 36.6%),
+    radial-gradient(ellipse at 78% 112%,transparent 0 28%,rgba(229,169,35,.055) 28.15% 28.35%,transparent 28.55% 34%,rgba(229,169,35,.038) 34.15% 34.35%,transparent 34.55%),
+    #fdfcf9;
+  overflow:hidden;
+}
+.approvedLogin .approvedLoginPanel::after{
+  content:"";
+  position:absolute;
+  right:-105px;
+  bottom:-100px;
+  width:390px;
+  height:470px;
+  background:url('/visual/heritage-hero.webp') right bottom/cover no-repeat;
+  opacity:.025;
+  filter:grayscale(1) sepia(1) saturate(.25) contrast(1.8);
+  pointer-events:none;
+}
+.approvedLogin .loginPanelInner{
+  position:relative;
+  z-index:2;
+  width:min(100%,445px);
+  min-height:100vh;
+  margin:0 auto;
+  padding:98px 0 58px;
+  display:flex;
+  flex-direction:column;
+}
+.approvedLogin .loginPanelInner>.iphanBrand{
+  width:445px;
+  max-width:100%;
+  height:84px;
+  margin:0 0 36px;
+  box-shadow:none;
+  flex:0 0 auto;
+}
+.approvedLogin .loginPanelInner>.iphanBrand .iphanBrandExact{
+  background-size:contain;
+  background-position:left center;
+}
+.approvedLogin .loginPanelInner h1{
+  margin:0;
+  color:#111;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:55px;
+  font-weight:500;
+  line-height:1.01;
+  letter-spacing:-.028em;
+}
+.approvedLogin .loginSubtitle{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  margin-top:14px;
+  color:#5f6670;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:20px;
+  line-height:1;
+  white-space:nowrap;
+}
+.approvedLogin .loginSubtitle .pill{
+  margin:0;
+  padding:7px 13px;
+  border-radius:999px;
+  background:#e7f1ec;
+  color:#087456;
+  font:500 11px/1 Arial,Helvetica,sans-serif;
+}
+.approvedLogin .formNotice{
+  margin:16px 0 0;
+}
+.approvedLogin .approvedLoginForm{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin:46px 0 0;
+}
+.approvedLogin .approvedLoginField{
+  position:relative;
+  display:flex;
+  align-items:center;
+  width:100%;
+  height:60px;
+  margin:0;
+  border:1px solid #d9deda;
+  border-radius:8px;
+  background:rgba(255,255,255,.88);
+  color:#626b78;
+  overflow:hidden;
+}
+.approvedLogin .approvedLoginField>svg{
+  position:absolute;
+  left:18px;
+  width:20px;
+  height:20px;
+  stroke-width:1.8;
+  color:#626b78;
+  pointer-events:none;
+}
+.approvedLogin .approvedLoginField input{
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0 50px 0 58px;
+  border:0!important;
+  border-radius:0;
+  outline:0;
+  background:transparent;
+  box-shadow:none;
+  color:#30353a;
+  font:400 14px/1 Arial,Helvetica,sans-serif;
+}
+.approvedLogin .approvedLoginField input::placeholder{
+  color:#7b8390;
+  opacity:1;
+}
+.approvedLogin .loginEye{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:#626b78;
+  cursor:pointer;
+}
+.approvedLogin .loginEye svg{
+  width:20px;
+  height:20px;
+  stroke-width:1.8;
+}
+.approvedLogin .approvedRemember{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:11px;
+  margin:5px 0 7px;
+  color:#3e454d;
+  font:400 13px/1 Arial,Helvetica,sans-serif;
+  cursor:pointer;
+}
+.approvedLogin .approvedRemember input{
+  width:26px;
+  height:26px;
+  margin:0;
+  border:1px solid #87908a;
+  border-radius:5px;
+  accent-color:#007350;
+}
+.approvedLogin .approvedLoginSubmit{
+  width:100%;
+  height:58px;
+  margin:0;
+  padding:0 20px;
+  border:0;
+  border-radius:8px;
+  background:#007350;
+  color:#fff;
+  font:700 18px/1 Arial,Helvetica,sans-serif;
+  cursor:pointer;
+  box-shadow:none;
+}
+.approvedLogin .approvedLoginSubmit span{
+  display:inline-block;
+  margin-left:8px;
+  font-size:24px;
+  font-weight:400;
+  transform:translateY(1px);
+}
+.approvedLogin .approvedLoginLinks{
+  display:flex;
+  justify-content:center;
+  margin:20px 0 0;
+}
+.approvedLogin .approvedLoginLinks a{
+  color:#0665dc;
+  font:400 13px/1 Arial,Helvetica,sans-serif;
+}
+.approvedLogin .approvedLoginQuote{
+  position:static;
+  margin-top:auto;
+  padding-top:55px;
+  color:#626872;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:24px;
+  font-weight:400;
+  line-height:1.22;
+}
+.approvedLogin .approvedLoginQuote i{
+  display:block;
+  width:65px;
+  height:2px;
+  margin:0 0 20px;
+  background:#e5a923;
+}
+@media(max-width:1280px){
+  .approvedLogin .loginPanelInner{
+    width:min(calc(100% - 72px),445px);
+    padding-top:68px;
+    padding-bottom:42px;
+  }
+  .approvedLogin .loginPanelInner>.iphanBrand{height:70px;margin-bottom:28px}
+  .approvedLogin .loginPanelInner h1{font-size:46px}
+  .approvedLogin .loginSubtitle{font-size:17px}
+  .approvedLogin .approvedLoginForm{margin-top:34px}
+  .approvedLogin .approvedLoginQuote{padding-top:34px;font-size:21px}
+}
+@media(max-width:900px){
+  .approvedLogin{grid-template-columns:1fr}
+  .approvedLogin .approvedLoginPhoto{display:none}
+  .approvedLogin .approvedLoginPanel{min-height:100vh}
+  .approvedLogin .loginPanelInner{
+    width:min(calc(100% - 48px),480px);
+    min-height:100vh;
+    padding:48px 0 38px;
+  }
+  .approvedLogin .loginPanelInner>.iphanBrand{width:100%;height:74px;max-width:420px}
+  .approvedLogin .loginPanelInner h1{font-size:43px}
+  .approvedLogin .loginSubtitle{white-space:normal;flex-wrap:wrap;font-size:17px}
+}
+@media(max-width:520px){
+  .approvedLogin .loginPanelInner{
+    width:calc(100% - 34px);
+    padding-top:32px;
+  }
+  .approvedLogin .loginPanelInner>.iphanBrand{height:58px;margin-bottom:26px}
+  .approvedLogin .loginPanelInner h1{font-size:36px}
+  .approvedLogin .loginSubtitle{font-size:15px}
+  .approvedLogin .approvedLoginForm{margin-top:30px}
+  .approvedLogin .approvedLoginField{height:56px}
+  .approvedLogin .approvedLoginSubmit{height:56px;font-size:16px}
+  .approvedLogin .approvedLoginQuote{font-size:20px}
+}
