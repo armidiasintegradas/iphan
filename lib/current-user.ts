@@ -8,10 +8,12 @@ export type CurrentUser = {
   role: Role;
   roleLabel: string;
   isDemo: boolean;
+  unitId: string | null;
+  active: boolean;
 };
 
 const roleLabels: Record<Role,string> = {
-  admin:"Administrador institucional",
+  admin:"Superadministrador",
   gestor:"Superintendente / Gestor",
   coordenador:"Coordenador",
   fiscal:"Fiscal",
@@ -31,6 +33,8 @@ export async function getCurrentUser(): Promise<CurrentUser> {
       role:"coordenador",
       roleLabel:"Coordenador",
       isDemo:true,
+      unitId:null,
+      active:true,
     };
   }
 
@@ -43,12 +47,14 @@ export async function getCurrentUser(): Promise<CurrentUser> {
       role:"consulta",
       roleLabel:"Consulta",
       isDemo:false,
+      unitId:null,
+      active:false,
     };
   }
 
   const {data:profile} = await supabase
     .from("perfis")
-    .select("nome,role")
+    .select("nome,role,unidade_id,ativo")
     .eq("id",user.id)
     .maybeSingle();
 
@@ -61,6 +67,8 @@ export async function getCurrentUser(): Promise<CurrentUser> {
     role,
     roleLabel:roleLabels[role],
     isDemo:false,
+    unitId:profile?.unidade_id || null,
+    active:profile?.ativo !== false,
   };
 }
 
