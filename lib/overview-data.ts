@@ -52,7 +52,14 @@ export async function getDocumentsOverview() {
 
   if(error) return {rows:[],groups:{},source:"supabase" as const};
 
-  const rows=data||[];
+  const rows=await Promise.all((data||[]).map(async (item:any)=>{
+    let signedUrl:string|null=null;
+    if(item.storage_path){
+      const signed=await supabase.storage.from("documentos").createSignedUrl(item.storage_path,900);
+      signedUrl=signed.data?.signedUrl||null;
+    }
+    return {...item,signedUrl};
+  }));
   const groups=rows.reduce((acc:Record<string,any[]>,item:any)=>{
     const key=item.contexto||"Outros";
     if(!acc[key]) acc[key]=[];
