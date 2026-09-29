@@ -103,11 +103,12 @@ export async function reviewMeasurement(formData:FormData){
   const supabase=await createClient();
   const {data:measurement,error:findError}=await supabase
     .from("medicoes")
-    .select("id,status,intervencao_id")
+    .select("id,status,intervencao_id,intervencoes(bens_culturais(unidade_id))")
     .eq("id",medicao_id)
     .maybeSingle();
 
-  if(findError||!measurement||measurement.intervencao_id!==intervencao_id){
+  if(findError||!measurement||measurement.intervencao_id!==intervencao_id||
+    (measurement as any).intervencoes?.bens_culturais?.unidade_id!==current.unitId){
     redirect(`/intervencoes/${intervencao_id}/medicoes?erro=medicao`);
   }
   if(measurement.status==="concluido"){
