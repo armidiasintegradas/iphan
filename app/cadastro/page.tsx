@@ -20,7 +20,7 @@ export default async function Page({
           Sistema de Gestão da Preservação <span className="pill">Beta 01</span>
         </p>
 
-        <FormNotice error={q.erro} />
+        {q.erro==="dominio" ? <div className="formNotice error">Este Beta aceita apenas e-mails institucionais autorizados.</div> : <FormNotice error={q.erro} />}
 
         <form action={signUp}>
           <label>
@@ -28,7 +28,7 @@ export default async function Page({
             <input name="name" required placeholder="Seu nome" />
           </label>
           <label>
-            E-mail
+            E-mail institucional
             <input name="email" type="email" required placeholder="seu.nome@iphan.gov.br" />
           </label>
           <label>
