@@ -40,7 +40,7 @@ function answer(question:string,ctx:any){
     const decisions=ctx.decisions.filter((x:any)=>x.intervencao_id===item.id);
     const gap=Math.max(0,item.planned-item.actual);
     const parts=[
-      `${item.title}: ${item.actual}% executado / ${item.planned}% planejado${gap? ` — desvio de ${gap.toFixed(1).replace(". ",",")} p.p.` : "."}`
+      `${item.title}: ${item.actual}% executado / ${item.planned}% planejado${gap? ` — desvio de ${gap.toFixed(1).replace(".",",")} p.p.` : "."}`
     ];
     if(restrictions.length) parts.push("Restrições associadas: "+restrictions.slice(0,3).map((x:any)=>x.titulo+(x.impacto?` (${x.impacto})`:"")).join("; ")+".");
     if(decisions.length) parts.push("Decisões pendentes associadas: "+decisions.slice(0,3).map((x:any)=>x.titulo+(x.prazo?` — prazo ${datePt(x.prazo)}`:"")).join("; ")+".");
