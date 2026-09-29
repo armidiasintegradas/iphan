@@ -20,8 +20,8 @@ export default async function Page() {
       </section>
 
       <section className="quickGrid approvedQuickGrid">
-        <Link href="/campo/evidencia"><Camera /><strong>Tirar foto</strong><span>Registrar evidência</span></Link>
-        <Link href="/campo/ocorrencia"><Mic /><strong>Falar</strong><span>Ditado técnico</span></Link>
+        <Link href="/campo/evidencia?camera=1"><Camera /><strong>Tirar foto</strong><span>Registrar evidência</span></Link>
+        <Link href="/campo/ocorrencia?voice=1"><Mic /><strong>Falar</strong><span>Ditado técnico</span></Link>
         <Link href="/campo/ocorrencia"><FileText /><strong>Escrever</strong><span>Nova observação</span></Link>
         <Link href="/fiscalizacoes/nova"><CheckCircle2 /><strong>Checklist</strong><span>Iniciar vistoria</span></Link>
       </section>
