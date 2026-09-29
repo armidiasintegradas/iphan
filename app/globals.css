@@ -580,3 +580,59 @@ body{background:var(--approved-bg)}
   .approvedIntervention .interventionLower{grid-template-columns:1fr}
   .approvedIntervention .photoPanel{grid-column:auto}
 }
+
+
+/* ===== Layout refinement phase — Campo & Intelligence v1 ===== */
+.approvedFieldApp{max-width:390px;padding:16px 16px 86px;background:#fff}
+.approvedFieldApp .fieldTopbar{padding:8px 0 12px}
+.approvedFieldApp .mobileBrandMini{width:76px;height:20px;background:url('/brand/iphan-lucio-costa.webp') left center/contain no-repeat}
+.approvedFieldApp .fieldOnline{font-size:8px;color:#67716c;display:flex;align-items:center;gap:4px}
+.approvedFieldApp .fieldHero{padding:8px 0 12px}
+.approvedFieldApp .fieldHero p{font-size:8px;margin-bottom:5px}
+.fieldAssetContext{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.approvedFieldApp .fieldAssetContext h1{font:600 22px/1.08 Arial,sans-serif;margin:0 0 4px;letter-spacing:-.02em}
+.approvedFieldApp .fieldAssetContext span{font-size:9.5px;color:var(--muted)}
+.fieldStatus{white-space:nowrap;border-radius:999px;background:#e8f3ee;color:var(--green);padding:5px 8px;font-size:8px;font-weight:800}
+
+.approvedFieldApp .approvedQuickGrid{gap:9px;padding:8px 0 18px}
+.approvedFieldApp .approvedQuickGrid a{min-height:108px;border:0;border-radius:12px;padding:13px;justify-content:center;align-items:center;text-align:center;box-shadow:none}
+.approvedFieldApp .approvedQuickGrid a:nth-child(1){background:#fff0cf;color:#d78900}
+.approvedFieldApp .approvedQuickGrid a:nth-child(2){background:#e5f2eb;color:var(--green)}
+.approvedFieldApp .approvedQuickGrid a:nth-child(3){background:#e8f0ff;color:#1767d8}
+.approvedFieldApp .approvedQuickGrid a:nth-child(4){background:#fff0cf;color:#d78900}
+.approvedFieldApp .approvedQuickGrid svg{width:24px;height:24px;margin:0 0 8px;color:currentColor}
+.approvedFieldApp .approvedQuickGrid strong{font-size:11px;margin:0}
+.approvedFieldApp .approvedQuickGrid span{display:none}
+
+.approvedFieldApp .fieldSectionTitle{padding:0;margin:0 0 4px}
+.approvedFieldApp .fieldSectionTitle h2{font:700 11px/1 Arial,sans-serif}
+.approvedFieldApp .fieldSectionTitle a{font-size:8px}
+.approvedFieldApp .fieldRecords{padding:0}
+.approvedFieldApp .approvedMobileRecord{grid-template-columns:56px 1fr 14px;gap:9px;padding:8px 0}
+.approvedFieldApp .fieldRecordThumb{width:56px;height:48px;border-radius:7px}
+.approvedFieldApp .approvedMobileRecord strong{font-size:10px}
+.approvedFieldApp .approvedMobileRecord span{font-size:8.5px;margin-top:2px}
+.approvedFieldApp .approvedMobileRecord small{font-size:7.5px;margin-top:3px}
+.approvedFieldApp .approvedBottomNav{width:min(390px,100%);height:66px;padding:7px 8px}
+.approvedFieldApp .approvedBottomNav a{font-size:8px;gap:3px}
+.approvedFieldApp .approvedBottomNav svg{width:18px;height:18px}
+
+.approvedIntelligence{max-width:390px;margin:0 auto;padding:20px 16px 86px;background:#fff}
+.approvedIntelligenceHeader{padding:8px 0 18px;gap:10px}
+.approvedIntelligenceHeader .aiMark{width:32px;height:32px}
+.approvedIntelligenceHeader p{font-size:8px;margin:1px 0 5px}
+.approvedIntelligenceHeader h1{font:600 22px/1.08 Arial,sans-serif;letter-spacing:-.02em}
+.approvedIntelligenceHeader span{font-size:9px;margin-top:5px}
+.approvedAiInput{grid-template-columns:18px 1fr 36px;padding:8px 8px 8px 11px;border-radius:11px;box-shadow:none}
+.approvedAiInput input{font-size:10.5px}
+.approvedAiInput button{width:34px;height:34px;border-radius:9px}
+.approvedAiInput button svg{width:15px;height:15px}
+.approvedQuestionList{margin-top:18px}
+.approvedQuestionList>p{font-size:8px;margin-bottom:7px}
+.approvedQuestionList button{border:1px solid var(--line);border-radius:10px;background:#fff;padding:11px 12px;margin-bottom:7px}
+.approvedQuestionList button span{font-size:10px;line-height:1.25}
+.approvedQuestionList button svg{width:13px}
+.approvedConversation .message{font-size:10px;padding:9px 10px;border-radius:11px}
+.aiTrustNote{margin-top:12px;border-radius:9px;padding:9px;background:#f6f7f5}
+.aiTrustNote svg{width:14px;height:14px}
+.aiTrustNote p{font-size:8px;line-height:1.4}
