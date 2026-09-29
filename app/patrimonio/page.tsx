@@ -14,7 +14,7 @@ function tone(risk:string){
 export default async function Page(){
   const result=await getHeritage();
   const heritage=result.data;
-  const mapPoints=heritage.filter((h:any)=>typeof h.lat==="number"&&typeof h.lng==="number");
+  const mapPoints=heritage.filter((h:any)=>h.lat!==null&&h.lng!==null).map((h:any)=>({...h,lat:Number(h.lat),lng:Number(h.lng)}));
 
   return <AppShell active="/patrimonio"><main className="pageWrap">
     <div className="pageHead"><div><h1>Patrimônio</h1><p>Mapa e lista de bens culturais de Pernambuco</p></div><div className="headActions"><DemoBadge source={result.source}/><Link href="/patrimonio/novo" className="primaryAction">+ Novo bem cultural</Link></div></div>
