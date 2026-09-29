@@ -3,9 +3,11 @@ import FormNotice from "@/components/FormNotice";
 import {createInspection} from "@/app/fiscalizacoes/actions";
 import {getHeritageOptions,getInterventionOptions} from "@/lib/data";
 import { ClipboardCheck, CalendarDays } from "lucide-react";
+import {requirePermission} from "@/lib/authorization";
 
 export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){
   const q=await searchParams;
+  await requirePermission("inspection.write","/fiscalizacoes");
   const [heritage,interventions]=await Promise.all([getHeritageOptions(),getInterventionOptions()]);
 
   return <AppShell active="/fiscalizacoes"><main className="pageWrap formPage approvedDesktopFormPage">
