@@ -77,5 +77,6 @@ jobs:
         if: steps.vercel_auth.outputs.available == 'true'
         run: |
           DEPLOY_URL=$(cat vercel-production-url.txt)
-          curl --fail --location --silent --show-error "$DEPLOY_URL/login" >/dev/null
-          echo "Production login route responded successfully."
+          curl --fail --location --silent --show-error "$DEPLOY_URL/api/health" | tee health.json
+          grep -q '"ok":true' health.json
+          echo "Production health check passed."
