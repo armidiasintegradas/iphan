@@ -6,10 +6,11 @@ import { signOut } from "@/app/auth/actions";
 
 const icons:any = { home:Home, landmark:Landmark, wrench:Wrench, mapPin:MapPin, clipboard:ClipboardCheck, shield:ShieldCheck, file:FileText, sparkles:Sparkles, users:Users, sliders:SlidersHorizontal };
 
-export function Brand(){
-  return <div className="brandLockup neutralBrand" aria-label="Sistema de Gestão da Preservação">
-    <span className="brandWord">Sistema de Gestão</span>
-    <span className="brandFull">DA PRESERVAÇÃO<br/><small>Iphan · Pernambuco</small></span>
+export function Brand({compact=false}:{compact?:boolean}){
+  return <div className={compact?"iphanBrand compact":"iphanBrand"} aria-label="Iphan — Instituto do Patrimônio Histórico e Artístico Nacional">
+    <span className="iphanBrandIcon"><Landmark size={compact?18:24} strokeWidth={1.4}/></span>
+    <span className="iphanBrandWord">IPHAN</span>
+    {!compact && <span className="iphanBrandFull">INSTITUTO DO<br/>PATRIMÔNIO<br/>HISTÓRICO E<br/>ARTÍSTICO NACIONAL</span>}
   </div>;
 }
 
@@ -25,18 +26,19 @@ export default async function AppShell({ children, active }: { children: React.R
         {visibleNav.map(item=>{ const Icon=icons[item.icon]; return <Link href={item.href} key={item.href} className={active===item.href?"sideLink active":"sideLink"}><Icon size={18}/><span>{item.label}</span></Link> })}
       </nav>
       <div className="sidebarArt">
-        <div className="lineArt"/>
-        <strong>Pernambuco</strong><span>Território, memória<br/>e futuro.</span>
+        <div className="sidebarPhoto" aria-hidden="true"/>
+        <strong>Pernambuco</strong>
+        <span>Território, memória<br/>e futuro.</span>
       </div>
     </aside>
     <div className="mainArea">
       <header className="topHeader">
         <div className="searchBox"><Search size={18}/><span>Buscar bens, intervenções, documentos...</span></div>
         <div className="profile">
-          <Link href="/notificacoes" className="iconBtn" aria-label="Notificações"><Bell size={19}/><i/></Link>
+          <Link href="/notificacoes" className="iconBtn" aria-label="Notificações"><Bell size={20}/><i/></Link>
           <div className="avatar">{initials || "US"}</div>
           <div><strong>{user.name}</strong><span>{user.roleLabel}</span></div>
-          <form action={signOut}><button type="submit" className="logoutBtn" aria-label="Sair" title="Sair"><LogOut size={17}/></button></form>
+          <form action={signOut}><button type="submit" className="logoutBtn" aria-label="Sair" title="Sair"><LogOut size={16}/></button></form>
         </div>
       </header>
       {children}
