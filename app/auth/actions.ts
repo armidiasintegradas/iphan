@@ -25,6 +25,16 @@ export async function signUp(formData: FormData) {
     redirect("/cadastro?erro=dados");
   }
 
+  const allowedDomains=(process.env.IPHAN_ALLOWED_EMAIL_DOMAINS || "iphan.gov.br")
+    .split(",")
+    .map((domain)=>domain.trim().toLowerCase())
+    .filter(Boolean);
+  const emailDomain=email.split("@").pop()?.toLowerCase() || "";
+
+  if(!allowedDomains.includes(emailDomain)){
+    redirect("/cadastro?erro=dominio");
+  }
+
   const supabase = await createClient();
   const headerStore = await headers();
   const origin =
