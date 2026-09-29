@@ -62,6 +62,28 @@ const priorityCards = [
   },
 ];
 
+
+const fallbackMapPoints = [
+  { id:"demo-olinda", name:"Igreja Matriz de Olinda", city:"Olinda, PE", municipality:"Olinda", lat:-7.9908, lng:-34.8416, risk:"Regular", image:"/visual/priority-decisao.webp" },
+  { id:"demo-recife-1", name:"Forte das Cinco Pontas", city:"Recife, PE", municipality:"Recife", lat:-8.0712, lng:-34.8804, risk:"Crítico", image:"/visual/priority-fiscalizacao.webp" },
+  { id:"demo-recife-2", name:"Igreja da Várzea", city:"Recife, PE", municipality:"Recife", lat:-8.0507, lng:-34.9601, risk:"Atenção", image:"/visual/priority-decisao.webp" },
+  { id:"demo-igarassu", name:"Conjunto Histórico de Igarassu", city:"Igarassu, PE", municipality:"Igarassu", lat:-7.8344, lng:-34.9064, risk:"Regular", image:"/visual/priority-decisao.webp" },
+  { id:"demo-goiana", name:"Centro Histórico de Goiana", city:"Goiana, PE", municipality:"Goiana", lat:-7.5606, lng:-35.0026, risk:"Atenção", image:"/visual/priority-decisao.webp" },
+  { id:"demo-vitoria", name:"Patrimônio de Vitória", city:"Vitória de Santo Antão, PE", municipality:"Vitória de Santo Antão", lat:-8.1187, lng:-35.2914, risk:"Regular", image:"/visual/priority-decisao.webp" },
+  { id:"demo-gravata", name:"Patrimônio de Gravatá", city:"Gravatá, PE", municipality:"Gravatá", lat:-8.2011, lng:-35.5641, risk:"Sem dado", image:"/visual/priority-decisao.webp" },
+  { id:"demo-caruaru", name:"Conjunto Cultural de Caruaru", city:"Caruaru, PE", municipality:"Caruaru", lat:-8.2846, lng:-35.9702, risk:"Regular", image:"/visual/priority-decisao.webp" },
+  { id:"demo-palmares", name:"Patrimônio de Palmares", city:"Palmares, PE", municipality:"Palmares", lat:-8.6842, lng:-35.5890, risk:"Regular", image:"/visual/priority-decisao.webp" },
+  { id:"demo-tamandare", name:"Patrimônio Costeiro", city:"Tamandaré, PE", municipality:"Tamandaré", lat:-8.7592, lng:-35.1047, risk:"Atenção", image:"/visual/priority-fiscalizacao.webp" },
+  { id:"demo-garanhuns", name:"Patrimônio de Garanhuns", city:"Garanhuns, PE", municipality:"Garanhuns", lat:-8.8820, lng:-36.4960, risk:"Regular", image:"/visual/priority-decisao.webp" },
+  { id:"demo-arcoverde", name:"Patrimônio de Arcoverde", city:"Arcoverde, PE", municipality:"Arcoverde", lat:-8.4189, lng:-37.0538, risk:"Atenção", image:"/visual/priority-decisao.webp" },
+  { id:"demo-afogados", name:"Patrimônio do Pajeú", city:"Afogados da Ingazeira, PE", municipality:"Afogados da Ingazeira", lat:-7.7507, lng:-37.6393, risk:"Regular", image:"/visual/priority-decisao.webp" },
+  { id:"demo-triunfo", name:"Conjunto Histórico de Triunfo", city:"Triunfo, PE", municipality:"Triunfo", lat:-7.8379, lng:-38.1035, risk:"Regular", image:"/visual/priority-decisao.webp" },
+  { id:"demo-serra", name:"Patrimônio de Serra Talhada", city:"Serra Talhada, PE", municipality:"Serra Talhada", lat:-7.9815, lng:-38.2893, risk:"Crítico", image:"/visual/priority-decisao.webp" },
+  { id:"demo-salgueiro", name:"Patrimônio de Salgueiro", city:"Salgueiro, PE", municipality:"Salgueiro", lat:-8.0742, lng:-39.1247, risk:"Regular", image:"/visual/priority-decisao.webp" },
+  { id:"demo-ouricuri", name:"Patrimônio de Ouricuri", city:"Ouricuri, PE", municipality:"Ouricuri", lat:-7.8792, lng:-40.0813, risk:"Sem dado", image:"/visual/priority-decisao.webp" },
+  { id:"demo-petrolina", name:"Patrimônio de Petrolina", city:"Petrolina, PE", municipality:"Petrolina", lat:-9.3891, lng:-40.5031, risk:"Crítico", image:"/visual/priority-decisao.webp" },
+];
+
 function greeting(hour: number) {
   if (hour < 12) return "Bom dia";
   if (hour < 18) return "Boa tarde";
@@ -110,6 +132,9 @@ export default async function Page() {
       lng: Number(h.lng),
       image: undefined,
     }));
+
+  const displayMapPoints = mapPoints.length ? mapPoints : fallbackMapPoints;
+  const displayMapCount = summary.intervencoes || fallbackMapPoints.length;
 
   const notificationData = notifications.data.slice(0, 4);
   const agendaFallback = [
@@ -246,7 +271,7 @@ export default async function Page() {
         </section>
 
         <section className="v12LowerGrid">
-          <DashboardMap points={mapPoints} activeCount={summary.intervencoes} />
+          <DashboardMap points={displayMapPoints} activeCount={displayMapCount} />
 
           <aside className="v12AgendaCard">
             <div className="v12AgendaHead">
