@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "verify:beta": "node scripts/verify-beta.mjs"
+    "verify:beta": "node scripts/verify-beta.mjs",
+    "preview": "next dev"
   },
   "dependencies": {
     "@supabase/ssr": "^0.6.1",
