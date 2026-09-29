@@ -34,12 +34,39 @@ export async function getNotifications(){
   return {data,source:"supabase" as const};
 }
 
-export async function getAudit(){
+export async function getAudit(filters?:{entidade?:string;q?:string}){
   const supabase=await createClient();
-  const {data,error}=await supabase.from("audit_log").select("id,actor_id,entidade,entidade_id,acao,antes,depois,created_at").order("created_at",{ascending:false}).limit(100);
+  let query=supabase.from("audit_log")
+    .select("id,actor_id,entidade,entidade_id,acao,antes,depois,created_at")
+    .order("created_at",{ascending:false})
+    .limit(200);
+
+  if(filters?.entidade && filters.entidade!=="todos") query=query.eq("entidade",filters.entidade);
+
+  const {data,error}=await query;
   if(error) return {data:[],source:"supabase" as const};
-  return {source:"supabase" as const,data:data.map(x=>({
-    id:x.id,actor:String(x.actor_id||"Sistema"),acao:x.acao,entidade:x.entidade,
-    detail:x.entidade_id?String(x.entidade_id):"Registro alterado",created_at:x.created_at
-  }))};
+
+  const actorIds=[...new Set((data||[]).map((x:any)=>x.actor_id).filter(Boolean))];
+  const names=new Map<string,string>();
+  if(actorIds.length){
+    const {data:profiles}=await supabase.from("perfis").select("id,nome").in("id",actorIds);
+    (profiles||[]).forEach((p:any)=>names.set(p.id,p.nome));
+  }
+
+  const mapped=(data||[]).map((x:any)=>({
+    id:x.id,
+    actor:x.actor_id ? (names.get(x.actor_id)||String(x.actor_id)) : "Sistema",
+    actorId:x.actor_id||null,
+    acao:x.acao,
+    entidade:x.entidade,
+    detail:x.entidade_id?String(x.entidade_id):"Registro alterado",
+    created_at:x.created_at,
+  }));
+
+  const search=(filters?.q||"").trim().toLowerCase();
+  const result=search ? mapped.filter((x:any)=>[
+    x.actor,x.acao,x.entidade,x.detail
+  ].join(" ").toLowerCase().includes(search)) : mapped;
+
+  return {source:"supabase" as const,data:result};
 }
