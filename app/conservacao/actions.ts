@@ -2,11 +2,16 @@
 
 import {redirect} from "next/navigation";
 import {createClient} from "@/lib/supabase/server";
+import {getCurrentUser} from "@/lib/current-user";
+import {can} from "@/lib/permissions";
 
 const value=(fd:FormData,key:string)=>String(fd.get(key)||"").trim();
 const allowedStates=["regular","atencao","risco","critico"];
 
 export async function createConservationInspection(fd:FormData){
+  const current=await getCurrentUser();
+  if(!current.id || !can(current.role,"inspection.write")) redirect("/conservacao/nova?erro=permissao");
+
   const supabase=await createClient();
   if(!supabase) redirect("/conservacao/nova?demo=1");
 
@@ -24,28 +29,15 @@ export async function createConservationInspection(fd:FormData){
     redirect("/conservacao/nova?erro=periodo");
   }
 
-  const {data:{user}}=await supabase.auth.getUser();
-  if(!user) redirect("/login");
-
-  const {data:heritage,error:heritageError}=await supabase
-    .from("bens_culturais").select("id").eq("id",bem_id).maybeSingle();
-  if(heritageError||!heritage) redirect("/conservacao/nova?erro=bem");
-
-  const {error}=await supabase.from("inspecoes_conservacao").insert({
-    bem_id,
-    categoria,
-    estado,
-    observacoes,
-    inspecionada_em,
-    proxima_inspecao,
-    responsavel_id:user.id,
+  const {error}=await supabase.rpc("create_conservation_inspection",{
+    p_bem_id:bem_id,
+    p_categoria:categoria,
+    p_estado:estado,
+    p_observacoes:observacoes||null,
+    p_inspecionada_em:inspecionada_em,
+    p_proxima_inspecao:proxima_inspecao,
   });
+
   if(error) redirect("/conservacao/nova?erro=salvar");
-
-  await supabase.from("bens_culturais").update({
-    risco:estado,
-    updated_at:new Date().toISOString(),
-  }).eq("id",bem_id);
-
   redirect("/conservacao?inspecao=criada");
 }
