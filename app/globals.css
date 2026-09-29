@@ -440,3 +440,58 @@ body{background:var(--approved-bg)}
   .approvedHome .approvedMetrics article{padding:12px}
   .approvedHome .approvedBottom{grid-template-columns:1fr}
 }
+
+
+/* ===== Layout refinement phase — Patrimônio v1 ===== */
+.approvedPatrimonio{max-width:1230px;padding-top:18px}
+.approvedPatrimonio .pageHead{align-items:flex-start;margin-bottom:8px}
+.approvedPatrimonio .patrimonioHead h1{font-size:38px;line-height:1}
+.approvedPatrimonio .patrimonioHead p{font-size:13px;margin-top:5px}
+.approvedPatrimonio .heritageSearchBar{margin-top:-50px;margin-bottom:13px}
+.approvedPatrimonio .heritageSearchBar input{width:min(43vw,500px);padding:11px 13px;border-radius:9px;font-size:10.5px;box-shadow:none}
+
+.approvedPatrimonio .realHeritageFilters{gap:7px;margin:0 0 10px}
+.approvedPatrimonio .realHeritageFilters label{padding:7px 9px;border-radius:8px;gap:3px}
+.approvedPatrimonio .realHeritageFilters label strong{font-size:7px;letter-spacing:.07em}
+.approvedPatrimonio .realHeritageFilters select{font-size:9px}
+.approvedPatrimonio .realHeritageFilters .filterAction{min-height:42px;border-radius:8px;font-size:9px}
+
+.approvedPatrimonio .approvedMapList{grid-template-columns:minmax(0,1.85fr) minmax(270px,.72fr);gap:10px}
+.approvedPatrimonio .approvedMapWrap .realMap{min-height:345px;border-radius:10px}
+.approvedPatrimonio .approvedHeritageList{padding:10px;border-radius:10px}
+.approvedPatrimonio .listHeader{padding-bottom:5px}
+.approvedPatrimonio .listHeader h3{font-size:16px}
+.approvedPatrimonio .listHeader span{font-size:8px}
+.approvedPatrimonio .approvedHeritageList .miniAsset{grid-template-columns:76px 1fr 16px;gap:8px;padding:8px 0}
+.approvedPatrimonio .approvedHeritageThumb{width:76px;height:52px;border-radius:7px}
+.approvedPatrimonio .approvedHeritageList .miniAsset strong{font-size:10.5px;line-height:1.2}
+.approvedPatrimonio .approvedHeritageList .miniAsset span{font-size:8.5px;margin:3px 0}
+.approvedPatrimonio .approvedHeritageList .status{font-size:8px;padding:4px 6px}
+
+.approvedPatrimonio .heritageGridTitle{margin:14px 0 8px}
+.approvedPatrimonio .heritageGridTitle h2{font-size:16px}
+.approvedPatrimonio .viewActions span{font-size:8px}
+.approvedPatrimonio .viewActions button{padding:6px 8px;border-radius:7px;font-size:9px}
+.approvedPatrimonio .approvedAssetGrid{gap:9px}
+.approvedPatrimonio .approvedAssetCard{border-radius:10px;box-shadow:none}
+.approvedPatrimonio .approvedAssetVisual{height:142px}
+.approvedPatrimonio .approvedAssetCard>div{padding:10px}
+.approvedPatrimonio .approvedAssetCard h3{font-size:15px;line-height:1.15}
+.approvedPatrimonio .approvedAssetCard p{font-size:8.5px}
+.approvedPatrimonio .approvedAssetCard .assetDesc{min-height:0;margin:7px 0}
+.approvedPatrimonio .approvedAssetCard .status{font-size:8px;padding:4px 6px}
+.approvedPatrimonio .assetCardFooter{padding-top:8px}
+.approvedPatrimonio .assetCardFooter a{font-size:9px}
+.approvedPatrimonio .assetCardFooter button{width:26px;height:26px}
+
+@media(max-width:1150px){
+  .approvedPatrimonio .heritageSearchBar{margin-top:0}
+  .approvedPatrimonio .approvedMapList{grid-template-columns:1fr}
+  .approvedPatrimonio .approvedAssetVisual{height:165px}
+}
+@media(max-width:700px){
+  .approvedPatrimonio .patrimonioHead h1{font-size:31px}
+  .approvedPatrimonio .patrimonioHead p{font-size:11px}
+  .approvedPatrimonio .approvedMapWrap .realMap{min-height:285px}
+  .approvedPatrimonio .approvedAssetVisual{height:180px}
+}
