@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Bell, ClipboardCheck, FileText, Home, Landmark, MapPin, Search, ShieldCheck, Sparkles, Wrench, Users, SlidersHorizontal } from "lucide-react";
+import { Bell, ClipboardCheck, FileText, Home, Landmark, MapPin, Search, ShieldCheck, Sparkles, Wrench, Users, SlidersHorizontal, LogOut } from "lucide-react";
 import { nav } from "@/lib/mock";
 import { getCurrentUser } from "@/lib/current-user";
+import { signOut } from "@/app/auth/actions";
 
 const icons:any = { home:Home, landmark:Landmark, wrench:Wrench, mapPin:MapPin, clipboard:ClipboardCheck, shield:ShieldCheck, file:FileText, sparkles:Sparkles, users:Users, sliders:SlidersHorizontal };
 
@@ -35,6 +36,7 @@ export default async function AppShell({ children, active }: { children: React.R
           <Link href="/notificacoes" className="iconBtn" aria-label="Notificações"><Bell size={19}/><i/></Link>
           <div className="avatar">{initials || "US"}</div>
           <div><strong>{user.name}</strong><span>{user.roleLabel}</span></div>
+          <form action={signOut}><button type="submit" className="logoutBtn" aria-label="Sair" title="Sair"><LogOut size={17}/></button></form>
         </div>
       </header>
       {children}
