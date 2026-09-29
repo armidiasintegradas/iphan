@@ -68,7 +68,7 @@ export async function getCurrentUser(): Promise<CurrentUser> {
     roleLabel:roleLabels[role],
     isDemo:false,
     unitId:profile?.unidade_id || null,
-    active:profile?.ativo !== false,
+    active:profile?.ativo === true,
   };
 }
 
