@@ -2,9 +2,11 @@ import AppShell from "@/components/AppShell";
 import FormNotice from "@/components/FormNotice";
 import {createRestriction} from "@/app/fiscalizacoes/actions";
 import {getInterventionOptions} from "@/lib/data";
+import {requirePermission} from "@/lib/authorization";
 
 export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){
  const q=await searchParams;
+ await requirePermission("decision.write","/controle");
  const interventions=await getInterventionOptions();
  return <AppShell active="/controle"><main className="pageWrap formPage">
   <div className="pageHead"><div><small>Controle / Restrições</small><h1>Nova restrição</h1><p>Registre impedimentos e impactos no andamento da intervenção.</p></div></div>
