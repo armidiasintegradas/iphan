@@ -4,6 +4,14 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 
+function strongPassword(password:string){
+  return password.length>=12
+    && /[a-z]/.test(password)
+    && /[A-Z]/.test(password)
+    && /\d/.test(password)
+    && /[^A-Za-z0-9]/.test(password);
+}
+
 export async function signIn(formData: FormData) {
   const email = String(formData.get("email") || "").trim();
   const password = String(formData.get("password") || "");
@@ -21,9 +29,8 @@ export async function signUp(formData: FormData) {
   const email = String(formData.get("email") || "").trim();
   const password = String(formData.get("password") || "");
 
-  if (!name || !email || password.length < 8) {
-    redirect("/cadastro?erro=dados");
-  }
+  if (!name || !email) redirect("/cadastro?erro=dados");
+  if (!strongPassword(password)) redirect("/cadastro?erro=senha");
 
   const allowedDomains=(process.env.IPHAN_ALLOWED_EMAIL_DOMAINS || "iphan.gov.br")
     .split(",")
@@ -88,8 +95,8 @@ export async function updatePassword(formData: FormData) {
   const password = String(formData.get("password") || "");
   const confirmPassword = String(formData.get("confirm_password") || "");
 
-  if (password.length < 8 || password !== confirmPassword) {
-    redirect("/redefinir-senha?erro=dados");
+  if (!strongPassword(password) || password !== confirmPassword) {
+    redirect("/redefinir-senha?erro=senha");
   }
 
   const supabase = await createClient();
