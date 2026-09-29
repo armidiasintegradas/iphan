@@ -9,11 +9,12 @@ export async function getHeritage() {
     .select("id,nome,municipio,uf,tipologia,risco,latitude,longitude")
     .order("nome");
 
-  if (error || !data?.length) return { data: mockHeritage, source: "demo" as const };
+  if (error) return { data: [], source: "supabase" as const, error: true };
 
   return {
     source: "supabase" as const,
-    data: data.map((item) => ({
+    error: false,
+    data: (data || []).map((item) => ({
       id: item.id,
       name: item.nome,
       city: [item.municipio, item.uf].filter(Boolean).join(", "),
@@ -57,14 +58,44 @@ export async function getInterventionOptions() {
   }));
 }
 
+export async function getInterventionsPortfolio() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("intervencoes")
+    .select("id,titulo,status,risco,avanco_planejado,avanco_real,inicio_previsto,fim_previsto,bens_culturais(id,nome,municipio,uf)")
+    .order("updated_at", { ascending: false });
+
+  if (error) {
+    return { data: [], source: "supabase" as const, error: true };
+  }
+
+  const rows = (data || []).map((item:any) => ({
+    id: item.id,
+    title: item.titulo,
+    status: item.status,
+    risk: item.risco,
+    planned: Number(item.avanco_planejado || 0),
+    actual: Number(item.avanco_real || 0),
+    start: item.inicio_previsto,
+    end: item.fim_previsto,
+    heritageId: item.bens_culturais?.id || null,
+    heritageName: item.bens_culturais?.nome || "Bem cultural",
+    city: [item.bens_culturais?.municipio, item.bens_culturais?.uf].filter(Boolean).join(", "),
+  }));
+
+  return { data: rows, source: "supabase" as const, error: false };
+}
+
 export async function getDashboardSummary() {
   const supabase = await createClient();
 
-  const [bens, intervencoes, ocorrencias, decisoes] = await Promise.all([
+  const [bens, intervencoes, ocorrencias, decisoes, fiscalizacoes] = await Promise.all([
     supabase.from("bens_culturais").select("*", { count: "exact", head: true }),
     supabase.from("intervencoes").select("*", { count: "exact", head: true }).eq("status", "em_andamento"),
     supabase.from("ocorrencias").select("*", { count: "exact", head: true }).in("status", ["aberto", "aguardando"]),
     supabase.from("decisoes").select("*", { count: "exact", head: true }).in("status", ["aberto", "aguardando"]),
+    supabase.from("fiscalizacoes").select("*", { count: "exact", head: true }).in("status", ["aberto", "em_andamento"]),
   ]);
 
   return {
@@ -72,5 +103,6 @@ export async function getDashboardSummary() {
     intervencoes: intervencoes.count || 0,
     ocorrencias: ocorrencias.count || 0,
     decisoes: decisoes.count || 0,
+    fiscalizacoes: fiscalizacoes.count || 0,
   };
 }
