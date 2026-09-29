@@ -780,3 +780,125 @@ body{background:var(--approved-bg)}
   .approvedConservation .conservationMetrics{grid-template-columns:1fr 1fr}
   .approvedDocs .approvedDocRow{grid-template-columns:14px 26px 1fr}
 }
+
+
+/* ===== Layout refinement phase — Portfolio, Control & Admin v1 ===== */
+.approvedInterventions,
+.approvedControl,
+.approvedAdminUsers,
+.approvedAudit{max-width:1180px;padding-top:18px}
+
+.approvedInterventions .pageHead,
+.approvedControl .pageHead,
+.approvedAdminUsers .pageHead,
+.approvedAudit .pageHead{align-items:flex-start;margin-bottom:12px}
+.approvedInterventions .pageHead h1,
+.approvedControl .pageHead h1,
+.approvedAdminUsers .pageHead h1,
+.approvedAudit .pageHead h1{font-size:36px;line-height:1}
+.approvedInterventions .pageHead p,
+.approvedControl .pageHead p,
+.approvedAdminUsers .pageHead p,
+.approvedAudit .pageHead p{font-size:12px;margin-top:5px}
+.approvedInterventions .primaryAction,
+.approvedControl .primaryAction,
+.approvedControl .secondaryAction,
+.approvedAdminUsers .secondaryAction{padding:9px 11px;border-radius:8px;font-size:9px}
+
+.approvedInterventions .portfolioMetrics,
+.approvedControl .controlMetricRow,
+.approvedAdminUsers .adminMetrics,
+.approvedAudit .adminMetrics{gap:8px;margin-bottom:10px}
+.approvedInterventions .portfolioMetrics article,
+.approvedControl .controlMetricRow article,
+.approvedAdminUsers .adminMetrics article,
+.approvedAudit .adminMetrics article{padding:11px 12px;border-radius:9px}
+.approvedInterventions .portfolioMetrics svg,
+.approvedControl .controlMetricRow svg,
+.approvedAdminUsers .adminMetrics svg,
+.approvedAudit .adminMetrics svg{width:15px;height:15px}
+.approvedInterventions .portfolioMetrics strong,
+.approvedControl .controlMetricRow strong,
+.approvedAdminUsers .adminMetrics strong,
+.approvedAudit .adminMetrics strong{font-size:24px}
+.approvedInterventions .portfolioMetrics span,
+.approvedControl .controlMetricRow span,
+.approvedAdminUsers .adminMetrics span,
+.approvedAudit .adminMetrics span{font-size:9px}
+.approvedInterventions .portfolioMetrics small,
+.approvedControl .controlMetricRow small{font-size:8px;margin-top:4px}
+
+.approvedInterventions .interventionToolbar{margin:8px 0 9px}
+.approvedInterventions .interventionToolbar a{padding:6px 9px;font-size:8.5px}
+.approvedInterventions .interventionToolbar>span{font-size:8.5px}
+.approvedInterventions .approvedInterventionGrid{gap:9px}
+.approvedInterventions .approvedInterventionCard{border-radius:10px;overflow:hidden;box-shadow:none}
+.approvedInterventions .interventionCardVisual{height:130px}
+.approvedInterventions .interventionCardVisual>.status{font-size:8px;padding:4px 6px}
+.approvedInterventions .interventionCardBody{padding:10px}
+.approvedInterventions .interventionCardBody>p{font-size:8.5px}
+.approvedInterventions .interventionCardBody h2{font-size:15px;line-height:1.18;margin:4px 0 9px}
+.approvedInterventions .cardProgressLabels{font-size:8px}
+.approvedInterventions .dualProgress{gap:5px;margin-top:5px}
+.approvedInterventions .dualProgress i{height:4px}
+.approvedInterventions .approvedInterventionCard footer{padding-top:8px;margin-top:8px;font-size:8.5px}
+
+.approvedControl .controlTabs{margin:4px 0 9px}
+.approvedControl .controlTabs a{padding:6px 9px;font-size:8.5px}
+.approvedControl .approvedControlTable{padding:10px 11px;border-radius:9px}
+.approvedControl .controlTableHead{font-size:8px;padding:0 0 7px}
+.approvedControl .controlTableRow{padding:8px 0;font-size:9px}
+.approvedControl .controlTableRow strong{font-size:9.5px}
+.approvedControl .controlTableRow small,
+.approvedControl .controlTableRow em{font-size:7.5px}
+.approvedControl .controlTableRow .status{font-size:8px;padding:4px 6px}
+.approvedControl .rowAction{padding:6px 8px;font-size:8px;border-radius:7px}
+
+.approvedAdminUsers .adminMetrics,
+.approvedAudit .adminMetrics{grid-template-columns:repeat(3,1fr)}
+.approvedAdminUsers .approvedUsersPanel,
+.approvedAudit .approvedAuditList{padding:10px 12px;border-radius:9px}
+.approvedAdminUsers .adminHint{padding:8px 10px;border-radius:8px;font-size:8.5px;margin-bottom:8px}
+.approvedAdminUsers .usersTableHead{font-size:8px;padding:0 0 7px}
+.approvedAdminUsers .approvedUserRow{padding:8px 0;font-size:9px}
+.approvedAdminUsers .approvedUserRow strong{font-size:9.5px}
+.approvedAdminUsers .approvedUserRow small{font-size:7.5px}
+.approvedAdminUsers .roleForm select{min-width:125px;padding:6px 7px;font-size:8px}
+.approvedAdminUsers .roleForm button,
+.approvedAdminUsers .userDeactivate,
+.approvedAdminUsers .userActivate{padding:6px 8px;font-size:8px;border-radius:7px}
+.approvedAdminUsers .permissionHeading{margin:12px 0 7px}
+.approvedAdminUsers .permissionHeading h2{font-size:15px}
+.approvedAdminUsers .approvedPermissionGrid{gap:8px}
+.approvedAdminUsers .approvedPermissionCard{padding:11px;border-radius:9px}
+.approvedAdminUsers .approvedPermissionCard h3{font-size:14px}
+.approvedAdminUsers .approvedPermissionCard p{font-size:8px;margin:4px 0 8px}
+.approvedAdminUsers .approvedPermissionCard>div{gap:4px}
+.approvedAdminUsers .approvedPermissionCard>div span{font-size:8px;padding:5px 6px;border-radius:6px}
+
+.approvedAudit .auditFilters{grid-template-columns:minmax(210px,1fr) 190px auto;gap:7px;margin:8px 0 10px}
+.approvedAudit .auditFilters input,
+.approvedAudit .auditFilters select{padding:8px 9px;border-radius:8px;font-size:8.5px}
+.approvedAudit .auditFilters button{padding:8px 11px;border-radius:8px;font-size:8.5px}
+.approvedAudit .approvedAuditItem{padding:9px 0}
+.approvedAudit .approvedAuditItem strong{font-size:9.5px}
+.approvedAudit .approvedAuditItem span{font-size:8.5px}
+.approvedAudit .approvedAuditItem small,
+.approvedAudit .approvedAuditItem time{font-size:7.5px}
+
+@media(max-width:900px){
+  .approvedInterventions .approvedInterventionGrid{grid-template-columns:1fr 1fr}
+  .approvedAdminUsers .approvedPermissionGrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .approvedInterventions .pageHead h1,
+  .approvedControl .pageHead h1,
+  .approvedAdminUsers .pageHead h1,
+  .approvedAudit .pageHead h1{font-size:30px}
+  .approvedInterventions .portfolioMetrics,
+  .approvedControl .controlMetricRow,
+  .approvedAdminUsers .adminMetrics,
+  .approvedAudit .adminMetrics{grid-template-columns:1fr 1fr}
+  .approvedInterventions .approvedInterventionGrid,
+  .approvedAdminUsers .approvedPermissionGrid{grid-template-columns:1fr}
+}
