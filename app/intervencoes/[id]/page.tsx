@@ -22,7 +22,8 @@ export default async function Page({params}:{params:Promise<{id:string}>}){
 
   const deviation=item.actual-item.planned;
   const finance=item.latestMeasurement?.valor ? Number(item.latestMeasurement.valor) : 0;
-  const hero="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=85";
+  const hero='/visual/intervention-progress.webp';
+  const heroFallback='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=85';
 
   return <AppShell active="/intervencoes"><main className="pageWrap detailPage approvedIntervention">
     <div className="pageHead interventionHead">
@@ -42,7 +43,7 @@ export default async function Page({params}:{params:Promise<{id:string}>}){
       <Link href="/documentos">Documentos</Link>
     </div>
 
-    <div className="detailHero intervention approvedInterventionHero" style={{backgroundImage:`url("${hero}")`}}/>
+    <div className="detailHero intervention approvedInterventionHero" style={{backgroundImage:`url("${hero}"),url("${heroFallback}")`}}/>
 
     <section className="interventionMetrics">
       <div className="progressMetric"><strong>{item.actual}%</strong><span>Executado</span><i><b style={{width:Math.max(0,Math.min(100,item.actual))+"%"}}/></i></div>
@@ -57,7 +58,7 @@ export default async function Page({params}:{params:Promise<{id:string}>}){
     <div className="interventionLower">
       <section className="panel photoPanel">
         <div className="sectionTitle"><h2>Progresso da intervenção</h2><Link href={"/intervencoes/"+id+"/cronograma"}>Ver mais →</Link></div>
-        <img src={hero} alt="" />
+        <div className="approvedProgressImage" style={{backgroundImage:`url("${hero}"),url("${heroFallback}")`}} aria-hidden="true"/>
       </section>
 
       <section className="panel">
