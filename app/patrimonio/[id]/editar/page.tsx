@@ -4,9 +4,11 @@ import {getHeritageById} from "@/lib/data";
 import {updateHeritage} from "@/app/actions";
 import {notFound} from "next/navigation";
 import {Landmark, Pencil} from "lucide-react";
+import {requirePermission} from "@/lib/authorization";
 
 export default async function Page({params,searchParams}:{params:Promise<{id:string}>,searchParams:Promise<Record<string,string|undefined>>}){
   const [{id},q]=await Promise.all([params,searchParams]);
+  await requirePermission("heritage.write","/patrimonio");
   const h=await getHeritageById(id);
   if(!h) notFound();
 
