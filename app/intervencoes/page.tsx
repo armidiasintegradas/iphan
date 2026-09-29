@@ -1,2 +1,53 @@
-import AppShell from "@/components/AppShell"; import Link from "next/link"; import {heritage} from "@/lib/mock"; import {Status,Metric} from "@/components/UI";
-export default function Page(){return <AppShell active="/intervencoes"><main className="pageWrap"><div className="pageHead"><div><h1>Intervenções</h1><p>Acompanhamento integrado das obras e ações de preservação.</p></div></div><div className="metricsRow"><Metric value="18" label="Em execução" detail="3 com desvio físico" tone="danger"/><Metric value="7" label="Decisões pendentes" detail="4 vencidas" tone="warning"/><Metric value="5" label="Medições em análise"/><Metric value="3" label="Situações de risco" tone="danger"/></div><div className="workGrid">{heritage.map((h,i)=><Link href="/intervencoes/restauro-matriz" className="workCard" key={h.id}><img src={h.image}/><div><Status tone={i===2?"danger":"regular"}>{i===2?"Risco":"Em execução"}</Status><h2>Restauração — {h.name}</h2><p>{h.city}</p><div className="progress"><i style={{width:`${64+i*5}%`}}/></div><small>{64+i*5}% executado</small></div></Link>)}</div></main></AppShell>}
+import AppShell from "@/components/AppShell";
+import Link from "next/link";
+import {Status,Metric} from "@/components/UI";
+import {getInterventionsPortfolio} from "@/lib/data";
+
+function tone(risk:string){
+  if(risk==="critico"||risk==="risco") return "danger";
+  if(risk==="atencao") return "warning";
+  return "regular";
+}
+
+function label(status:string){
+  const map:Record<string,string>={
+    rascunho:"Rascunho",
+    aberto:"Aberta",
+    em_andamento:"Em execução",
+    aguardando:"Aguardando",
+    concluido:"Concluída",
+    cancelado:"Cancelada",
+  };
+  return map[status]||status;
+}
+
+export default async function Page(){
+  const result=await getInterventionsPortfolio();
+  const rows=result.data;
+  const running=rows.filter((x:any)=>x.status==="em_andamento").length;
+  const delayed=rows.filter((x:any)=>x.actual<x.planned).length;
+  const risks=rows.filter((x:any)=>x.risk==="risco"||x.risk==="critico").length;
+  const completed=rows.filter((x:any)=>x.status==="concluido").length;
+
+  return <AppShell active="/intervencoes"><main className="pageWrap">
+    <div className="pageHead"><div><h1>Intervenções</h1><p>Acompanhamento integrado das obras e ações de preservação.</p></div><Link href="/intervencoes/nova" className="primaryAction">+ Nova intervenção</Link></div>
+
+    <div className="metricsRow">
+      <Metric value={String(running)} label="Em execução"/>
+      <Metric value={String(delayed)} label="Com desvio físico" tone={delayed?"danger":undefined}/>
+      <Metric value={String(risks)} label="Situações de risco" tone={risks?"danger":undefined}/>
+      <Metric value={String(completed)} label="Concluídas"/>
+    </div>
+
+    {rows.length ? <div className="workGrid">{rows.map((item:any)=><Link href={"/intervencoes/"+item.id} className="workCard" key={item.id}>
+      <div className="workCardPlaceholder"/>
+      <div>
+        <Status tone={tone(item.risk)}>{label(item.status)}</Status>
+        <h2>{item.title}</h2>
+        <p>{item.heritageName}{item.city?" · "+item.city:""}</p>
+        <div className="progress"><i style={{width:Math.max(0,Math.min(100,item.actual))+"%"}}/></div>
+        <small>{item.actual}% executado · {item.planned}% planejado</small>
+      </div>
+    </Link>)}</div> : <div className="emptyState panel">Nenhuma intervenção cadastrada. Crie uma intervenção após cadastrar o primeiro bem cultural.</div>}
+  </main></AppShell>
+}
