@@ -43,16 +43,34 @@ export async function getConservationOverview() {
   return {inspections:inspections||[],heritage:all,metrics,source:"supabase" as const};
 }
 
-export async function getDocumentsOverview() {
+export async function getDocumentsOverview(filters?:{
+  contexto?:string;
+  sistema?:string;
+  status?:string;
+  periodo?:string;
+}) {
   const supabase=await createClient();
-  const {data,error}=await supabase
+  let query=supabase
     .from("documentos")
     .select("id,contexto,titulo,sistema_origem,referencia_externa,storage_path,created_at,bem_id,intervencao_id")
     .order("created_at",{ascending:false});
 
+  if(filters?.contexto && filters.contexto!=="todos") query=query.eq("contexto",filters.contexto);
+  if(filters?.sistema && filters.sistema!=="todos") query=query.eq("sistema_origem",filters.sistema);
+  if(filters?.periodo && filters.periodo!=="todos"){
+    const days=filters.periodo==="30" ? 30 : filters.periodo==="90" ? 90 : 365;
+    const since=new Date(Date.now()-days*24*60*60*1000).toISOString();
+    query=query.gte("created_at",since);
+  }
+
+  const {data,error}=await query;
   if(error) return {rows:[],groups:{},source:"supabase" as const};
 
-  const rows=await Promise.all((data||[]).map(async (item:any)=>{
+  let base=data||[];
+  if(filters?.status==="arquivo") base=base.filter((item:any)=>!!item.storage_path);
+  if(filters?.status==="referencia") base=base.filter((item:any)=>!item.storage_path && !!item.referencia_externa);
+
+  const rows=await Promise.all(base.map(async (item:any)=>{
     let signedUrl:string|null=null;
     if(item.storage_path){
       const signed=await supabase.storage.from("documentos").createSignedUrl(item.storage_path,900);
