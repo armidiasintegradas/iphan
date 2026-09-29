@@ -17,7 +17,7 @@ export default async function Page({params}:{params:Promise<{id:string}>}){
   if(!h) notFound();
 
   return <AppShell active="/patrimonio"><main className="pageWrap detailPage approvedHeritageDetail">
-    <div className="detailHero approvedDetailHero" style={{backgroundImage:`url("${h.image}")`}}>
+    <div className="detailHero approvedDetailHero" style={{backgroundImage:`url("https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1800&q=88")`}}>
       <div className="heroActions">
         <button><MapPin size={16}/> Ver no mapa</button>
         <button aria-label="Compartilhar"><Share2 size={16}/></button>
@@ -32,7 +32,7 @@ export default async function Page({params}:{params:Promise<{id:string}>}){
         <h1>{h.name}</h1>
         <p>⌖ {h.city || "Localização não informada"} &nbsp; · &nbsp; {h.protection}</p>
       </div>
-      <Status tone={tone(h.risk)}>{h.status || h.risk}</Status>
+      <Status tone={tone(h.risk)}>{h.risk}</Status>
     </div>
 
     <div className="tabs approvedTabs">
