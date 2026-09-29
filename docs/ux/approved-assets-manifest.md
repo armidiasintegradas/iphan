@@ -1,57 +1,47 @@
-# Manifesto de ativos visuais aprovados
+# Ativos visuais aprovados
 
-Status: **OBRIGATÓRIO**
+Status de integração: **em execução**
 
-As imagens das referências visuais aprovadas são fonte de verdade do projeto. Não substituir por fotografias genéricas, bancos de imagem, novas gerações de IA ou variações semelhantes sem aprovação explícita.
+## Regra
 
-## Ativos congelados
+As referências visuais aprovadas são a fonte de verdade. Não substituir por imagens genéricas sem nova aprovação.
 
-| Arquivo | Uso |
-|---|---|
-| `iphan-logo-official-lucio-costa.png` | Marca oficial colorida do Iphan, versão com Croqui de Lucio Costa |
-| `login-hero.png` | Hero do Login |
-| `priority-decisao.png` | Card “Decisão técnica vencida” |
-| `priority-intervencao.png` | Card “Intervenção com desvio físico” |
-| `priority-medicao.png` | Card “Medição aguardando conferência” |
-| `priority-fiscalizacao.png` | Card “Fiscalização programada” |
-| `heritage-hero.png` | Hero da Ficha do Bem Cultural |
-| `heritage-thumb-01.png` | Patrimônio — thumbnail 01 |
-| `heritage-thumb-02.png` | Patrimônio — thumbnail 02 |
-| `heritage-thumb-03.png` | Patrimônio — thumbnail 03 |
-| `heritage-thumb-04.png` | Patrimônio — thumbnail 04 |
-| `intervention-progress.png` | Cockpit — imagem de progresso da intervenção |
-| `field-thumb-01.png` | Campo — último registro 01 |
-| `field-thumb-02.png` | Campo — último registro 02 |
-| `field-thumb-03.png` | Campo — último registro 03 |
+## Caminhos oficiais no front-end
 
-## Regras
+### Marca
+- `/brand/iphan-lucio-costa.webp` — marca oficial colorida com croqui de Lucio Costa.
 
-1. Manter o mesmo enquadramento e proporção das referências.
-2. Não usar Unsplash, placeholders ou imagens “parecidas” na versão de fidelidade.
-3. Não alterar saturação, temperatura, contraste ou composição sem aprovação.
-4. A marca oficial deve manter proporções e área de respiro previstas no manual.
-5. O nome do sistema e “Pernambuco” permanecem separados da marca Iphan.
-6. Responsividade pode recortar a imagem por `object-fit: cover`, mas o ponto focal deve permanecer o mesmo da referência.
-7. Quando houver versão desktop e mobile, usar o mesmo ativo, salvo referência aprovada específica.
+### Hoje
+- `/visual/priority-decisao.webp`
+- `/visual/priority-intervencao.webp`
+- `/visual/priority-medicao.webp`
+- `/visual/priority-fiscalizacao.webp`
 
-## Estrutura alvo
+### Login
+- `/visual/login-hero.webp`
 
-```text
-/public/brand/iphan-logo-official-lucio-costa.png
-/public/visual/login-hero.png
-/public/visual/priority-decisao.png
-/public/visual/priority-intervencao.png
-/public/visual/priority-medicao.png
-/public/visual/priority-fiscalizacao.png
-/public/visual/heritage-hero.png
-/public/visual/heritage-thumb-01.png
-/public/visual/heritage-thumb-02.png
-/public/visual/heritage-thumb-03.png
-/public/visual/heritage-thumb-04.png
-/public/visual/intervention-progress.png
-/public/visual/field-thumb-01.png
-/public/visual/field-thumb-02.png
-/public/visual/field-thumb-03.png
-```
+### Patrimônio
+- `/visual/heritage-hero.webp`
+- `/visual/heritage-thumb-01.webp`
+- `/visual/heritage-thumb-02.webp`
+- `/visual/heritage-thumb-03.webp`
+- `/visual/heritage-thumb-04.webp`
 
-O código só deve passar a apontar para estes caminhos quando os binários estiverem presentes no repositório/deploy, evitando telas quebradas.
+### Intervenção
+- `/visual/intervention-progress.webp`
+
+### Campo
+- `/visual/field-thumb-01.webp`
+- `/visual/field-thumb-02.webp`
+- `/visual/field-thumb-03.webp`
+
+## Estado atual
+
+Integrados no repositório:
+- [x] marca oficial Iphan;
+- [x] card de prioridade “decisão técnica”;
+- [ ] demais imagens aprovadas — migração binária em andamento.
+
+## Regra de fallback
+
+Durante a migração, o front-end procura primeiro o ativo local aprovado e usa o fallback existente somente se o arquivo ainda não estiver no deploy. Quando todos os arquivos estiverem presentes, os fallbacks externos devem ser removidos.
