@@ -6,10 +6,9 @@ import { getCurrentUser } from "@/lib/current-user";
 const icons:any = { home:Home, landmark:Landmark, wrench:Wrench, mapPin:MapPin, clipboard:ClipboardCheck, shield:ShieldCheck, file:FileText, sparkles:Sparkles, users:Users, sliders:SlidersHorizontal };
 
 export function Brand(){
-  return <div className="brandLockup" aria-label="Iphan">
-    <span className="brandSymbol">⌂</span>
-    <span className="brandWord">IPHAN</span>
-    <span className="brandFull">INSTITUTO DO<br/>PATRIMÔNIO HISTÓRICO E<br/>ARTÍSTICO NACIONAL</span>
+  return <div className="brandLockup neutralBrand" aria-label="Sistema de Gestão da Preservação">
+    <span className="brandWord">Sistema de Gestão</span>
+    <span className="brandFull">DA PRESERVAÇÃO<br/><small>Iphan · Pernambuco</small></span>
   </div>;
 }
 
