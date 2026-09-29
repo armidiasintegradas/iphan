@@ -2,6 +2,8 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/current-user";
+import { can } from "@/lib/permissions";
 
 function text(formData: FormData, key: string) {
   const value = formData.get(key);
@@ -82,4 +84,44 @@ export async function createMeasurement(formData: FormData) {
   if (error?.code==="23505") redirect(`/intervencoes/${intervencao_id}/medicoes/nova?erro=duplicada`);
   if (error) redirect(`/intervencoes/${intervencao_id}/medicoes/nova?erro=salvar`);
   redirect(`/intervencoes/${intervencao_id}/medicoes?criada=1`);
+}
+
+
+export async function reviewMeasurement(formData:FormData){
+  const current=await getCurrentUser();
+  const intervencao_id=text(formData,"intervencao_id");
+  const medicao_id=text(formData,"medicao_id");
+  const decision=text(formData,"decision");
+
+  if(!current.id || !can(current.role,"measurement.approve")) {
+    redirect(`/intervencoes/${intervencao_id}/medicoes?erro=permissao`);
+  }
+  if(!intervencao_id||!medicao_id||!["approve","reject"].includes(decision)){
+    redirect(`/intervencoes/${intervencao_id}/medicoes?erro=dados`);
+  }
+
+  const supabase=await createClient();
+  const {data:measurement,error:findError}=await supabase
+    .from("medicoes")
+    .select("id,status,intervencao_id")
+    .eq("id",medicao_id)
+    .maybeSingle();
+
+  if(findError||!measurement||measurement.intervencao_id!==intervencao_id){
+    redirect(`/intervencoes/${intervencao_id}/medicoes?erro=medicao`);
+  }
+  if(measurement.status==="concluido"){
+    redirect(`/intervencoes/${intervencao_id}/medicoes?erro=concluida`);
+  }
+
+  const status=decision==="approve" ? "concluido" : "cancelado";
+  const {error}=await supabase.from("medicoes").update({
+    status,
+    conferida_por:current.id,
+    conferida_em:new Date().toISOString(),
+    updated_at:new Date().toISOString(),
+  }).eq("id",medicao_id);
+
+  if(error) redirect(`/intervencoes/${intervencao_id}/medicoes?erro=salvar`);
+  redirect(`/intervencoes/${intervencao_id}/medicoes?${decision==="approve"?"aprovada":"rejeitada"}=1`);
 }
