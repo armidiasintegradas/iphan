@@ -1,34 +1,40 @@
 import Link from "next/link";
 import { Camera, CheckCircle2, FileText, Mic, ChevronRight, Home, MapPin, MoreHorizontal } from "lucide-react";
-import { heritage } from "@/lib/mock";
+import { getFieldOverview } from "@/lib/overview-data";
 
-export default function Page() {
+export default async function Page() {
+  const {rows}=await getFieldOverview();
+
   return (
     <main className="mobileApp">
       <header>
         <Link href="/">←</Link>
         <div>
           <h1>Campo</h1>
-          <p>Igreja Matriz de Olinda · Olinda, PE</p>
+          <p>Registros técnicos em campo</p>
         </div>
-        <span className="status regular"><i />Em execução</span>
+        <span className="status regular"><i />Online</span>
       </header>
 
       <section className="quickGrid">
         <Link href="/campo/evidencia"><Camera /><span>Tirar foto</span></Link>
         <Link href="/campo/ocorrencia"><Mic /><span>Falar</span></Link>
         <Link href="/campo/ocorrencia"><FileText /><span>Escrever</span></Link>
-        <Link href="/campo/ocorrencia"><CheckCircle2 /><span>Checklist</span></Link>
+        <Link href="/fiscalizacoes/nova"><CheckCircle2 /><span>Checklist</span></Link>
       </section>
 
-      <div className="sectionTitle"><h2>Últimos registros</h2><a>Ver todos →</a></div>
-      {[["Fachada oeste","Registro fotográfico"],["Cobertura","Registro de campo"],["Torre","Observação técnica"]].map(([t,s],i)=>(
-        <div className="mobileRecord" key={t}>
-          <img src={heritage[i%heritage.length].image}/>
-          <div><strong>{t}</strong><span>{s}</span><small>{i?"Hoje, 11:20":"Hoje, 14:32"}</small></div>
+      <div className="sectionTitle"><h2>Últimos registros</h2><Link href="/documentos">Ver registros →</Link></div>
+      {rows.length ? rows.map((item:any)=>(
+        <div className="mobileRecord" key={item.id}>
+          {item.image ? <img src={item.image}/> : <div className="recordPlaceholder"><FileText/></div>}
+          <div>
+            <strong>{item.title}</strong>
+            <span>{item.kind} · {item.subtitle}</span>
+            <small>{item.createdAt ? new Date(item.createdAt).toLocaleString("pt-BR") : "—"}</small>
+          </div>
           <ChevronRight/>
         </div>
-      ))}
+      )) : <div className="emptyState">Nenhum registro de campo ainda.</div>}
 
       <nav className="bottomNav">
         <Link href="/"><Home/><span>Início</span></Link>
