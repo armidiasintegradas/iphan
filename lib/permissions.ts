@@ -25,17 +25,17 @@ const matrix: Record<Role, Permission[]> = {
   admin: [
     "heritage.read","heritage.write","intervention.read","intervention.write",
     "field.write","evidence.write","inspection.write","measurement.write",
-    "measurement.approve","decision.write","document.write","document.write","document.write","users.manage",
+    "measurement.approve","decision.write","document.write","users.manage",
   ],
   gestor: [
     "heritage.read","heritage.write","intervention.read","intervention.write",
     "field.write","evidence.write","inspection.write","measurement.write",
-    "measurement.approve","decision.write","users.manage",
+    "measurement.approve","decision.write","document.write","users.manage",
   ],
   coordenador: [
     "heritage.read","heritage.write","intervention.read","intervention.write",
     "field.write","evidence.write","inspection.write","measurement.write",
-    "measurement.approve","decision.write",
+    "measurement.approve","decision.write","document.write",
   ],
   fiscal: [
     "heritage.read","intervention.read","field.write","evidence.write",
