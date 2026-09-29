@@ -342,3 +342,9 @@ body{background:var(--approved-bg)}
   .inlineTableSearch input{flex:1;min-width:0}
   .tableExportAction{justify-content:center}
 }
+
+
+.voiceButton{display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #dce9e3;background:#e9f3ef;color:var(--green);border-radius:10px;padding:12px 14px;font-size:10px;font-weight:800}
+.voiceButton svg{width:17px;height:17px}
+.voiceButton.listening{background:#173f33;color:#fff;border-color:#173f33}
+.voiceUnavailable{font-size:9px;color:var(--muted);padding:4px 0}
