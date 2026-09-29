@@ -3,12 +3,15 @@ import {Status} from "@/components/UI";
 import {getDocumentsOverview} from "@/lib/overview-data";
 import Link from "next/link";
 import { FileText, Star, Clock3 } from "lucide-react";
+import {getCurrentUser} from "@/lib/current-user";
+import {can} from "@/lib/permissions";
 
 export default async function Page(){
-  const {rows,groups}=await getDocumentsOverview();
+  const [{rows,groups},current]=await Promise.all([getDocumentsOverview(),getCurrentUser()]);
+  const canWrite=can(current.role,"document.write");
 
   return <AppShell active="/documentos"><main className="pageWrap approvedDocs">
-    <div className="pageHead"><div><h1>Documentos</h1><p>Organize e acesse documentos do patrimônio cultural.</p></div></div>
+    <div className="pageHead"><div><h1>Documentos</h1><p>Organize e acesse documentos do patrimônio cultural.</p></div>{canWrite&&<Link href="/documentos/novo" className="primaryAction">+ Novo documento</Link>}</div>
     <div className="filterRow docFilters">{[["Contexto","Todos os contextos"],["Sistema","Todos os sistemas"],["Status","Todos os status"],["Data","Últimos 12 meses"]].map(([a,b])=><button key={a}><strong>{a}</strong><span>{b}</span></button>)}</div>
 
     <div className="docsGrid approvedDocsGrid">
