@@ -3,7 +3,10 @@ import {Status} from "@/components/UI";
 import {getInterventionById} from "@/lib/data";
 import {notFound} from "next/navigation";
 import Link from "next/link";
-import { CalendarDays, Database, AlertTriangle, FileText, MapPin, MoreHorizontal } from "lucide-react";
+import { CalendarDays, Database, AlertTriangle, FileText, MapPin, MoreHorizontal, Pencil, CheckCircle2 } from "lucide-react";
+import {getCurrentUser} from "@/lib/current-user";
+import {can} from "@/lib/permissions";
+import {closeIntervention} from "@/app/actions";
 
 function tone(risk:string){
   if(risk==="critico"||risk==="risco") return "danger";
@@ -17,8 +20,9 @@ function label(status:string){
 
 export default async function Page({params}:{params:Promise<{id:string}>}){
   const {id}=await params;
-  const item=await getInterventionById(id);
+  const [item,current]=await Promise.all([getInterventionById(id),getCurrentUser()]);
   if(!item) notFound();
+  const canEdit=can(current.role,"intervention.write");
 
   const deviation=item.actual-item.planned;
   const finance=item.latestMeasurement?.valor ? Number(item.latestMeasurement.valor) : 0;
@@ -31,7 +35,13 @@ export default async function Page({params}:{params:Promise<{id:string}>}){
         <h1>{item.title}</h1>
         <p>⌖ {item.heritage?.nome || "Bem cultural"}{item.heritage?.municipio ? " · "+item.heritage.municipio+", "+(item.heritage.uf||"PE") : ""}</p>
       </div>
-      <div className="headActions"><Status tone={tone(item.risk)}>{label(item.status)}</Status><button className="iconButton"><MoreHorizontal size={17}/></button><button className="secondaryAction"><MapPin size={15}/> Ver no mapa</button></div>
+      <div className="headActions">
+        <Status tone={tone(item.risk)}>{label(item.status)}</Status>
+        {canEdit&&<Link href={"/intervencoes/"+id+"/editar"} className="secondaryAction"><Pencil size={15}/> Editar</Link>}
+        {canEdit&&item.status!=="concluido"&&<form action={closeIntervention}><input type="hidden" name="id" value={id}/><button className="secondaryAction successAction" type="submit"><CheckCircle2 size={15}/> Concluir</button></form>}
+        <button className="iconButton"><MoreHorizontal size={17}/></button>
+        <button className="secondaryAction"><MapPin size={15}/> Ver no mapa</button>
+      </div>
     </div>
 
     <div className="tabs approvedTabs">
