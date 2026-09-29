@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Bell, ClipboardCheck, FileText, Home, Landmark, MapPin, Search, ShieldCheck, Sparkles, Wrench } from "lucide-react";
+import { Bell, ClipboardCheck, FileText, Home, Landmark, MapPin, Search, ShieldCheck, Sparkles, Wrench, Users } from "lucide-react";
 import { nav } from "@/lib/mock";
 
-const icons:any = { home:Home, landmark:Landmark, wrench:Wrench, mapPin:MapPin, clipboard:ClipboardCheck, shield:ShieldCheck, file:FileText, sparkles:Sparkles };
+const icons:any = { home:Home, landmark:Landmark, wrench:Wrench, mapPin:MapPin, clipboard:ClipboardCheck, shield:ShieldCheck, file:FileText, sparkles:Sparkles, users:Users };
 
 export function Brand(){
   return <div className="brandLockup" aria-label="Iphan"><span className="brandSymbol">⌂</span><span className="brandWord">IPHAN</span><span className="brandFull">INSTITUTO DO<br/>PATRIMÔNIO HISTÓRICO E<br/>ARTÍSTICO NACIONAL</span></div>;
