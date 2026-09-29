@@ -1,8 +1,65 @@
-import AppShell from "@/components/AppShell"; import {heritage} from "@/lib/mock"; import {Status} from "@/components/UI";
-export default async function Page({params}:{params:Promise<{id:string}>}){const {id}=await params; const h=heritage.find(x=>x.id===id)||heritage[0];return <AppShell active="/patrimonio"><main className="pageWrap detailPage">
-<div className="detailHero" style={{backgroundImage:`url('${h.image}')`}}/><div className="detailTitle"><div><h1>{h.name}</h1><p>⌖ {h.city} &nbsp; · &nbsp; Tombamento Federal</p></div><Status tone="regular">Em intervenção</Status></div>
-<div className="tabs"><b>Visão geral</b><span>Histórico</span><span>Elementos</span><span>Intervenções</span><span>Fiscalizações</span><span>Documentos</span><span>Conservação</span></div>
-<div className="threeCols"><section className="panel"><h2>Sobre o bem</h2><p>A Igreja Matriz de Olinda integra o conjunto histórico e cultural de Pernambuco e representa importante referência da arquitetura religiosa brasileira.</p><p>Seu acompanhamento reúne informações históricas, técnicas e de conservação em um único prontuário digital.</p><a>Ver mais informações →</a></section>
-<section className="panel infoTable"><h2>Informações principais</h2><p><span>Tipologia</span><b>{h.type}</b></p><p><span>Período</span><b>Século XVI</b></p><p><span>Última vistoria</span><b>12/07/2024</b></p><p><span>Responsável técnico</span><b>Maria Souza</b></p></section>
-<section className="panel"><h2>Estado de conservação</h2>{[["Cobertura","Atenção"],["Estrutura","Regular"],["Instalações","Atenção"],["Fachadas","Regular"],["Umidade","Atenção"],["Incêndio","Regular"]].map(([a,b])=><div className="stateRow" key={a}><span>{a}</span><Status tone={b==="Regular"?"regular":"warning"}>{b}</Status></div>)}</section></div>
-</main></AppShell>}
+import AppShell from "@/components/AppShell";
+import {Status} from "@/components/UI";
+import {getHeritageById} from "@/lib/data";
+import {notFound} from "next/navigation";
+import Link from "next/link";
+
+function tone(risk:string){
+  if(risk==="critico"||risk==="risco") return "danger";
+  if(risk==="atencao") return "warning";
+  return "regular";
+}
+
+export default async function Page({params}:{params:Promise<{id:string}>}){
+  const {id}=await params;
+  const h=await getHeritageById(id);
+  if(!h) notFound();
+
+  return <AppShell active="/patrimonio"><main className="pageWrap detailPage">
+    <div className="detailHero neutralHero"/>
+    <div className="detailTitle">
+      <div>
+        <h1>{h.name}</h1>
+        <p>⌖ {h.city || "Localização não informada"} &nbsp; · &nbsp; {h.protection}</p>
+      </div>
+      <Status tone={tone(h.risk)}>{h.risk}</Status>
+    </div>
+
+    <div className="tabs">
+      <b>Visão geral</b>
+      <span>Histórico</span>
+      <span>Elementos</span>
+      <span>Intervenções</span>
+      <span>Fiscalizações</span>
+      <span>Documentos</span>
+      <span>Conservação</span>
+    </div>
+
+    <div className="threeCols">
+      <section className="panel">
+        <h2>Sobre o bem</h2>
+        <p>{h.description || "Descrição histórica e técnica ainda não cadastrada."}</p>
+        <p>O prontuário reúne intervenções, fiscalizações, documentos e registros de conservação vinculados ao bem.</p>
+        <Link href="/intervencoes/nova">Criar intervenção →</Link>
+      </section>
+
+      <section className="panel infoTable">
+        <h2>Informações principais</h2>
+        <p><span>Tipologia</span><b>{h.type}</b></p>
+        <p><span>Nível de proteção</span><b>{h.protection}</b></p>
+        <p><span>Intervenções</span><b>{h.interventions.length}</b></p>
+        <p><span>Documentos recentes</span><b>{h.documents.length}</b></p>
+      </section>
+
+      <section className="panel">
+        <h2>Estado de conservação</h2>
+        {h.inspections.length ? h.inspections.map((item:any)=><div className="stateRow" key={item.id}><span>{item.categoria}</span><Status tone={tone(item.estado)}>{item.estado}</Status></div>) : <div className="emptyState">Nenhuma inspeção de conservação registrada.</div>}
+      </section>
+    </div>
+
+    <div className="sectionTitle"><h2>Intervenções vinculadas</h2></div>
+    <section className="panel">
+      {h.interventions.length ? h.interventions.map((item:any)=><Link href={"/intervencoes/"+item.id} className="updateRow" key={item.id}><strong>{item.titulo}</strong><span>{item.avanco_real}% executado · {item.status}</span></Link>) : <div className="emptyState">Nenhuma intervenção vinculada a este bem.</div>}
+    </section>
+  </main></AppShell>
+}
