@@ -1,3 +1,39 @@
-import AppShell from "@/components/AppShell"; import {Status} from "@/components/UI";
-const groups={ "Bem cultural":["Dossiê de Tombamento — Igreja Matriz de Olinda","Parecer Técnico de Valores Culturais","Ficha de Identificação do Bem"],"Intervenção":["Projeto Básico de Restauração","Relatório de Andamento da Obra","Memorial Descritivo"],"Fiscalização":["Auto de Infração nº 012/2024","Relatório de Fiscalização de Campo"],"Medição":["Planilha de Medição nº 03","Relatório de Medição"],"Decisão":["Portaria de Tombamento nº 123","Despacho Decisório"]};
-export default function Page(){return <AppShell active="/documentos"><main className="pageWrap"><div className="pageHead"><div><h1>Documentos</h1><p>Organize e acesse documentos do patrimônio cultural.</p></div></div><div className="filterRow">{["Contexto","Sistema","Status","Data"].map(x=><button key={x}>{x}<span>Todos</span></button>)}</div><div className="docsGrid"><section>{Object.entries(groups).map(([g,docs])=><div className="docGroup" key={g}><h2>{g}<small>{docs.length} documentos</small></h2>{docs.map((d,i)=><div className="docRow" key={d}><span className="docIcon">PDF</span><div><strong>{d}</strong><span>Proc. 01450.000{123+i}/2024-18</span></div><span>12/08/2024</span><Status tone={i%2?"regular":"info"}>{i%2?"SICG":"SEI"}</Status><b>⋮</b></div>)}</div>)}</section><aside className="panel recentDocs"><h2>Documentos recentes</h2>{Object.values(groups).flat().slice(0,6).map((d,i)=><div className="updateRow" key={d}><strong>{d}</strong><span>{i%2?"SICG":"Transferegov"} · atualizado recentemente</span></div>)}</aside></div></main></AppShell>}
+import AppShell from "@/components/AppShell";
+import {Status} from "@/components/UI";
+import {getDocumentsOverview} from "@/lib/overview-data";
+
+export default async function Page(){
+  const {rows,groups}=await getDocumentsOverview();
+
+  return <AppShell active="/documentos"><main className="pageWrap">
+    <div className="pageHead"><div><h1>Documentos</h1><p>Organize e acesse documentos do patrimônio cultural.</p></div></div>
+
+    <div className="filterRow">
+      {["Contexto","Sistema","Status","Data"].map(x=><button key={x}>{x}<span>Todos</span></button>)}
+    </div>
+
+    <div className="docsGrid">
+      <section>
+        {Object.keys(groups).length ? Object.entries(groups).map(([g,docs]:any)=><div className="docGroup" key={g}>
+          <h2>{g}<small>{docs.length} documentos</small></h2>
+          {docs.map((d:any)=><div className="docRow" key={d.id}>
+            <span className="docIcon">DOC</span>
+            <div><strong>{d.titulo}</strong><span>{d.referencia_externa||"Sem referência externa"}</span></div>
+            <span>{new Date(d.created_at).toLocaleDateString("pt-BR")}</span>
+            <Status tone="info">{d.sistema_origem||"Interno"}</Status>
+            <b>⋮</b>
+          </div>)}
+        </div>) : <div className="emptyState panel">Nenhum documento cadastrado.</div>}
+      </section>
+
+      <aside className="panel recentDocs">
+        <h2>Documentos recentes</h2>
+        {rows.slice(0,6).map((d:any)=><div className="updateRow" key={d.id}>
+          <strong>{d.titulo}</strong>
+          <span>{d.sistema_origem||"Interno"} · {new Date(d.created_at).toLocaleDateString("pt-BR")}</span>
+        </div>)}
+        {!rows.length&&<div className="emptyState">Nenhum documento recente.</div>}
+      </aside>
+    </div>
+  </main></AppShell>
+}
