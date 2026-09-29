@@ -1,39 +1,69 @@
-# IPHAN OS — Beta 01 Pernambuco
+# Sistema de Gestão da Preservação — Beta 01
 
-Sistema Operacional da Preservação.
+Camada operacional para acompanhamento de bens culturais, intervenções, fiscalização, evidências, decisões, medições e conservação.
 
-Plataforma em desenvolvimento para gestão integrada de bens culturais, intervenções, fiscalização, evidências, decisões, medições, conservação e inteligência operacional.
+## Escopo do Beta 01
 
-## Objetivo
+O projeto está configurado para a Superintendência do Iphan em Pernambuco e foi desenhado para complementar — não substituir — sistemas oficiais como SEI, SICG, Fiscalis e Transferegov.
 
-Criar uma camada operacional que organize a rotina de acompanhamento das intervenções e da preservação, sem substituir sistemas oficiais como SEI, SICG, Fiscalis e Transferegov.
+Fluxo central:
 
-## Beta 01
+**CONHECER → PLANEJAR → INTERVIR → FISCALIZAR → VALIDAR → PRESERVAR**
 
-O primeiro ciclo contempla:
+## Módulos atuais
 
-- painel "Hoje";
-- patrimônio e mapa;
-- intervenções;
-- cronograma;
-- campo e diário;
-- evidências fotográficas;
-- ocorrências;
-- fiscalizações;
-- restrições e pendências;
-- decisões;
-- medições;
-- documentos;
-- trilha de auditoria;
-- Intelligence por texto e voz.
+- Hoje — visão de prioridades e indicadores;
+- Patrimônio — cadastro, mapa e prontuário do bem;
+- Intervenções — portfólio e cockpit operacional;
+- Cronograma — planejado × executado;
+- Campo — ocorrências e evidências;
+- Fiscalizações — agenda e checklist;
+- Controle — decisões, restrições, responsáveis e prazos;
+- Medições — registro e conferência;
+- Conservação — inspeções preventivas;
+- Documentos — referências e arquivos;
+- Auditoria — trilha de alterações;
+- Inteligência — consultas operacionais baseadas nos dados do sistema;
+- Administração — usuários, perfis e permissões.
 
-## Stack inicial
+## Backend
 
-- Next.js / App Router
+O Beta está conectado ao projeto Supabase dedicado **iphan**.
+
+Estrutura aplicada:
+
+- PostgreSQL;
+- Supabase Auth;
+- Storage privado para evidências;
+- Row Level Security (RLS);
+- auditoria automática;
+- perfis por função;
+- unidade institucional de Pernambuco.
+
+As migrations versionadas ficam em `supabase/migrations/`.
+
+## Primeiro acesso
+
+A rota `/cadastro` cria o usuário no Supabase Auth.
+
+- o primeiro usuário cadastrado recebe perfil `admin`;
+- os usuários seguintes recebem perfil `consulta`;
+- Administrador/Gestor pode alterar perfis em **Administração → Usuários e permissões**.
+
+## Stack
+
+- Next.js 16 / App Router
+- React 19
 - TypeScript
-- Tailwind CSS
-- PWA
-- Supabase (PostgreSQL, Auth, Storage e Realtime)
-- PostGIS para recursos geográficos
+- CSS próprio
+- Supabase
+- MapLibre GL + OpenStreetMap
+- GitHub Actions para validação de build
 
-> Nome de trabalho do produto. Uso institucional e identidade definitiva dependem de validação pelo IPHAN.
+## Status
+
+O código principal está conectado ao backend real. Dados demonstrativos estão sendo removidos das telas operacionais; banco vazio é tratado como estado vazio.
+
+A publicação web ainda precisa de um ambiente que execute Next.js com rotas de servidor e Server Actions. GitHub Pages sozinho não executa essa arquitetura.
+
+> A marca oficial do Iphan deve ser usada somente com o arquivo institucional aprovado. O componente visual temporário do projeto não deve ser tratado como marca oficial.
