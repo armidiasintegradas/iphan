@@ -1,33 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDashboardSummary } from "@/lib/data";
+import { getDashboardSummary, getInterventionsPortfolio } from "@/lib/data";
 
-const demo = {
-  bens: 42,
-  intervencoes: 18,
-  ocorrencias: 7,
-  decisoes: 7,
-};
-
-function answer(question: string, summary: typeof demo, source: "demo" | "supabase") {
+function answer(question: string, summary: any, delayed: any[]) {
   const q = question.toLowerCase();
 
   if (q.includes("atenção") || q.includes("atencao")) {
     return {
       text: `Há quatro frentes principais de atenção: decisões pendentes, intervenções com desvio físico, ocorrências abertas e fiscalizações próximas. No recorte atual há ${summary.decisoes} decisões pendentes e ${summary.ocorrencias} ocorrências que exigem acompanhamento.`,
-      source,
+      source: "supabase",
     };
   }
 
   if (q.includes("atrasad") || q.includes("desvio")) {
     return {
-      text: "A intervenção demonstrativa da Igreja Matriz apresenta execução de 64% frente a 72% planejados, um desvio de -8 p.p. As principais restrições cadastradas estão relacionadas a estrutura, instalações e proteção de elementos artísticos.",
-      source,
+      text: delayed.length
+        ? "Intervenções abaixo do planejado: " + delayed.slice(0,5).map((item:any) => item.title + " — " + item.actual + "% executado / " + item.planned + "% planejado").join("; ") + "."
+        : "Não há intervenções com execução abaixo do planejado nos registros atuais.",
+      source: "supabase",
     };
   }
 
   if (q.includes("decis") && q.includes("venc")) {
     return {
-      text: `O painel registra ${summary.decisoes} decisões pendentes. Na demonstração, quatro estão vencidas e devem ser priorizadas pela coordenação responsável.`,
+      text: `O sistema registra ${summary.decisoes} decisões pendentes. Consulte Controle para verificar prazos e responsáveis.`,
       source,
     };
   }
@@ -60,9 +55,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Pergunta obrigatória." }, { status: 400 });
   }
 
-  const realSummary = await getDashboardSummary();
-  const source = realSummary ? "supabase" : "demo";
-  const summary = realSummary || demo;
+  const [summary, portfolio] = await Promise.all([
+    getDashboardSummary(),
+    getInterventionsPortfolio(),
+  ]);
+  const delayed = portfolio.data.filter((item:any) => item.actual < item.planned);
 
-  return NextResponse.json(answer(question, summary, source));
+  return NextResponse.json(answer(question, summary, delayed));
 }
