@@ -54,5 +54,28 @@
 
     <a class="review-index" href="index.html">Revisão visual · Login</a>
   </main>
+  <script>
+    (async () => {
+      const photo = document.querySelector('.login-photo');
+      try {
+        const [a, b] = await Promise.all([
+          fetch('assets/login-photo-a.txt', {cache:'no-store'}).then(r => {
+            if (!r.ok) throw new Error('photo-a');
+            return r.text();
+          }),
+          fetch('assets/login-photo-b.txt', {cache:'no-store'}).then(r => {
+            if (!r.ok) throw new Error('photo-b');
+            return r.text();
+          })
+        ]);
+        const data = (a + b).replace(/\\s+/g, '');
+        photo.style.backgroundImage = 'url("data:image/webp;base64,' + data + '")';
+        photo.classList.add('is-loaded');
+      } catch (error) {
+        photo.classList.add('load-error');
+        console.error('Falha ao carregar a fotografia aprovada', error);
+      }
+    })();
+  </script>
 </body>
 </html>
