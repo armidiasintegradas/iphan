@@ -329,3 +329,16 @@ body{background:var(--approved-bg)}
 @media(max-width:1200px){.realHeritageFilters{grid-template-columns:repeat(3,1fr)}.realHeritageFilters .filterAction{grid-column:1/4}}
 @media(max-width:700px){.realHeritageFilters{grid-template-columns:1fr 1fr}.realHeritageFilters .filterAction{grid-column:1/3}}
 @media(max-width:480px){.realHeritageFilters{grid-template-columns:1fr}.realHeritageFilters .filterAction{grid-column:auto}}
+
+
+.inlineTableSearch{display:flex;align-items:center;gap:6px}
+.inlineTableSearch input{min-width:220px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 10px;font-size:10px;outline:0}
+.inlineTableSearch button,.tableExportAction{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 10px;font-size:10px;color:#53605a;text-decoration:none;font-weight:700}
+.tableExportAction{color:var(--green)}
+.approvedDataTable .withThumb b small{display:block;font-size:8px;font-weight:400;color:var(--muted);margin-top:3px;line-height:1.3}
+@media(max-width:760px){
+  .tableToolbar>div{width:100%;display:flex;flex-direction:column;align-items:stretch}
+  .inlineTableSearch{width:100%}
+  .inlineTableSearch input{flex:1;min-width:0}
+  .tableExportAction{justify-content:center}
+}
