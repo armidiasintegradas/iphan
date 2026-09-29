@@ -16,4 +16,6 @@ jobs:
       - run: npm install
       - name: Audit production dependencies
         run: npm audit --omit=dev --json || true
+      - name: Verify Beta integrity
+        run: npm run verify:beta
       - run: npm run build
