@@ -42,5 +42,24 @@ export async function getMeasurements(intervencaoId:string) {
     .select("id,numero,referencia,valor,percentual,status")
     .eq("intervencao_id",intervencaoId).order("numero");
   if(error) return {data:[],source:"supabase" as const};
-  return {source:"supabase" as const,data:data.map(i=>({...i,valor:Number(i.valor||0),percentual:Number(i.percentual||0),evidencias:0}))};
+
+  const ids=(data||[]).map(i=>i.id);
+  const counts=new Map<string,number>();
+  if(ids.length){
+    const {data:evidenceRows,error:evidenceError}=await supabase.from("evidencias")
+      .select("medicao_id")
+      .in("medicao_id",ids);
+    if(!evidenceError){
+      (evidenceRows||[]).forEach((row:any)=>{
+        if(row.medicao_id) counts.set(row.medicao_id,(counts.get(row.medicao_id)||0)+1);
+      });
+    }
+  }
+
+  return {source:"supabase" as const,data:(data||[]).map(i=>({
+    ...i,
+    valor:Number(i.valor||0),
+    percentual:Number(i.percentual||0),
+    evidencias:counts.get(i.id)||0,
+  }))};
 }
