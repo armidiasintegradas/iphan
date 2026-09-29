@@ -56,7 +56,7 @@ export function can(role: Role, permission: Permission) {
 }
 
 export const roleLabels: Record<Role,string> = {
-  admin: "Administrador institucional",
+  admin: "Superadministrador",
   gestor: "Superintendente / Gestor",
   coordenador: "Coordenador",
   fiscal: "Fiscal",
