@@ -71,3 +71,6 @@ A publicação web ainda precisa de um ambiente que execute Next.js com rotas de
 ## Publicação
 
 O ambiente de produção é acionado pela branch `main` conectada à Vercel.
+
+
+<!-- deployment trigger: approved login 2026-09-29 -->
