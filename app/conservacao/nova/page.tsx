@@ -3,9 +3,11 @@ import FormNotice from "@/components/FormNotice";
 import {getHeritageOptions} from "@/lib/data";
 import {createConservationInspection} from "@/app/conservacao/actions";
 import {ShieldCheck, CalendarDays} from "lucide-react";
+import {requirePermission} from "@/lib/authorization";
 
 export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){
   const q=await searchParams;
+  await requirePermission("inspection.write","/conservacao");
   const heritage=await getHeritageOptions();
   const today=new Date().toISOString().slice(0,10);
 
