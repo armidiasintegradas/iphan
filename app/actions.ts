@@ -126,3 +126,101 @@ export async function createOccurrence(formData: FormData) {
   if (error) redirect("/campo/ocorrencia?erro=salvar");
   redirect("/campo?ocorrencia=criada");
 }
+
+
+export async function updateHeritage(formData:FormData){
+  const current=await getCurrentUser();
+  ensureCurrent(current,"heritage.write","/patrimonio");
+
+  const id=value(formData,"id");
+  const nome=value(formData,"nome");
+  const municipio=value(formData,"municipio");
+  const uf=(value(formData,"uf")||"PE").toUpperCase();
+  const tipologia=value(formData,"tipologia");
+  const nivel_protecao=value(formData,"nivel_protecao");
+  const descricao=value(formData,"descricao");
+
+  if(!id||!nome||!municipio||uf.length!==2||!tipologia||!nivel_protecao){
+    redirect(id?"/patrimonio/"+id+"/editar?erro=dados":"/patrimonio?erro=dados");
+  }
+
+  const supabase=await createClient();
+  const {data:item,error:findError}=await supabase.from("bens_culturais")
+    .select("id,unidade_id").eq("id",id).maybeSingle();
+  if(findError||!item||item.unidade_id!==current.unitId) redirect("/patrimonio?erro=registro");
+
+  const {error}=await supabase.from("bens_culturais").update({
+    nome,municipio,uf,tipologia,nivel_protecao,descricao,
+    updated_at:new Date().toISOString(),
+  }).eq("id",id);
+  if(error) redirect("/patrimonio/"+id+"/editar?erro=salvar");
+  redirect("/patrimonio/"+id+"?salvo=1");
+}
+
+export async function updateIntervention(formData:FormData){
+  const current=await getCurrentUser();
+  ensureCurrent(current,"intervention.write","/intervencoes");
+
+  const id=value(formData,"id");
+  const titulo=value(formData,"titulo");
+  const descricao=value(formData,"descricao");
+  const inicio_previsto=value(formData,"inicio_previsto")||null;
+  const fim_previsto=value(formData,"fim_previsto")||null;
+  const avanco_planejado=Number(value(formData,"avanco_planejado").replace(",","."));
+  const avanco_real=Number(value(formData,"avanco_real").replace(",","."));
+
+  if(!id||!titulo||!Number.isFinite(avanco_planejado)||!Number.isFinite(avanco_real)||
+     avanco_planejado<0||avanco_planejado>100||avanco_real<0||avanco_real>100){
+    redirect(id?"/intervencoes/"+id+"/editar?erro=dados":"/intervencoes?erro=dados");
+  }
+  if(inicio_previsto&&fim_previsto&&fim_previsto<inicio_previsto){
+    redirect("/intervencoes/"+id+"/editar?erro=periodo");
+  }
+
+  const supabase=await createClient();
+  const {data:item,error:findError}=await supabase.from("intervencoes")
+    .select("id,bens_culturais(unidade_id)").eq("id",id).maybeSingle();
+  if(findError||!item||(item as any).bens_culturais?.unidade_id!==current.unitId){
+    redirect("/intervencoes?erro=registro");
+  }
+
+  const {error}=await supabase.from("intervencoes").update({
+    titulo,descricao,inicio_previsto,fim_previsto,avanco_planejado,avanco_real,
+    updated_at:new Date().toISOString(),
+  }).eq("id",id);
+  if(error) redirect("/intervencoes/"+id+"/editar?erro=salvar");
+  redirect("/intervencoes/"+id+"?salvo=1");
+}
+
+export async function closeIntervention(formData:FormData){
+  const current=await getCurrentUser();
+  ensureCurrent(current,"intervention.write","/intervencoes");
+
+  const id=value(formData,"id");
+  if(!id) redirect("/intervencoes?erro=dados");
+
+  const supabase=await createClient();
+  const {data:item,error:findError}=await supabase.from("intervencoes")
+    .select("id,status,bens_culturais(unidade_id)").eq("id",id).maybeSingle();
+  if(findError||!item||(item as any).bens_culturais?.unidade_id!==current.unitId){
+    redirect("/intervencoes?erro=registro");
+  }
+  if(item.status==="concluido") redirect("/intervencoes/"+id+"?estado=concluido");
+
+  const {count:openDecisions}=await supabase.from("decisoes").select("*",{count:"exact",head:true})
+    .eq("intervencao_id",id).in("status",["aberto","aguardando","em_andamento"]);
+  const {count:openRestrictions}=await supabase.from("restricoes").select("*",{count:"exact",head:true})
+    .eq("intervencao_id",id).in("status",["aberto","aguardando","em_andamento"]);
+  if((openDecisions||0)>0||(openRestrictions||0)>0){
+    redirect("/intervencoes/"+id+"?erro=pendencias");
+  }
+
+  const {error}=await supabase.from("intervencoes").update({
+    status:"concluido",
+    fim_real:new Date().toISOString().slice(0,10),
+    avanco_real:100,
+    updated_at:new Date().toISOString(),
+  }).eq("id",id);
+  if(error) redirect("/intervencoes/"+id+"?erro=salvar");
+  redirect("/intervencoes/"+id+"?concluida=1");
+}
