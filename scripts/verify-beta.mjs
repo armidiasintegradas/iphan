@@ -13,6 +13,7 @@ const required=[
   "app/intervencoes/[id]/medicoes/page.tsx",
   "app/fiscalizacoes/page.tsx",
   "app/api/fiscalizacoes/export/route.ts",
+  "app/api/health/route.ts",
   "app/controle/page.tsx",
   "app/conservacao/page.tsx",
   "app/campo/page.tsx",
