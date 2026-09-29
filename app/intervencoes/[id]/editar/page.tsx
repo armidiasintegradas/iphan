@@ -4,9 +4,11 @@ import {getInterventionById} from "@/lib/data";
 import {updateIntervention} from "@/app/actions";
 import {notFound} from "next/navigation";
 import {Wrench, Pencil} from "lucide-react";
+import {requirePermission} from "@/lib/authorization";
 
 export default async function Page({params,searchParams}:{params:Promise<{id:string}>,searchParams:Promise<Record<string,string|undefined>>}){
   const [{id},q]=await Promise.all([params,searchParams]);
+  await requirePermission("intervention.write","/intervencoes");
   const item=await getInterventionById(id);
   if(!item) notFound();
 
