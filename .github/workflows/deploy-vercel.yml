@@ -7,7 +7,6 @@ on:
 
 jobs:
   deploy:
-    if: ${{ secrets.VERCEL_TOKEN != '' }}
     runs-on: ubuntu-latest
     environment: production
     env:
@@ -20,13 +19,16 @@ jobs:
         with:
           node-version: 22
 
-      - name: Validate deployment token
+      - name: Detect deployment token
+        id: vercel_auth
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          if [ -z "$VERCEL_TOKEN" ]; then
-            echo "VERCEL_TOKEN is not configured in GitHub Actions."
-            exit 1
+          if [ -n "$VERCEL_TOKEN" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "VERCEL_TOKEN is not configured; deployment steps will be skipped."
           fi
 
       - run: npm install
@@ -34,30 +36,36 @@ jobs:
       - run: npm run build
 
       - name: Install Vercel CLI
+        if: steps.vercel_auth.outputs.available == 'true'
         run: npm install --global vercel@latest
 
       - name: Ensure Vercel project exists
+        if: steps.vercel_auth.outputs.available == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           vercel project inspect "$VERCEL_PROJECT_NAME" --scope "$VERCEL_TEAM_SLUG" --token "$VERCEL_TOKEN" >/dev/null 2>&1 ||           vercel project add "$VERCEL_PROJECT_NAME" --scope "$VERCEL_TEAM_SLUG" --token "$VERCEL_TOKEN"
 
       - name: Link repository to Vercel project
+        if: steps.vercel_auth.outputs.available == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel link --yes --project "$VERCEL_PROJECT_NAME" --scope "$VERCEL_TEAM_SLUG" --token "$VERCEL_TOKEN"
 
       - name: Pull production environment
+        if: steps.vercel_auth.outputs.available == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel pull --yes --environment=production --scope "$VERCEL_TEAM_SLUG" --token "$VERCEL_TOKEN"
 
       - name: Build Vercel output
+        if: steps.vercel_auth.outputs.available == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel build --prod --scope "$VERCEL_TEAM_SLUG" --token "$VERCEL_TOKEN"
 
       - name: Deploy production
+        if: steps.vercel_auth.outputs.available == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
@@ -66,6 +74,7 @@ jobs:
           echo "$DEPLOY_URL" > vercel-production-url.txt
 
       - name: Verify production response
+        if: steps.vercel_auth.outputs.available == 'true'
         run: |
           DEPLOY_URL=$(cat vercel-production-url.txt)
           curl --fail --location --silent --show-error "$DEPLOY_URL/login" >/dev/null
