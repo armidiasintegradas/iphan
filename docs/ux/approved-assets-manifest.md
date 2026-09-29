@@ -1,6 +1,6 @@
 # Ativos visuais aprovados
 
-Status de integração: **em execução — layout consolidado, ativos binários em migração**
+Status de integração: **CONCLUÍDA — layout consolidado e ativos visuais aprovados locais**
 
 ## Regra
 
@@ -77,23 +77,18 @@ Todos os builds dessa fase concluíram com sucesso.
 
 Os seguintes ativos já foram extraídos das referências aprovadas; os três recortes de Campo já estão publicados e os demais seguem prontos para publicação:
 
-- [x] login hero
+- [x] login hero — publicado
 - [x] quatro imagens de prioridades — publicadas e sem fallback externo
-- [x] hero do patrimônio
-- [x] quatro thumbnails de patrimônio
-- [x] imagem de progresso da intervenção
+- [x] hero do patrimônio — publicado
+- [x] quatro thumbnails de patrimônio — publicados
+- [x] imagem de progresso da intervenção — publicada
 - [x] três thumbnails de campo — publicados no GitHub
 
-A publicação binária restante será feita sem regenerar ou reinterpretar os recortes.
+Todos os ativos listados acima estão publicados no repositório. Os fallbacks externos foram removidos das telas aprovadas.
 
 ## Regra de fallback
 
-Enquanto um ativo aprovado ainda não estiver fisicamente em `public/visual`, o front-end mantém o fallback existente para não quebrar a produção.
-
-Assim que o arquivo local estiver publicado:
-1. o ativo aprovado local passa a ser a primeira fonte;
-2. o fallback externo deve ser removido;
-3. a tela deve ser novamente verificada em desktop, tablet e mobile.
+Os ativos aprovados são carregados diretamente de `public/brand` e `public/visual`. Não há fallback externo nas telas aprovadas desta fase.
 
 ## Critério de conclusão visual
 
