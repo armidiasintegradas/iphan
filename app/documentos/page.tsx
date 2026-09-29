@@ -6,7 +6,7 @@ export default async function Page(){
   const {rows,groups}=await getDocumentsOverview();
 
   return <AppShell active="/documentos"><main className="pageWrap">
-    <div className="pageHead"><div><h1>Documentos</h1><p>Organize e acesse documentos do patrimônio cultural.</p></div></div>
+    <div className="pageHead"><div><h1>Documentos</h1><p>Organize e acesse documentos do patrimônio cultural.</p></div><a href="/documentos/novo" className="primaryAction">+ Novo documento</a></div>
 
     <div className="filterRow">
       {["Contexto","Sistema","Status","Data"].map(x=><button key={x}>{x}<span>Todos</span></button>)}
@@ -21,7 +21,7 @@ export default async function Page(){
             <div><strong>{d.titulo}</strong><span>{d.referencia_externa||"Sem referência externa"}</span></div>
             <span>{new Date(d.created_at).toLocaleDateString("pt-BR")}</span>
             <Status tone="info">{d.sistema_origem||"Interno"}</Status>
-            <b>⋮</b>
+            {d.signedUrl ? <a href={d.signedUrl} target="_blank" rel="noreferrer">Abrir</a> : <b>—</b>}
           </div>)}
         </div>) : <div className="emptyState panel">Nenhum documento cadastrado.</div>}
       </section>
