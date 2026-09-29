@@ -1,13 +1,17 @@
 import AppShell from "@/components/AppShell";
 import DemoBadge from "@/components/DemoBadge";
 import {getMeasurements} from "@/lib/operational-data";
+import {reviewMeasurement} from "@/app/intervencoes/actions";
+import {getCurrentUser} from "@/lib/current-user";
+import {can} from "@/lib/permissions";
 import Link from "next/link";
 import { Banknote, ClipboardCheck, Image, TimerReset } from "lucide-react";
 
 const money=(v:number)=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(v);
 
 export default async function Page({params}:{params:Promise<{id:string}>}){
- const {id}=await params; const {data,source}=await getMeasurements(id);
+ const {id}=await params; const [{data,source},current]=await Promise.all([getMeasurements(id),getCurrentUser()]);
+ const canReview=can(current.role,"measurement.approve");
  const total=data.reduce((s:any,m:any)=>s+m.valor,0);
  const awaiting=data.filter((m:any)=>m.status==="aguardando").length;
  const evidence=data.reduce((s:any,m:any)=>s+m.evidencias,0);
@@ -23,14 +27,20 @@ export default async function Page({params}:{params:Promise<{id:string}>}){
   </section>
 
   <section className="panel approvedMeasurementTable">
-    <div className="measurementHead"><span>Nº</span><span>Referência</span><span>Valor</span><span>% físico</span><span>Evidências</span><span>Status</span></div>
+    <div className="measurementHead withActions"><span>Nº</span><span>Referência</span><span>Valor</span><span>% físico</span><span>Evidências</span><span>Status</span><span>Ações</span></div>
     {data.map((m:any)=><article className="measurementRow" key={m.id}>
       <span className="measurementNumber">{String(m.numero).padStart(2,"0")}</span>
       <div><strong>{m.referencia}</strong><small>Medição vinculada à intervenção</small></div>
       <span>{money(m.valor)}</span>
       <div className="measurementPhysical"><i><b style={{width:Math.max(0,Math.min(100,m.percentual))+"%"}}/></i><em>{m.percentual}%</em></div>
       <span>{m.evidencias}</span>
-      <span className={"status "+(m.status==="concluido"?"regular":m.status==="aguardando"?"warning":"neutral")}><i/>{m.status}</span>
+      <span className={"status "+(m.status==="concluido"?"regular":m.status==="aguardando"?"warning":m.status==="cancelado"?"danger":"neutral")}><i/>{m.status}</span>
+      <div className="rowActions">
+        {canReview&&m.status==="aguardando" ? <>
+          <form action={reviewMeasurement}><input type="hidden" name="intervencao_id" value={id}/><input type="hidden" name="medicao_id" value={m.id}/><input type="hidden" name="decision" value="approve"/><button className="rowAction success" type="submit">Aprovar</button></form>
+          <form action={reviewMeasurement}><input type="hidden" name="intervencao_id" value={id}/><input type="hidden" name="medicao_id" value={m.id}/><input type="hidden" name="decision" value="reject"/><button className="rowAction danger" type="submit">Rejeitar</button></form>
+        </> : <span className="rowActionMuted">{m.status==="concluido"?"Conferida":m.status==="cancelado"?"Rejeitada":"—"}</span>}
+      </div>
     </article>)}
     {!data.length&&<div className="emptyState">Nenhuma medição registrada.</div>}
   </section>
