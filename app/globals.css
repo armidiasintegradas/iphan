@@ -138,7 +138,7 @@ body{background:var(--approved-bg)}
 .portfolioMetrics svg{grid-row:1/4;color:var(--green);width:21px}
 .portfolioMetrics strong{font:500 28px/1 Georgia,serif}.portfolioMetrics span{font-size:10px}.portfolioMetrics small{font-size:9px;color:var(--green);margin-top:5px}
 .interventionToolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.interventionToolbar>div{display:flex;gap:6px}.interventionToolbar button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-size:10px;color:#66706b}.interventionToolbar button.active{background:#e9f3ef;color:var(--green);border-color:#dce9e3}.interventionToolbar>span{font-size:10px;color:var(--muted)}
+.interventionToolbar>div{display:flex;gap:6px;flex-wrap:wrap}.interventionToolbar button,.interventionToolbar a{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-size:10px;color:#66706b;text-decoration:none}.interventionToolbar button.active,.interventionToolbar a.active{background:#e9f3ef;color:var(--green);border-color:#dce9e3}.interventionToolbar>span{font-size:10px;color:var(--muted)}
 .approvedInterventionGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .approvedInterventionCard{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;color:inherit;box-shadow:0 5px 18px rgba(28,39,33,.035)}
 .interventionCardVisual{height:170px;background-size:cover,cover;background-position:center;position:relative;padding:12px}.interventionCardVisual .status{position:absolute;left:12px;top:12px}
@@ -147,7 +147,7 @@ body{background:var(--approved-bg)}
 .dualProgress{margin:8px 0 13px}.dualProgress i{display:block;height:5px;background:#ebeeeb;border-radius:99px;overflow:hidden;margin-top:5px}.dualProgress b{display:block;height:100%;background:var(--green);border-radius:99px}.dualProgress .planned b{background:#65736c}
 .interventionCardBody footer{border-top:1px solid var(--line);padding-top:11px;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#60706a}.interventionCardBody footer .negative{color:#d93434}
 
-.controlTabs{display:flex;gap:6px;margin:0 0 12px}.controlTabs button{border:0;background:transparent;padding:8px 11px;border-radius:999px;color:#66706b;font-size:10px}.controlTabs button.active{background:#e9f3ef;color:var(--green)}
+.controlTabs{display:flex;gap:6px;margin:0 0 12px;flex-wrap:wrap}.controlTabs button,.controlTabs a{border:0;background:transparent;padding:8px 11px;border-radius:999px;color:#66706b;font-size:10px;text-decoration:none}.controlTabs button.active,.controlTabs a.active{background:#e9f3ef;color:var(--green)}
 .approvedControlTable{padding:0;overflow:hidden}.controlTableHead,.controlTableRow{display:grid;grid-template-columns:110px minmax(260px,1.6fr) .7fr 1fr .65fr .75fr;gap:10px;align-items:center}.controlTableHead{padding:11px 14px;background:#f4f5f2;color:#7a827e;font-size:9px;text-transform:uppercase;letter-spacing:.05em}.controlTableRow{padding:13px 14px;border-top:1px solid var(--line);font-size:10px}.controlTableRow>div strong,.controlTableRow>div small,.controlTableRow>div em{display:block}.controlTableRow>div strong{font-size:12px}.controlTableRow>div small{color:var(--muted);margin-top:3px}.controlTableRow>div em{font-style:normal;color:#a06a19;margin-top:5px;font-size:9px}.controlId{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#707975}
 
 .approvedMobileFormPage{background:#f8f7f3;min-height:100vh;padding:0 18px 44px}.mobileFormHeader{display:flex!important;align-items:flex-start!important;gap:13px!important;padding:20px 0 15px!important;background:transparent!important}.mobileFormHeader>a{width:34px;height:34px;border:1px solid var(--line);background:#fff;border-radius:50%;display:grid;place-items:center;color:#27312c;flex:0 0 auto}.mobileFormHeader p{font-size:8px;letter-spacing:.16em;font-weight:800;color:#7b837f;margin:2px 0 5px}.mobileFormHeader h1{font:500 29px/1.1 Georgia,serif;margin:0}.mobileFormHeader span{display:block;font-size:10px;color:var(--muted);margin-top:6px}
@@ -319,3 +319,13 @@ body{background:var(--approved-bg)}
 .realDocFilters>button{border:0;background:var(--green);color:#fff;border-radius:10px;padding:12px 15px;font-size:10px;font-weight:800;cursor:pointer}
 @media(max-width:900px){.realDocFilters{grid-template-columns:1fr 1fr}.realDocFilters>button{grid-column:1/3}}
 @media(max-width:520px){.realDocFilters{grid-template-columns:1fr}.realDocFilters>button{grid-column:auto}}
+
+
+.realHeritageFilters{display:grid;grid-template-columns:repeat(6,minmax(130px,1fr)) auto;gap:8px;align-items:end}
+.realHeritageFilters label{display:flex;flex-direction:column;gap:5px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-width:0}
+.realHeritageFilters label strong{font-size:8px;text-transform:uppercase;letter-spacing:.06em;color:#7a827e}
+.realHeritageFilters select{border:0;outline:0;background:transparent;color:#38433d;font-size:10px;min-width:0;width:100%}
+.realHeritageFilters .filterAction{height:100%;min-height:48px;justify-content:center}
+@media(max-width:1200px){.realHeritageFilters{grid-template-columns:repeat(3,1fr)}.realHeritageFilters .filterAction{grid-column:1/4}}
+@media(max-width:700px){.realHeritageFilters{grid-template-columns:1fr 1fr}.realHeritageFilters .filterAction{grid-column:1/3}}
+@media(max-width:480px){.realHeritageFilters{grid-template-columns:1fr}.realHeritageFilters .filterAction{grid-column:auto}}
