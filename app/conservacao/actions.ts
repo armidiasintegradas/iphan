@@ -29,13 +29,14 @@ export async function createConservationInspection(fd:FormData){
     redirect("/conservacao/nova?erro=periodo");
   }
 
-  const {error}=await supabase.rpc("create_conservation_inspection",{
-    p_bem_id:bem_id,
-    p_categoria:categoria,
-    p_estado:estado,
-    p_observacoes:observacoes||null,
-    p_inspecionada_em:inspecionada_em,
-    p_proxima_inspecao:proxima_inspecao,
+  const {error}=await supabase.from("inspecoes_conservacao").insert({
+    bem_id,
+    categoria,
+    estado,
+    observacoes:observacoes||null,
+    inspecionada_em,
+    proxima_inspecao,
+    responsavel_id:current.id,
   });
 
   if(error) redirect("/conservacao/nova?erro=salvar");
