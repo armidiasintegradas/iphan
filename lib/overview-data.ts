@@ -1,20 +1,27 @@
 import { createClient } from "@/lib/supabase/server";
 
-export async function getFiscalizationsOverview() {
+export async function getFiscalizationsOverview(filters?:{q?:string}) {
   const supabase=await createClient();
   const {data,error}=await supabase
     .from("fiscalizacoes")
-    .select("id,titulo,tipo,status,agendada_para,realizada_em,observacoes,bem_id,intervencao_id")
+    .select("id,titulo,tipo,status,agendada_para,realizada_em,observacoes,bem_id,intervencao_id,bens_culturais(nome,municipio,uf),intervencoes(titulo,bens_culturais(nome,municipio,uf))")
     .order("agendada_para",{ascending:true});
 
   if(error) return {rows:[],metrics:{abertas:0,planejadas:0,realizadas:0,vencidas:0},source:"supabase" as const};
 
-  const rows=data||[];
+  const all=(data||[]).map((x:any)=>({
+    ...x,
+    bemNome:x.bens_culturais?.nome || x.intervencoes?.bens_culturais?.nome || "Bem cultural",
+    local:[x.bens_culturais?.municipio || x.intervencoes?.bens_culturais?.municipio,x.bens_culturais?.uf || x.intervencoes?.bens_culturais?.uf].filter(Boolean).join(", "),
+  }));
+  const search=(filters?.q||"").trim().toLowerCase();
+  const rows=search ? all.filter((x:any)=>[x.titulo,x.tipo,x.bemNome,x.local].join(" ").toLowerCase().includes(search)) : all;
+
   const metrics={
-    abertas:rows.filter((x:any)=>["aberto","em_andamento","aguardando"].includes(x.status)).length,
-    planejadas:rows.filter((x:any)=>x.agendada_para&&!x.realizada_em).length,
-    realizadas:rows.filter((x:any)=>!!x.realizada_em||x.status==="concluido").length,
-    vencidas:rows.filter((x:any)=>x.agendada_para&&new Date(x.agendada_para)<new Date()&&!x.realizada_em&&x.status!=="concluido").length,
+    abertas:all.filter((x:any)=>["aberto","em_andamento","aguardando"].includes(x.status)).length,
+    planejadas:all.filter((x:any)=>x.agendada_para&&!x.realizada_em&&x.status!=="concluido").length,
+    realizadas:all.filter((x:any)=>!!x.realizada_em||x.status==="concluido").length,
+    vencidas:all.filter((x:any)=>x.agendada_para&&new Date(x.agendada_para)<new Date()&&!x.realizada_em&&x.status!=="concluido").length,
   };
 
   return {rows,metrics,source:"supabase" as const};
