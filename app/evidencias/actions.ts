@@ -2,12 +2,19 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/current-user";
+import { can } from "@/lib/permissions";
 
 function cleanFileName(name: string) {
   return name.toLowerCase().replace(/[^a-z0-9._-]+/g, "-");
 }
 
 export async function uploadEvidence(formData: FormData) {
+  const current=await getCurrentUser();
+  if(!current.id) redirect("/login");
+  if(!current.active) redirect("/login?erro=inativo");
+  if(!current.unitId || !can(current.role,"evidence.write")) redirect("/campo/evidencia?erro=permissao");
+
   const file = formData.get("arquivo");
   const intervencaoId = String(formData.get("intervencao_id") || "");
   const medicaoId = String(formData.get("medicao_id") || "");
@@ -21,8 +28,14 @@ export async function uploadEvidence(formData: FormData) {
   const supabase = await createClient();
   if (!supabase) redirect("/campo/evidencia?demo=1");
 
-  const { data: { user } } = await supabase.auth.getUser();
-  if(!user) redirect("/login");
+  const {data:intervention,error:interventionError}=await supabase
+    .from("intervencoes")
+    .select("id,bens_culturais(unidade_id)")
+    .eq("id",intervencaoId)
+    .maybeSingle();
+  if(interventionError||!intervention||(intervention as any).bens_culturais?.unidade_id!==current.unitId){
+    redirect("/campo/evidencia?erro=intervencao");
+  }
 
   if(medicaoId){
     const {data:measurement,error:measurementError}=await supabase
@@ -58,7 +71,7 @@ export async function uploadEvidence(formData: FormData) {
     storage_path: path,
     legenda,
     captured_at: new Date().toISOString(),
-    created_by: user.id,
+    created_by: current.id,
     metadata: {
       original_name: file.name,
       size: file.size,
