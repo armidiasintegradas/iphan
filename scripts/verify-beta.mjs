@@ -17,6 +17,7 @@ const required=[
   "app/campo/page.tsx",
   "app/inteligencia/page.tsx",
   "app/notificacoes/page.tsx",
+  "app/buscar/page.tsx",
   "app/administracao/usuarios/page.tsx",
   "app/administracao/auditoria/page.tsx",
   "public/brand/iphan-lucio-costa.webp",
@@ -34,6 +35,8 @@ const required=[
   "supabase/migrations/0012_operational_update_rls.sql",
   "supabase/migrations/0014_conservation_risk_trigger.sql",
   "supabase/migrations/0016_unit_scope_rls_hardening.sql",
+  "supabase/migrations/0017_intervention_update_rls.sql",
+  "supabase/migrations/0018_complete_audit_triggers.sql",
 ];
 
 const guardedRoutes=[
