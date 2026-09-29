@@ -48,7 +48,7 @@ export default function IntelligenceClient() {
       <header className="intelligenceHeader approvedIntelligenceHeader">
         <div className="aiMark"><Sparkles size={20}/></div>
         <div>
-          <p>INTELLIGENCE</p>
+          <p>INTELIGÊNCIA</p>
           <h1>Pergunte ao sistema</h1>
           <span>Contexto operacional do patrimônio, em linguagem natural.</span>
         </div>
