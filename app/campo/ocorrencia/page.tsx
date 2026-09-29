@@ -3,9 +3,11 @@ import FormNotice from "@/components/FormNotice";
 import { createOccurrence } from "@/app/actions";
 import { AlertTriangle, ChevronLeft, Mic } from "lucide-react";
 import { getInterventionOptions } from "@/lib/data";
+import {requirePermission} from "@/lib/authorization";
 
 export default async function Page({ searchParams }: { searchParams: Promise<Record<string,string|undefined>> }) {
   const q = await searchParams;
+  await requirePermission("field.write","/campo");
   const interventions = await getInterventionOptions();
 
   return <main className="mobileApp occurrenceForm approvedMobileFormPage">
