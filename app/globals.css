@@ -92,3 +92,19 @@ body{background:var(--approved-bg)}
 
 @media(max-width:1100px){.approvedControlGrid,.approvedConservationGrid,.approvedDocsGrid{grid-template-columns:1fr}.controlMetricRow,.conservationMetrics{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.controlMetricRow,.conservationMetrics{grid-template-columns:1fr 1fr}.approvedDataTable{overflow-x:auto}.approvedDataTable .tr{min-width:720px}.inlineFilters{flex-wrap:wrap}.inlineFilters span{flex-basis:100%}.conservationAsset{grid-template-columns:90px 1fr}.conservationAsset img{width:90px;height:65px}.conservationAsset>.status{grid-column:2}.docFilters{grid-template-columns:1fr 1fr}.approvedDocRow{grid-template-columns:18px 30px 1fr}.approvedDocRow>span:nth-of-type(2),.approvedDocRow>.status{display:none}}
+
+
+/* ===== Approved exact-reference assets ===== */
+.iphanBrand{position:relative;overflow:hidden}
+.iphanBrandFallback{display:flex;align-items:stretch;height:100%;width:100%}
+.iphanBrandExact{position:absolute;inset:0;background-image:url('/brand/iphan-lucio-costa.webp');background-size:contain;background-repeat:no-repeat;background-position:left center;pointer-events:none}
+.priorityApprovedImage{width:100%;height:116px;background-size:cover,cover;background-position:center,center;background-repeat:no-repeat}
+.approvedProgressImage{width:100%;height:235px;border-radius:11px;background-size:cover,cover;background-position:center,center;background-repeat:no-repeat}
+.approvedLogin .loginPhoto{background-image:
+  linear-gradient(90deg,transparent 80%,rgba(248,247,243,.18)),
+  url('/visual/login-hero.webp'),
+  url('https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1800&q=90');
+background-size:auto,cover,cover;
+background-position:center,center,center;
+background-repeat:no-repeat}
+@media(max-width:700px){.priorityApprovedImage{height:140px}.approvedProgressImage{height:190px}}
