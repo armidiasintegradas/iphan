@@ -2,13 +2,13 @@ import { redirect } from "next/navigation";
 import AppShell from "@/components/AppShell";
 import { permissionMatrix, roleLabels, type Role } from "@/lib/permissions";
 import { getCurrentUser, getProfiles } from "@/lib/current-user";
-import { updateProfileRole } from "@/app/administracao/actions";
+import { updateProfileRole, toggleProfileActive } from "@/app/administracao/actions";
 import { ShieldCheck, Users, Building2 } from "lucide-react";
 
 export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>;}){
   const q=await searchParams;
   const current=await getCurrentUser();
-  if(!["admin","gestor"].includes(current.role)) redirect("/");
+  if(!current.active || !current.unitId || !["admin","gestor"].includes(current.role)) redirect("/");
 
   const users=await getProfiles();
   const roles=Object.keys(roleLabels) as Role[];
@@ -21,7 +21,13 @@ export default async function Page({searchParams}:{searchParams:Promise<Record<s
     </div>
 
     {q.salvo&&<div className="formNotice">Perfil atualizado com sucesso.</div>}
-    {q.erro&&<div className="formNotice error">Não foi possível atualizar o perfil. {q.erro==="proprio-perfil"?"Seu próprio perfil não pode ser alterado por esta tela.":""}</div>}
+    {q.erro&&<div className="formNotice error">{
+      q.erro==="proprio-perfil"?"Seu próprio perfil não pode ser alterado por esta tela.":
+      q.erro==="proprio-status"?"Você não pode desativar o próprio acesso.":
+      q.erro==="admin"?"Somente um Superadministrador pode alterar outro Superadministrador.":
+      q.erro==="escopo"?"O usuário selecionado não pertence à sua unidade institucional.":
+      "Não foi possível atualizar o perfil."
+    }</div>}
 
     <section className="adminMetrics">
       <article><Users/><strong>{users.length}</strong><span>Usuários cadastrados</span></article>
@@ -39,7 +45,14 @@ export default async function Page({searchParams}:{searchParams:Promise<Record<s
           : <form action={updateProfileRole} className="roleForm"><input type="hidden" name="profile_id" value={u.id}/><select name="role" defaultValue={u.role}>{roles.map(role=><option value={role} key={role}>{roleLabels[role]}</option>)}</select><button type="submit">Salvar</button></form>
         }</div>
         <span>{u.unit}{u.uf?" · "+u.uf:""}</span>
-        <span className={"status "+(u.active?"regular":"danger")}><i/>{u.active?"Ativo":"Inativo"}</span>
+        <div className="userStatusActions">
+          <span className={"status "+(u.active?"regular":"danger")}><i/>{u.active?"Ativo":"Inativo"}</span>
+          {u.id!==current.id&&<form action={toggleProfileActive}>
+            <input type="hidden" name="profile_id" value={u.id}/>
+            <input type="hidden" name="ativo" value={u.active?"false":"true"}/>
+            <button type="submit" className={u.active?"userDeactivate":"userActivate"}>{u.active?"Desativar":"Ativar"}</button>
+          </form>}
+        </div>
       </article>) : <div className="emptyState">Nenhum perfil cadastrado.</div>}
     </section>
 
