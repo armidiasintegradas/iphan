@@ -1217,3 +1217,109 @@ body{background:var(--approved-bg)}
   .previewIndexHead h1{font-size:40px}
   .previewScreenGrid{grid-template-columns:1fr}
 }
+
+
+/* ===== Preview Login — approved exact assets ===== */
+.previewLogin .previewApprovedPhoto{
+  background:#dfe5e1!important;
+}
+.previewLogin .previewApprovedPhoto img{
+  width:100%;
+  height:100vh;
+  display:block;
+  object-fit:cover;
+  object-position:center center;
+  image-rendering:auto;
+}
+.previewLogin .previewApprovedPanel{
+  background:#fdfcf9!important;
+}
+.previewLogin .previewApprovedPanel::after{
+  content:"";
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:190px;
+  height:520px;
+  background:url('/preview/login-approved-ornament.webp') right bottom/contain no-repeat;
+  opacity:1;
+  filter:none;
+  pointer-events:none;
+}
+.previewLogin .loginPanelInner{
+  width:min(calc(100% - 88px),445px);
+  padding:94px 0 52px;
+}
+.previewLogin .approvedPreviewLogo{
+  display:block;
+  width:100%;
+  max-width:445px;
+  height:auto;
+  margin:0 0 34px;
+  object-fit:contain;
+}
+.previewLogin .loginPanelInner h1{
+  font-size:54px;
+  line-height:1.01;
+  margin:0;
+  letter-spacing:-.027em;
+}
+.previewLogin .loginSubtitle{
+  margin-top:13px;
+  font-size:19px;
+  gap:12px;
+}
+.previewLogin .approvedLoginForm{
+  margin-top:44px;
+  gap:14px;
+}
+.previewLogin .approvedLoginField{
+  height:59px;
+}
+.previewLogin .approvedRemember{
+  margin:4px 0 6px;
+}
+.previewLogin .approvedLoginSubmit{
+  height:58px;
+}
+.previewLogin .approvedLoginLinks{
+  margin-top:20px;
+}
+.previewLogin .approvedLoginQuote{
+  margin-top:auto;
+  padding-top:42px;
+  font-size:24px;
+}
+.previewLogin .approvedLoginQuote i{
+  width:65px;
+  margin-bottom:18px;
+}
+@media(max-height:820px) and (min-width:901px){
+  .previewLogin .loginPanelInner{
+    padding-top:54px;
+    padding-bottom:34px;
+  }
+  .previewLogin .approvedPreviewLogo{
+    max-width:390px;
+    margin-bottom:24px;
+  }
+  .previewLogin .loginPanelInner h1{
+    font-size:47px;
+  }
+  .previewLogin .loginSubtitle{
+    font-size:16px;
+  }
+  .previewLogin .approvedLoginForm{
+    margin-top:28px;
+  }
+  .previewLogin .approvedLoginField{
+    height:54px;
+  }
+  .previewLogin .approvedLoginSubmit{
+    height:54px;
+  }
+  .previewLogin .approvedLoginQuote{
+    padding-top:24px;
+    font-size:20px;
+  }
+}
