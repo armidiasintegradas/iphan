@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
+import "maplibre-gl/dist/maplibre-gl.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "IPHAN OS — Beta 01",
-  description: "Sistema Operacional da Preservação",
+  title: "Sistema de Gestão da Preservação — Beta 01",
+  description: "Plataforma operacional para gestão do patrimônio cultural e das intervenções.",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
       <body>{children}</body>
