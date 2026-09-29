@@ -21,7 +21,7 @@ export default async function Page(){
   const year=dateParts.find(x=>x.type==="year")?.value||"";
   const weekday=(dateParts.find(x=>x.type==="weekday")?.value||"").toUpperCase();
   const firstName=current.name.split(" ")[0]||"Usuário";
-  const mapPoints=heritageResult.data.filter((h:any)=>typeof h.lat==="number"&&typeof h.lng==="number");
+  const mapPoints=heritageResult.data.filter((h:any)=>h.lat!==null&&h.lng!==null).map((h:any)=>({...h,lat:Number(h.lat),lng:Number(h.lng)}));
   const topNotifications=notifications.data.slice(0,4);
 
   return <AppShell active="/">
