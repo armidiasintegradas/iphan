@@ -200,3 +200,5 @@ body{background:var(--approved-bg)}
 
 @media(max-width:900px){.approvedPermissionGrid{grid-template-columns:1fr 1fr}.usersTableHead,.approvedUserRow{grid-template-columns:1.3fr 1fr .8fr .55fr}}
 @media(max-width:700px){.adminMetrics{grid-template-columns:1fr}.usersTableHead{display:none}.approvedUsersPanel{background:transparent;border:0}.approvedUserRow{grid-template-columns:1fr auto;background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}.approvedUserRow>div:first-child{grid-column:1}.approvedUserRow>div:nth-child(2){grid-column:1}.approvedUserRow>span:nth-of-type(1){grid-column:1}.approvedUserRow>.status{grid-column:2;grid-row:1}.approvedPermissionGrid{grid-template-columns:1fr}.approvedAuditItem{grid-template-columns:12px 1fr}.approvedAuditItem time{grid-column:2;text-align:left}}
+
+.fieldHint{font-size:9px;font-weight:400;color:var(--muted);line-height:1.35;margin-top:-2px}
