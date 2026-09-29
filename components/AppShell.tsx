@@ -8,11 +8,6 @@ const icons:any = { home:Home, landmark:Landmark, wrench:Wrench, mapPin:MapPin, 
 
 export function Brand({compact=false}:{compact?:boolean}){
   return <div className={compact?"iphanBrand compact":"iphanBrand"} aria-label="Iphan — Instituto do Patrimônio Histórico e Artístico Nacional">
-    <span className="iphanBrandFallback">
-      <span className="iphanBrandIcon"><Landmark size={compact?18:24} strokeWidth={1.4}/></span>
-      <span className="iphanBrandWord">IPHAN</span>
-      {!compact && <span className="iphanBrandFull">INSTITUTO DO<br/>PATRIMÔNIO<br/>HISTÓRICO E<br/>ARTÍSTICO NACIONAL</span>}
-    </span>
     <span className="iphanBrandExact" aria-hidden="true"/>
   </div>;
 }
