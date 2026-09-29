@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Brand } from "@/components/AppShell";
 import FormNotice from "@/components/FormNotice";
 import { signIn } from "@/app/auth/actions";
@@ -20,10 +21,14 @@ export default async function Page({
           da Preservação
         </h1>
         <p>
-          Superintendência de Pernambuco <span className="pill">Beta 01</span>
+          Superintendência do Iphan em Pernambuco <span className="pill">Beta 01</span>
         </p>
 
-        <FormNotice demo={q.demo} error={q.erro} />
+        <FormNotice error={q.erro} />
+
+        {q.cadastro === "confirmar-email" && (
+          <div className="formNotice">Cadastro criado. Confirme o e-mail recebido para concluir o primeiro acesso.</div>
+        )}
 
         <form action={signIn}>
           <label>
@@ -40,7 +45,7 @@ export default async function Page({
           <button type="submit">Entrar →</button>
         </form>
 
-        <a href="#">Esqueci minha senha</a>
+        <Link href="/cadastro">Primeiro acesso</Link>
         <div className="loginQuote">
           Patrimônio que conecta
           <br />
