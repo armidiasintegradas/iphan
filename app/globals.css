@@ -217,3 +217,7 @@ body{background:var(--approved-bg)}
  .measurementHead.withActions,.measurementRow{grid-template-columns:45px minmax(130px,1.2fr) 100px minmax(120px,.8fr) 75px 100px 120px}
  .controlTableHead.withActions,.controlTableRow{grid-template-columns:90px minmax(180px,1.4fr) 90px 110px 90px 100px 100px}
 }
+
+.tabAction{margin-left:auto;display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:10px;font-weight:700;text-decoration:none}
+.headActions form{margin:0}
+.successAction{border-color:#b8d9ca!important;color:var(--green)!important;background:#f1f8f5!important}
