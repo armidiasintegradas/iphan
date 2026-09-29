@@ -27,3 +27,8 @@ h1,h2,h3{font-family:Georgia,'Times New Roman',serif;margin:0;color:#111}p{margi
 .recordPlaceholder{width:58px;height:58px;border-radius:10px;background:#eef1ee;display:grid;place-items:center;color:var(--green);flex:0 0 auto}
 .neutralHero{background:linear-gradient(135deg,#e8ece8,#f5f3ec)}
 .workCardPlaceholder{height:180px;background:linear-gradient(135deg,#e8ece8,#f4f2ea)}
+
+.loginLinks{display:flex;justify-content:center;gap:18px;margin-top:14px}
+.loginLinks a{font-size:12px;color:#1661c5}
+.logoutBtn{width:34px;height:34px;border:1px solid var(--line);border-radius:9px;background:#fff;color:#65706a;display:grid;place-items:center;cursor:pointer}
+.logoutBtn:hover{color:var(--green);background:#f5f8f6}
