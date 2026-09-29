@@ -112,12 +112,21 @@ export async function createRestriction(fd:FormData){
 
 export async function completeInspection(fd:FormData){
   const current=await getCurrentUser();
-  if(!current.id || !can(current.role,"inspection.write")) redirect("/fiscalizacoes?erro=permissao");
+  if(!current.id) redirect("/login");
+  if(!current.active || !current.unitId || !can(current.role,"inspection.write")) redirect("/fiscalizacoes?erro=permissao");
 
   const id=value(fd,"fiscalizacao_id");
   if(!id) redirect("/fiscalizacoes?erro=dados");
 
   const supabase=await createClient();
+  const {data:inspection,error:inspectionError}=await supabase
+    .from("fiscalizacoes")
+    .select("id,bem_id,intervencao_id,bens_culturais(unidade_id),intervencoes(bens_culturais(unidade_id))")
+    .eq("id",id)
+    .maybeSingle();
+  const unit=(inspection as any)?.bens_culturais?.unidade_id || (inspection as any)?.intervencoes?.bens_culturais?.unidade_id;
+  if(inspectionError||!inspection||unit!==current.unitId) redirect("/fiscalizacoes?erro=registro");
+
   const {error}=await supabase.from("fiscalizacoes").update({
     status:"concluido",
     realizada_em:new Date().toISOString(),
