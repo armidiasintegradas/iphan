@@ -22,6 +22,7 @@ const messages:Record<string,string>={
   email:"Informe um e-mail válido.",
   titulo:"Informe um título válido.",
   percentual:"Os percentuais devem estar entre 0 e 100.",
+  senha:"Use pelo menos 12 caracteres, com maiúscula, minúscula, número e símbolo.",
 };
 
 export default function FormNotice({ demo, error }: { demo?: string; error?: string }) {
