@@ -2,9 +2,11 @@ import AppShell from "@/components/AppShell";
 import FormNotice from "@/components/FormNotice";
 import { createHeritage } from "@/app/actions";
 import { Landmark, MapPin } from "lucide-react";
+import {requirePermission} from "@/lib/authorization";
 
 export default async function Page({ searchParams }: { searchParams: Promise<Record<string,string|undefined>> }) {
   const q = await searchParams;
+  await requirePermission("heritage.write","/patrimonio");
   return <AppShell active="/patrimonio"><main className="pageWrap formPage approvedDesktopFormPage">
     <div className="pageHead"><div><small>Patrimônio / Novo bem</small><h1>Novo bem cultural</h1><p>Cadastre os dados básicos para iniciar o prontuário digital.</p></div></div>
     <FormNotice demo={q.demo} error={q.erro}/>
