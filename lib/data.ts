@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { heritage as mockHeritage } from "@/lib/mock";
 
 export async function getHeritage() {
   const supabase = await createClient();
