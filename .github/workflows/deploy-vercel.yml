@@ -32,8 +32,11 @@ jobs:
           fi
 
       - run: npm install
+        if: steps.vercel_auth.outputs.available == 'true'
       - run: npm run verify:beta
+        if: steps.vercel_auth.outputs.available == 'true'
       - run: npm run build
+        if: steps.vercel_auth.outputs.available == 'true'
 
       - name: Install Vercel CLI
         if: steps.vercel_auth.outputs.available == 'true'
@@ -80,3 +83,7 @@ jobs:
           curl --fail --location --silent --show-error "$DEPLOY_URL/api/health" | tee health.json
           grep -q '"ok":true' health.json
           echo "Production health check passed."
+
+      - name: Deployment skipped
+        if: steps.vercel_auth.outputs.available != 'true'
+        run: echo "Vercel deployment skipped because VERCEL_TOKEN is not configured."
