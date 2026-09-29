@@ -495,3 +495,88 @@ body{background:var(--approved-bg)}
   .approvedPatrimonio .approvedMapWrap .realMap{min-height:285px}
   .approvedPatrimonio .approvedAssetVisual{height:180px}
 }
+
+
+/* ===== Layout refinement phase — Detail & Cockpit v1 ===== */
+.approvedHeritageDetail,
+.approvedIntervention{max-width:1180px;padding-top:14px}
+
+.approvedHeritageDetail .approvedDetailHero{
+  height:230px;
+  border-radius:11px;
+  margin-bottom:10px;
+  background-position:center 48%;
+}
+.approvedHeritageDetail .heroActions{top:11px;right:11px;gap:6px}
+.approvedHeritageDetail .heroActions button{min-height:32px;padding:7px 9px;border-radius:999px;font-size:9px}
+.approvedHeritageDetail .photoCount{font-size:8px;bottom:9px;left:10px}
+.approvedHeritageDetail .approvedDetailTitle{align-items:flex-end}
+.approvedHeritageDetail .approvedDetailTitle h1{font-size:37px;line-height:1;letter-spacing:-.025em}
+.approvedHeritageDetail .approvedDetailTitle p{font-size:10px;margin-top:6px}
+.approvedHeritageDetail .approvedDetailTitle>.status{font-size:9px;padding:5px 8px}
+.approvedHeritageDetail .approvedTabs{margin:13px 0 10px;gap:24px}
+.approvedHeritageDetail .approvedTabs span,
+.approvedHeritageDetail .approvedTabs b,
+.approvedHeritageDetail .approvedTabs a{padding:9px 2px;font-size:9.5px}
+.approvedHeritageDetail .approvedTabs b{border-bottom-width:2px}
+.approvedHeritageDetail .approvedThreeCols{grid-template-columns:1.25fr .95fr .9fr;gap:9px}
+.approvedHeritageDetail .approvedThreeCols .panel{padding:13px;border-radius:10px}
+.approvedHeritageDetail .approvedThreeCols h2{font-size:16px;margin-bottom:9px}
+.approvedHeritageDetail .editorialPanel p{font-size:10.5px;line-height:1.5;margin-bottom:8px}
+.approvedHeritageDetail .editorialPanel a{font-size:9px}
+.approvedHeritageDetail .approvedInfoTable p,
+.approvedHeritageDetail .conservationPanel .stateRow{padding:9px 0;font-size:9.5px}
+.approvedHeritageDetail .approvedInfoTable p:first-of-type,
+.approvedHeritageDetail .conservationPanel .stateRow:first-of-type{border-top:0}
+
+.approvedIntervention .interventionHead{align-items:flex-start;margin-bottom:10px}
+.approvedIntervention .interventionHead>div:first-child>a{font-size:9px;color:var(--muted)}
+.approvedIntervention .interventionHead h1{font-size:34px;line-height:1.05;margin-top:5px}
+.approvedIntervention .interventionHead p{font-size:9.5px;margin-top:4px}
+.approvedIntervention .headActions{gap:6px}
+.approvedIntervention .headActions .secondaryAction,
+.approvedIntervention .headActions .iconButton{min-height:31px;padding:7px 9px;border-radius:8px;font-size:9px}
+.approvedIntervention .approvedTabs{margin:9px 0 10px;gap:22px}
+.approvedIntervention .approvedTabs b,
+.approvedIntervention .approvedTabs a{padding:8px 2px;font-size:9.5px}
+.approvedIntervention .approvedInterventionHero{height:205px;border-radius:10px;margin-bottom:9px;background-position:center 46%}
+
+.approvedIntervention .interventionMetrics{border-radius:10px;overflow:hidden;margin-bottom:10px}
+.approvedIntervention .interventionMetrics>div{padding:11px 12px}
+.approvedIntervention .progressMetric strong{font-size:25px}
+.approvedIntervention .progressMetric span,
+.approvedIntervention .factMetric span{font-size:8.5px}
+.approvedIntervention .progressMetric i{height:4px;margin-top:7px}
+.approvedIntervention .factMetric svg{width:15px;height:15px}
+.approvedIntervention .factMetric strong{font-size:11px;margin-top:4px}
+.approvedIntervention .interventionLower{grid-template-columns:1.2fr 1fr 1fr;gap:9px}
+.approvedIntervention .interventionLower>.panel{padding:11px;border-radius:10px}
+.approvedIntervention .interventionLower .sectionTitle{margin:0 0 8px}
+.approvedIntervention .interventionLower .sectionTitle h2{font-size:15px}
+.approvedIntervention .interventionLower .sectionTitle a{font-size:8.5px}
+.approvedIntervention .approvedProgressImage{height:190px;border-radius:8px;background-position:center}
+.approvedIntervention .taskRow,
+.approvedIntervention .updateRow{padding:9px 0}
+.approvedIntervention .taskRow{grid-template-columns:25px 1fr;gap:8px}
+.approvedIntervention .taskRow>i{width:22px;height:22px}
+.approvedIntervention .taskRow strong,
+.approvedIntervention .updateRow strong{font-size:10px}
+.approvedIntervention .taskRow span,
+.approvedIntervention .updateRow span{font-size:8.5px}
+
+@media(max-width:1000px){
+  .approvedHeritageDetail .approvedThreeCols{grid-template-columns:1fr 1fr}
+  .approvedHeritageDetail .editorialPanel{grid-column:1/-1}
+  .approvedIntervention .interventionLower{grid-template-columns:1fr 1fr}
+  .approvedIntervention .photoPanel{grid-column:1/-1}
+}
+@media(max-width:700px){
+  .approvedHeritageDetail .approvedDetailHero{height:195px}
+  .approvedHeritageDetail .approvedDetailTitle h1{font-size:30px}
+  .approvedHeritageDetail .approvedThreeCols{grid-template-columns:1fr}
+  .approvedHeritageDetail .editorialPanel{grid-column:auto}
+  .approvedIntervention .interventionHead h1{font-size:29px}
+  .approvedIntervention .approvedInterventionHero{height:180px}
+  .approvedIntervention .interventionLower{grid-template-columns:1fr}
+  .approvedIntervention .photoPanel{grid-column:auto}
+}
