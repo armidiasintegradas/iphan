@@ -26,6 +26,7 @@ export default async function Page({
 
         <FormNotice error={q.erro} />
 
+        {q.senha === "alterada" && <div className="formNotice">Senha atualizada. Entre novamente com sua nova senha.</div>}
         {q.cadastro === "confirmar-email" && (
           <div className="formNotice">Cadastro criado. Confirme o e-mail recebido para concluir o primeiro acesso.</div>
         )}
@@ -45,7 +46,7 @@ export default async function Page({
           <button type="submit">Entrar →</button>
         </form>
 
-        <Link href="/cadastro">Primeiro acesso</Link>
+        <div className="loginLinks"><Link href="/cadastro">Primeiro acesso</Link><Link href="/recuperar-senha">Esqueci minha senha</Link></div>
         <div className="loginQuote">
           Patrimônio que conecta
           <br />
