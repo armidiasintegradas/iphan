@@ -78,7 +78,7 @@ Todos os builds dessa fase concluíram com sucesso.
 Os seguintes ativos já foram extraídos das referências aprovadas; os três recortes de Campo já estão publicados e os demais seguem prontos para publicação:
 
 - [x] login hero
-- [x] quatro imagens de prioridades
+- [x] quatro imagens de prioridades — publicadas e sem fallback externo
 - [x] hero do patrimônio
 - [x] quatro thumbnails de patrimônio
 - [x] imagem de progresso da intervenção
