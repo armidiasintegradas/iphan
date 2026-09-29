@@ -1,12 +1,14 @@
 import AppShell from "@/components/AppShell";
 import FormNotice from "@/components/FormNotice";
 import {createScheduleItem} from "@/app/intervencoes/actions";
+import {requirePermission} from "@/lib/authorization";
 
 export default async function Page({
   params,
   searchParams,
 }:{params:Promise<{id:string}>;searchParams:Promise<Record<string,string|undefined>>}){
   const {id}=await params; const q=await searchParams;
+  await requirePermission("intervention.write","/intervencoes");
   return <AppShell active="/intervencoes"><main className="pageWrap formPage">
     <div className="pageHead"><div><small>Intervenção / Cronograma</small><h1>Novo item de cronograma</h1><p>Cadastre uma frente ou etapa de serviço.</p></div></div>
     <FormNotice demo={q.demo} error={q.erro}/>
