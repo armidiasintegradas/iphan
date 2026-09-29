@@ -7,10 +7,10 @@ import Link from "next/link";
 import { AlertCircle, CalendarClock, ClipboardCheck, SearchCheck } from "lucide-react";
 
 const priorityImages=[
-  {local:"/visual/priority-decisao.webp",fallback:"/visual/priority-decisao.webp"},
-  {local:"/visual/priority-intervencao.webp",fallback:"https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80"},
-  {local:"/visual/priority-medicao.webp",fallback:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80"},
-  {local:"/visual/priority-fiscalizacao.webp",fallback:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"}
+  "/visual/priority-decisao.webp",
+  "/visual/priority-intervencao.webp",
+  "/visual/priority-medicao.webp",
+  "/visual/priority-fiscalizacao.webp"
 ];
 
 const priorityIcons=[AlertCircle,CalendarClock,ClipboardCheck,SearchCheck];
@@ -48,7 +48,7 @@ export default async function Page(){
         {topNotifications.length ? topNotifications.map((p:any,index:number)=>{
           const Icon=priorityIcons[index%priorityIcons.length];
           return <article className="priorityCard approvedPriority" key={p.id}>
-            <div className="priorityApprovedImage" style={{backgroundImage:`url("${priorityImages[index%priorityImages.length].local}"),url("${priorityImages[index%priorityImages.length].fallback}")`}} aria-hidden="true"/>
+            <div className="priorityApprovedImage" style={{backgroundImage:`url("${priorityImages[index%priorityImages.length]}")`}} aria-hidden="true"/>
             <div className="priorityBody">
               <div className={"priorityIcon "+p.tone}><Icon size={14}/></div>
               <div>
