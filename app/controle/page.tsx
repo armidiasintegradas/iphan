@@ -9,7 +9,9 @@ import {can} from "@/lib/permissions";
 
 const tone=(r:string)=>r==="critico"?"danger":r==="atencao"?"warning":"regular";
 
-export default async function Page(){
+export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){
+  const q=await searchParams;
+  const tab=q.tab||"todos";
   const [{decisions,restrictions,source},current]=await Promise.all([getControlData(),getCurrentUser()]);
   const canClose=can(current.role,"decision.write");
   const openDecisions=decisions.filter((x:any)=>x.status!=="concluido"&&x.status!=="cancelado");
@@ -28,11 +30,23 @@ export default async function Page(){
       <article><SlidersHorizontal/><strong>{openDecisions.length+openRestrictions.length}</strong><span>Total em controle</span><small>visão consolidada</small></article>
     </section>
 
-    <div className="controlTabs"><button className="active">Todos</button><button>Decisões</button><button>Restrições</button><button>Vencidos</button></div>
+    <div className="controlTabs">
+      <Link className={tab==="todos"?"active":""} href="/controle">Todos</Link>
+      <Link className={tab==="decisoes"?"active":""} href="/controle?tab=decisoes">Decisões</Link>
+      <Link className={tab==="restricoes"?"active":""} href="/controle?tab=restricoes">Restrições</Link>
+      <Link className={tab==="vencidos"?"active":""} href="/controle?tab=vencidos">Vencidos</Link>
+    </div>
 
     <section className="panel approvedControlTable">
       <div className="controlTableHead withActions"><span>ID</span><span>Item</span><span>Tipo</span><span>Responsável</span><span>Prazo</span><span>Status</span><span>Ações</span></div>
-      {[...decisions.map(d=>({...d,kind:"Decisão"})),...restrictions.map(r=>({...r,kind:"Restrição"}))].map((item:any)=><article className="controlTableRow" key={item.kind+item.id}>
+      {[...decisions.map(d=>({...d,kind:"Decisão"})),...restrictions.map(r=>({...r,kind:"Restrição"}))]
+        .filter((item:any)=>{
+          if(tab==="decisoes") return item.kind==="Decisão";
+          if(tab==="restricoes") return item.kind==="Restrição";
+          if(tab==="vencidos") return item.prazo && new Date(item.prazo)<new Date() && item.status!=="concluido";
+          return true;
+        })
+        .map((item:any)=><article className="controlTableRow" key={item.kind+item.id}>
         <span className="controlId">{item.id}</span>
         <div><strong>{item.titulo}</strong><small>{item.intervencao}</small>{item.impacto&&<em>{item.impacto}</em>}</div>
         <span>{item.kind}</span>
