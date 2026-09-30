@@ -1667,3 +1667,476 @@ body{background:#f3f5f2;color:var(--v12-ink)}
   .v12MapFooter{align-items:flex-start;flex-direction:column}
   .v12Legend{gap:8px}
 }
+/* ===== STITCH LOGIN V2 ===== */
+.stitchLogin{
+  min-height:100vh;
+  min-height:100svh;
+  width:100%;
+  display:grid;
+  grid-template-columns:58.5% 41.5%;
+  overflow:hidden;
+  background:#faf8f5;
+  color:#16221e;
+  font-family:"Plus Jakarta Sans",Arial,Helvetica,sans-serif;
+}
+.stitchLoginHero{
+  position:relative;
+  min-width:0;
+  min-height:100vh;
+  min-height:100svh;
+  margin:0;
+  overflow:hidden;
+  background:#d7ded9;
+}
+.stitchLoginHero>img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+}
+.stitchLoginHeroShade{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.10) 0%,transparent 28%,transparent 72%,rgba(0,0,0,.12) 100%),
+    linear-gradient(180deg,transparent 68%,rgba(0,0,0,.12) 100%);
+}
+.stitchLoginHero:after{
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  width:84px;
+  background:linear-gradient(90deg,transparent,rgba(250,248,245,.25));
+  pointer-events:none;
+}
+.stitchLoginLocation{
+  position:absolute;
+  left:32px;
+  bottom:32px;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  max-width:calc(100% - 64px);
+  padding:10px 15px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:12px;
+  background:rgba(12,26,20,.42);
+  box-shadow:0 8px 30px rgba(0,0,0,.14);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  color:rgba(255,255,255,.96);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.02em;
+}
+.stitchLoginLocation svg{
+  flex:0 0 auto;
+  width:17px;
+  height:17px;
+  color:#df9b2d;
+  stroke-width:2;
+}
+
+.stitchLoginPanel{
+  position:relative;
+  min-width:0;
+  min-height:100vh;
+  min-height:100svh;
+  overflow-y:auto;
+  overflow-x:hidden;
+  display:flex;
+  align-items:center;
+  padding:26px clamp(34px,5vw,96px);
+  background:
+    radial-gradient(circle at 100% 10%,rgba(202,138,4,.05) 0%,transparent 60%),
+    radial-gradient(circle at 70% 90%,rgba(202,138,4,.04) 0%,transparent 50%),
+    repeating-radial-gradient(ellipse at 80% 40%,transparent 0,transparent 40px,rgba(180,140,75,.035) 41px,transparent 42px),
+    #faf7f2;
+}
+.stitchLoginPanel:after{
+  content:"";
+  position:absolute;
+  right:-130px;
+  bottom:-115px;
+  width:420px;
+  height:500px;
+  opacity:.028;
+  pointer-events:none;
+  background:
+    linear-gradient(140deg,transparent 0 28%,rgba(7,80,55,.32) 28.3% 28.7%,transparent 29% 36%,rgba(7,80,55,.22) 36.3% 36.6%,transparent 37%),
+    repeating-radial-gradient(ellipse at 55% 70%,transparent 0 25px,rgba(7,80,55,.35) 26px,transparent 27px);
+  transform:rotate(-8deg);
+}
+.stitchLoginContours{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.24;
+  overflow:hidden;
+}
+.stitchLoginContours:before,
+.stitchLoginContours:after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(223,155,45,.20);
+  border-radius:50%;
+}
+.stitchLoginContours:before{
+  width:520px;
+  height:520px;
+  right:-250px;
+  top:-180px;
+  box-shadow:
+    0 0 0 70px rgba(223,155,45,.025),
+    0 0 0 140px rgba(223,155,45,.018),
+    0 0 0 210px rgba(223,155,45,.012);
+}
+.stitchLoginContours:after{
+  width:600px;
+  height:260px;
+  right:-245px;
+  bottom:20px;
+  transform:rotate(-14deg);
+  box-shadow:
+    0 0 0 55px rgba(223,155,45,.018),
+    0 0 0 110px rgba(223,155,45,.012);
+}
+.stitchLoginInner{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:430px;
+  margin:auto;
+  padding:22px 0;
+}
+.stitchLoginBrand{
+  margin:0 0 25px;
+}
+.stitchLoginBrand img{
+  width:auto;
+  max-width:100%;
+  height:58px;
+  object-fit:contain;
+  object-position:left center;
+}
+.stitchLoginTitle{
+  margin-bottom:0;
+}
+.stitchLoginTitle h1{
+  margin:0;
+  color:#16221e;
+  font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  font-size:40px;
+  font-weight:700;
+  line-height:1.08;
+  letter-spacing:-.025em;
+}
+.stitchLoginContext{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:10px;
+  color:#4f5d56;
+  font-size:14px;
+  font-weight:500;
+  line-height:1.25;
+}
+.stitchLoginBeta{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  flex:0 0 auto;
+  padding:4px 9px;
+  border:1px solid rgba(16,91,62,.18);
+  border-radius:999px;
+  background:#dcede4;
+  color:#105b3e;
+  font-size:10px;
+  font-weight:700;
+}
+.stitchLoginBeta i{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#12835d;
+}
+.stitchLogin .formNotice{
+  margin:16px 0 0;
+  border-radius:9px;
+  font-size:12px;
+}
+.stitchLoginForm{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-top:28px;
+}
+.stitchLoginField,
+.stitchPasswordWrap .approvedLoginField{
+  position:relative;
+  display:flex;
+  align-items:center;
+  width:100%;
+  height:52px;
+  margin:0;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 1px 2px rgba(20,36,29,.025);
+  color:#94a3b8;
+  overflow:hidden;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+.stitchLoginField:focus-within,
+.stitchPasswordWrap .approvedLoginField:focus-within{
+  border-color:#075037;
+  box-shadow:0 0 0 3px rgba(7,80,55,.10);
+}
+.stitchLoginField>svg,
+.stitchPasswordWrap .approvedLoginField>svg{
+  position:absolute;
+  left:16px;
+  z-index:1;
+  width:19px;
+  height:19px;
+  color:#94a3b8;
+  stroke-width:1.6;
+  pointer-events:none;
+}
+.stitchLoginField input,
+.stitchPasswordWrap .approvedLoginField input{
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0 48px 0 46px;
+  border:0!important;
+  border-radius:0;
+  outline:0;
+  background:transparent;
+  box-shadow:none!important;
+  color:#1f2937;
+  font-family:"Plus Jakarta Sans",Arial,Helvetica,sans-serif;
+  font-size:13px;
+  font-weight:400;
+}
+.stitchLoginField input::placeholder,
+.stitchPasswordWrap .approvedLoginField input::placeholder{
+  color:#9ca3af;
+  opacity:1;
+}
+.stitchPasswordWrap .loginEye{
+  position:absolute;
+  right:7px;
+  top:50%;
+  width:38px;
+  height:38px;
+  transform:translateY(-50%);
+  display:grid;
+  place-items:center;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:#9ca3af;
+}
+.stitchPasswordWrap .loginEye:hover{
+  background:#f5f7f6;
+  color:#5d6662;
+}
+.stitchPasswordWrap .loginEye svg{
+  width:18px;
+  height:18px;
+  stroke-width:1.6;
+}
+.stitchLoginOptions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:1px 0;
+}
+.stitchRemember{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:#46534e;
+  font-size:12px;
+  font-weight:500;
+  cursor:pointer;
+}
+.stitchRemember input{
+  width:18px;
+  height:18px;
+  margin:0;
+  border:1px solid #cbd5d1;
+  border-radius:4px;
+  accent-color:#075037;
+}
+.stitchLoginOptions>a{
+  color:#075037;
+  font-size:12px;
+  font-weight:500;
+  transition:color .15s ease;
+}
+.stitchLoginOptions>a:hover{
+  color:#06422d;
+  text-decoration:underline;
+}
+.stitchLoginSubmit{
+  width:100%;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  margin:0;
+  border:0;
+  border-radius:12px;
+  background:#075037;
+  color:#fff;
+  box-shadow:0 7px 18px rgba(7,80,55,.16);
+  font-family:"Plus Jakarta Sans",Arial,Helvetica,sans-serif;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .15s ease,transform .15s ease,box-shadow .15s ease;
+}
+.stitchLoginSubmit:hover{
+  background:#06422d;
+  box-shadow:0 9px 22px rgba(7,80,55,.22);
+}
+.stitchLoginSubmit:active{
+  transform:translateY(1px);
+}
+.stitchLoginSubmit svg{
+  width:17px;
+  height:17px;
+  stroke-width:2.2;
+}
+.stitchLoginFooter{
+  margin-top:34px;
+  padding-top:20px;
+  border-top:1px solid #e8e2d8;
+}
+.stitchLoginGoldLine{
+  display:block;
+  width:48px;
+  height:2.5px;
+  margin-bottom:13px;
+  border-radius:999px;
+  background:#d49826;
+}
+.stitchLoginFooter>p{
+  margin:0;
+  color:#37443e;
+  font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  font-size:21px;
+  font-style:italic;
+  font-weight:500;
+  line-height:1.18;
+}
+.stitchLoginCredentials{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:7px;
+  margin-top:18px;
+  color:#818987;
+  font-size:9px;
+  font-weight:500;
+  letter-spacing:.02em;
+}
+.stitchLoginCredentials>span:first-child{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  color:#527068;
+}
+.stitchLoginCredentials svg{
+  width:13px;
+  height:13px;
+  color:#147052;
+}
+.stitchLoginCredentials>i{
+  color:#c6cbc8;
+  font-style:normal;
+}
+
+@media(max-height:760px) and (min-width:901px){
+  .stitchLoginPanel{padding-top:18px;padding-bottom:18px}
+  .stitchLoginInner{padding:12px 0}
+  .stitchLoginBrand{margin-bottom:18px}
+  .stitchLoginBrand img{height:48px}
+  .stitchLoginTitle h1{font-size:34px}
+  .stitchLoginContext{font-size:12px;margin-top:7px}
+  .stitchLoginForm{margin-top:20px;gap:10px}
+  .stitchLoginField,.stitchPasswordWrap .approvedLoginField{height:46px}
+  .stitchLoginSubmit{height:46px}
+  .stitchLoginFooter{margin-top:22px;padding-top:16px}
+  .stitchLoginFooter>p{font-size:18px}
+  .stitchLoginCredentials{margin-top:12px}
+}
+@media(max-width:900px){
+  .stitchLogin{
+    display:block;
+    overflow:auto;
+    background:#faf7f2;
+  }
+  .stitchLoginHero{display:none}
+  .stitchLoginPanel{
+    min-height:100vh;
+    min-height:100svh;
+    align-items:center;
+    padding:34px 24px;
+  }
+  .stitchLoginInner{
+    max-width:480px;
+    padding:18px 0;
+  }
+  .stitchLoginBrand img{height:54px}
+  .stitchLoginTitle h1{font-size:39px}
+}
+@media(max-width:520px){
+  .stitchLoginPanel{
+    padding:26px 20px;
+    align-items:flex-start;
+  }
+  .stitchLoginInner{
+    margin:0 auto;
+    padding:10px 0 20px;
+  }
+  .stitchLoginBrand{
+    margin-bottom:23px;
+  }
+  .stitchLoginBrand img{
+    height:auto;
+    width:min(100%,330px);
+  }
+  .stitchLoginTitle h1{
+    font-size:36px;
+  }
+  .stitchLoginContext{
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap:8px 10px;
+    font-size:13px;
+  }
+  .stitchLoginForm{
+    margin-top:25px;
+  }
+  .stitchLoginOptions{
+    align-items:flex-start;
+  }
+  .stitchRemember,
+  .stitchLoginOptions>a{
+    font-size:11px;
+  }
+  .stitchLoginFooter{
+    margin-top:30px;
+  }
+}
